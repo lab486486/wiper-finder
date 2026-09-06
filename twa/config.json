@@ -1,0 +1,11 @@
+{
+  "packageId": "com.wiperfinder.app",
+  "host": "wiper-finder.com",
+  "name": "자동차 와이퍼 사이즈 검색기",
+  "launcherName": "와이퍼 검색",
+  "startUrl": "/",
+  "themeColor": "#2563EB",
+  "backgroundColor": "#F4F6F8",
+  "manifestUrl": "https://wiper-finder.com/manifest.json",
+  "iconUrl": "https://wiper-finder.com/icons/icon-512.png"
+}

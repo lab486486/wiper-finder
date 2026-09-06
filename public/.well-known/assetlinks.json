@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.wiperfinder.app",
+      "sha256_cert_fingerprints": [
+        "CF:47:63:31:E6:5D:0C:01:04:39:BE:32:BA:B1:37:CC:A3:E7:92:B4:F4:DC:BC:D3:FD:09:D2:07:FA:14:88:BB"
+      ]
+    }
+  }
+]

@@ -1,0 +1,10 @@
+android/
+android.keystore
+.keystore-env
+local.properties
+twa-manifest.json
+*.aab
+*.apk
+.gradle/
+build/
+app/build/
