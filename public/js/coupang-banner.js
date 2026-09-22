@@ -1,9 +1,10 @@
 (function () {
   "use strict";
 
-  var STORAGE_KEY = "wiper_coupang_reload_log";
-  var WINDOW_MS = 10 * 60 * 1000;
-  var MAX_RELOADS = 3;
+  var COUNT_KEY = "page_refresh_count";
+  var BLOCK_KEY = "coupang_block_until";
+  var MAX_RELOAD = 3;
+  var BLOCK_TIME_MS = 10 * 60 * 1000;
   var G_JS = "https://ads-partners.coupang.com/g.js";
 
   var WIDGET = {
@@ -15,52 +16,11 @@
     tsource: "",
   };
 
-  function getNavigationType() {
-    var entries = performance.getEntriesByType("navigation");
-    if (entries && entries.length) return entries[0].type;
-
-    if (performance.navigation) {
-      switch (performance.navigation.type) {
-        case 1:
-          return "reload";
-        case 2:
-          return "back_forward";
-        default:
-          return "navigate";
-      }
-    }
-
-    return "navigate";
-  }
-
-  function readReloadLog() {
-    try {
-      var raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return [];
-      var parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return [];
-      var now = Date.now();
-      return parsed.filter(function (t) {
-        return now - t < WINDOW_MS;
-      });
-    } catch (_err) {
-      return [];
-    }
-  }
-
-  function writeReloadLog(timestamps) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(timestamps));
-    } catch (_err) {}
-  }
-
-  function trackReloadAndCheckAbuse() {
-    var log = readReloadLog();
-    if (getNavigationType() === "reload") {
-      log.push(Date.now());
-    }
-    writeReloadLog(log);
-    return log.length >= MAX_RELOADS;
+  function isReloadNavigation() {
+    var perfEntries = performance.getEntriesByType("navigation");
+    if (perfEntries.length > 0 && perfEntries[0].type === "reload") return true;
+    if (performance.navigation && performance.navigation.type === 1) return true;
+    return false;
   }
 
   function hideBanner(root) {
@@ -91,12 +51,38 @@
     slot.appendChild(gScript);
   }
 
+  function shouldBlockBanner() {
+    var now = Date.now();
+    var blockUntil = parseInt(localStorage.getItem(BLOCK_KEY) || "0", 10);
+
+    if (now < blockUntil) return true;
+
+    if (blockUntil && now >= blockUntil) {
+      localStorage.removeItem(BLOCK_KEY);
+    }
+
+    var count = parseInt(sessionStorage.getItem(COUNT_KEY) || "0", 10);
+
+    if (isReloadNavigation()) {
+      count += 1;
+      sessionStorage.setItem(COUNT_KEY, String(count));
+    }
+
+    if (count >= MAX_RELOAD) {
+      localStorage.setItem(BLOCK_KEY, String(now + BLOCK_TIME_MS));
+      sessionStorage.removeItem(COUNT_KEY);
+      return true;
+    }
+
+    return false;
+  }
+
   function init() {
     var root = document.getElementById("coupang-banner");
     var slot = document.getElementById("coupang-banner-slot");
     if (!root || !slot) return;
 
-    if (trackReloadAndCheckAbuse()) {
+    if (shouldBlockBanner()) {
       hideBanner(root);
       return;
     }
