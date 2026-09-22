@@ -389,13 +389,6 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   display: flex; flex-direction: column; gap: 8px;
   margin-top: 10px; text-align: left;
 }
-.coupang-banner {
-  margin-top: 12px; overflow: hidden;
-}
-.coupang-banner-slot {
-  min-height: 140px; display: flex; justify-content: center; align-items: flex-start;
-}
-.coupang-banner--hidden { display: none !important; }
 .product-ftc {
   font-size: .72rem; color: var(--muted); line-height: 1.45;
 }
@@ -829,12 +822,10 @@ export function layout({
   keywords = "",
   body,
   homePage = false,
-  coupangBanner = false,
 }) {
   const scriptBase = base || "";
   const jsSrc = `${scriptBase}/js/favorites.js`.replace(/\/+/g, "/");
   const shareSrc = `${scriptBase}/js/share.js`.replace(/\/+/g, "/");
-  const coupangSrc = `${scriptBase}/js/coupang-banner.js`.replace(/\/+/g, "/");
   const canonical = absoluteUrl(siteUrl, base, canonicalPath);
   const ogImage = defaultOgImageUrl(siteUrl, base);
   const ogAlt = DEFAULT_OG_IMAGE_ALT;
@@ -850,7 +841,6 @@ export function layout({
   <script>window.WIPER_BASE=${JSON.stringify(scriptBase)};</script>
   <script src="${jsSrc}" defer></script>
   <script src="${shareSrc}" defer></script>
-  ${coupangBanner ? `<script src="${coupangSrc}" defer></script>` : ""}
 </head>
 <body>
   ${renderAppHeader({ base, breadcrumb, showBreadcrumb, homePage })}
@@ -1005,12 +995,6 @@ function formatPrice(n) {
   return `${v.toLocaleString("ko-KR")}원`;
 }
 
-function coupangBannerHtml() {
-  return `<aside class="coupang-banner" id="coupang-banner" aria-label="쿠팡 파트너스 추천">
-    <div class="coupang-banner-slot" id="coupang-banner-slot"></div>
-  </aside>`;
-}
-
 function productGridHtml(productsEntry, gen) {
   if (!productsEntry?.products?.length) return "";
   const tiles = productsEntry.products
@@ -1065,7 +1049,6 @@ function productGridHtml(productsEntry, gen) {
       </li>
     </ul>
     <div class="product-grid">${tiles}</div>
-    ${coupangBannerHtml()}
     ${productFooter}
   </div>`;
 }
@@ -1209,7 +1192,6 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
     base,
     breadcrumb,
     showBreadcrumb: true,
-    coupangBanner: Boolean(productsEntry?.products?.length),
     jsonLd: buildJsonLd({
       siteUrl,
       base,
