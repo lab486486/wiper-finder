@@ -160,9 +160,11 @@ export function seoWarningList() {
   return {
     documentTitle: titleSuffix(WARNING_LIST_TITLE),
     description:
-      "자동차 경고등 의미·종류·조치방법을 한눈에 확인하세요. 엔진, ABS, 배터리 등 계기판 경고등 아이콘별 원인과 해결 방법 | " +
+      "계기판에 노란색 느낌표, 빨간색 수도꼭지·주전자, 타이어 모양 등 보이는 아이콘 그대로 찾아 의미·조치 방법을 확인하세요. 자동차 경고등 종류별 원인과 해결 | " +
       SITE_NAME,
     path: "/warnings/",
+    keywords:
+      "자동차 노란색 느낌표, 자동차 노란색 수도꼭지, 자동차 노란색 주전자, 계기판 경고등, 경고등 의미, 경고등 종류",
   };
 }
 
@@ -217,15 +219,110 @@ const WARNING_SEO = {
 const WARNING_COLOR_LABEL = {
   red: "빨간색",
   yellow: "노란색",
+  green: "초록색",
+  blue: "파란색",
+  grey: "회색",
 };
+
+/** Sheet id → JSON 폴백 id */
+const WARNING_ID_ALIAS = {
+  brake_warnings: "brake",
+  oil_pressure_warning: "oil",
+  battery_warning: "battery",
+  coolant_temp_warning: "coolant",
+  door_open_indicator: "door",
+  airbag_warning: "airbag",
+  seatbelt_reminder: "seatbelt",
+  engine_check_warning: "check-engine",
+  tpms_warning: "tpms",
+  smart_key_not_detected: "smart-key",
+  low_fuel_warning: "fuel",
+  esc_warning: "esc",
+  abs_warning: "abs",
+  washer_fluid_warning: "washer",
+  direction_indicator: "turn-signal",
+  parking_light_indicator: "headlight",
+  fog_light_indicator: "fog-light",
+  eco_mode_indicator: "eco",
+  high_beam_indicator: "high-beam",
+  glow_plug_indicator: "glow-plug",
+  water_separator_warning: "fuel-filter",
+};
+
+/** 페이지에 표시 — 아이콘을 눈에 보이는 모양 그대로 (canonical id) */
+const WARNING_VISUAL_TAGS = {
+  brake: ["자동차 P", "자동차 BRAKE"],
+  oil: ["자동차 주전자", "자동차 손잡이 물통"],
+  battery: ["자동차 배터리", "자동차 빨간색 + -", "자동차 빨간색 건전지"],
+  coolant: ["자동차 온도계", "자동차 물결"],
+  door: ["자동차 문", "자동차 트렁크", "자동차 열린 문"],
+  airbag: ["자동차 앉은 사람", "자동차 동그란 공", "자동차 동그란 원"],
+  seatbelt: ["자동차 벨트 착용한 사람", "자동차 운전자", "자동차 동승자"],
+  "check-engine": ["자동차 수도꼭지", "자동차 헬리콥터"],
+  tpms: ["자동차 타이어", "자동차 U자 느낌표", "자동차 바퀴"],
+  "smart-key": ["자동차 열쇠", "자동차 KEY"],
+  fuel: ["자동차 주유기", "자동차 연료 펌프"],
+  esc: ["자동차 미끄러지는 차", "자동차 ESC"],
+  abs: ["자동차 ABS", "자동차 바퀴 ABS"],
+  washer: ["자동차 물 분사", "자동차 워셔액"],
+  "turn-signal": ["자동차 화살표", "자동차 깜빡이"],
+  headlight: ["자동차 전조등", "자동차 미등"],
+  "fog-light": ["자동차 안개등"],
+  eco: ["자동차 ECO"],
+  "high-beam": ["자동차 상향등", "자동차 하이빔"],
+  "glow-plug": ["자동차 나선", "자동차 예열"],
+  "fuel-filter": ["자동차 연료 필터", "자동차 물방울"],
+};
+
+/** meta·title용 — 색상+모양 조합 검색어 (canonical id) */
+const WARNING_COLOR_SEARCH = {
+  brake: ["자동차 빨간색 P", "자동차 빨간색 BRAKE"],
+  oil: ["자동차 빨간색 기름통", "자동차 빨간색 주전자"],
+  battery: ["자동차 빨간색 배터리"],
+  coolant: [
+    "자동차 빨간색 수도꼭지",
+    "자동차 빨간색 주전자",
+    "자동차 노란색 수도꼭지",
+    "자동차 노란색 주전자",
+  ],
+  door: ["자동차 빨간색 문"],
+  airbag: ["자동차 빨간색 에어백"],
+  seatbelt: ["자동차 빨간색 안전벨트"],
+  "check-engine": ["자동차 노란색 느낌표", "자동차 노란색 수도꼭지"],
+  tpms: ["자동차 노란색 타이어", "자동차 노란색 느낌표"],
+  "smart-key": ["자동차 노란색 열쇠"],
+  fuel: ["자동차 노란색 주유기"],
+  esc: ["자동차 노란색 ESC"],
+  abs: ["자동차 노란색 ABS"],
+  washer: ["자동차 노란색 워셔액", "자동차 노란색 수도꼭지"],
+  "turn-signal": ["자동차 초록색 화살표"],
+  headlight: ["자동차 초록색 전조등"],
+  "fog-light": ["자동차 초록색 안개등"],
+  eco: ["자동차 초록색 ECO"],
+  "high-beam": ["자동차 파란색 상향등"],
+  "glow-plug": ["자동차 회색 나선"],
+  "fuel-filter": ["자동차 회색 연료 필터"],
+};
+
+function canonicalWarningId(id) {
+  return WARNING_ID_ALIAS[id] ?? id;
+}
 
 function resolveWarningColorLabel(warning, entry) {
   if (entry && "colorLabel" in entry) return entry.colorLabel;
   return WARNING_COLOR_LABEL[warning.color] ?? null;
 }
 
+function warningVisualTags(warning) {
+  return WARNING_VISUAL_TAGS[canonicalWarningId(warning.id)] ?? [];
+}
+
+function warningColorSearch(warning) {
+  return WARNING_COLOR_SEARCH[canonicalWarningId(warning.id)] ?? [];
+}
+
 export function warningSeoMeta(warning) {
-  const entry = WARNING_SEO[warning.id];
+  const entry = WARNING_SEO[warning.id] ?? WARNING_SEO[canonicalWarningId(warning.id)];
   const keyword =
     entry?.keyword ??
     (String(warning.label ?? "").includes("경고")
@@ -233,12 +330,98 @@ export function warningSeoMeta(warning) {
       : `${warning.label} 경고등`);
   const colorLabel = resolveWarningColorLabel(warning, entry);
   const colorSuffix = colorLabel ? ` ${colorLabel}` : "";
-  const h1 = colorLabel ? `${keyword} (${colorLabel})` : keyword;
-  const pageTitle = `${keyword}${colorSuffix} 원인·해결방법`;
+  const visualTags = warningVisualTags(warning);
+  const colorSearchTerms = warningColorSearch(warning);
+  const primaryVisual = colorSearchTerms[0] ?? visualTags[0] ?? null;
+  const pageTitle = primaryVisual
+    ? `${primaryVisual} 뜻·원인·해결`
+    : `${keyword}${colorSuffix} 원인·해결방법`;
+  const h1 = keyword;
   const summary = warning.summary ? `${warning.summary} ` : "";
-  const description = `${summary}${keyword}${colorSuffix} 뜻·원인·증상·해결 방법 | ${SITE_NAME}`;
+  const searchPhrases = [...colorSearchTerms, ...visualTags];
+  const visualHint = searchPhrases.length
+    ? `「${searchPhrases.slice(0, 4).join("」「")}」 등으로 검색해도 ${keyword} 안내입니다. `
+    : "";
+  const description = `${visualHint}${summary}${keyword}${colorSuffix} 뜻·원인·증상·해결 방법 | ${SITE_NAME}`;
+  const topic = keyword.replace(/ 경고등$/, "").replace(/ 부족$/, "");
+  const keywords = [
+    ...visualTags,
+    ...colorSearchTerms,
+    keyword,
+    colorLabel ? `자동차 ${colorLabel} ${topic}` : null,
+    colorLabel ? `자동차 ${colorLabel} 경고등` : null,
+  ]
+    .filter(Boolean)
+    .join(", ");
 
-  return { keyword, colorLabel, h1, pageTitle, description };
+  return {
+    keyword,
+    colorLabel,
+    h1,
+    pageTitle,
+    description,
+    visualTags,
+    colorSearchTerms,
+    primaryVisual,
+    keywords,
+  };
+}
+
+/** 상세 페이지 본문·FAQ에 쓸 자연스러운 색·모양 검색 안내 */
+export function warningSearchHint(meta) {
+  const { colorLabel, keyword, visualTags, colorSearchTerms } = meta;
+  if (!visualTags.length && !colorSearchTerms.length) return null;
+
+  const shapes = visualTags.map((t) => t.replace(/^자동차\s*/, ""));
+  const shapePhrase =
+    shapes.length >= 2 ? `${shapes[0]}·${shapes[1]}` : shapes[0] || "아이콘";
+
+  const searchExamples = [...colorSearchTerms.slice(0, 2), ...visualTags.slice(0, 1)]
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .slice(0, 3);
+
+  const intro = colorLabel
+    ? `계기판 ${colorLabel} ${shapePhrase} 모양으로 찾으셔도 ${keyword} 안내입니다.`
+    : `계기판 ${shapePhrase} 모양으로 찾으셔도 ${keyword} 안내입니다.`;
+
+  const searchLine = searchExamples.length
+    ? ` ${searchExamples.join(", ")} 등으로 보이는 경우에도 같은 원인입니다.`
+    : "";
+
+  return {
+    plain: (intro + searchLine).trim(),
+    shapePhrase,
+    searchExamples,
+  };
+}
+
+export function warningFaqJsonLd({ siteUrl, base, warning, meta }) {
+  const url = absoluteUrl(siteUrl, base, `/warnings/${warning.id}/`);
+  const hint = warningSearchHint(meta);
+  const items = [];
+  if (meta.primaryVisual) {
+    items.push({
+      q: `${meta.primaryVisual}가 켜지면 무슨 뜻인가요?`,
+      a: hint?.plain ?? `${meta.keyword}입니다. ${warning.summary} ${warning.meaning}`.trim(),
+    });
+  }
+  for (const term of meta.visualTags.slice(0, 3)) {
+    items.push({
+      q: `계기판 ${term} 아이콘은 무슨 경고등인가요?`,
+      a: hint?.plain ?? `${meta.keyword}에 해당합니다. ${warning.summary}`,
+    });
+  }
+  if (!items.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    url,
+    mainEntity: items.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
 }
 
 export function seoWarningDetail(warning) {
@@ -249,6 +432,8 @@ export function seoWarningDetail(warning) {
     path: `/warnings/${warning.id}/`,
     h1: meta.h1,
     breadcrumbLabel: meta.keyword,
+    keywords: meta.keywords,
+    meta,
   };
 }
 

@@ -21,6 +21,8 @@ import {
   faqPageJsonLd,
   resultPageJsonLd,
   siteBrandJsonLd,
+  warningFaqJsonLd,
+  warningSearchHint,
 } from "./seo.mjs";
 import {
   GUIDES,
@@ -387,6 +389,13 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   display: flex; flex-direction: column; gap: 8px;
   margin-top: 10px; text-align: left;
 }
+.coupang-banner {
+  margin-top: 12px; overflow: hidden;
+}
+.coupang-banner-slot {
+  min-height: 140px; display: flex; justify-content: center; align-items: flex-start;
+}
+.coupang-banner--hidden { display: none !important; }
 .product-ftc {
   font-size: .72rem; color: var(--muted); line-height: 1.45;
 }
@@ -416,9 +425,21 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   position: relative; text-align: center; margin-bottom: 16px; padding: 16px 12px 14px;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
 }
-.warn-detail-head .warn-icon-img { margin: 0 auto 10px; max-width: 88px; height: auto; }
+.warn-icon-stack {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  margin: 0 auto 12px; max-width: 120px;
+}
+.warn-icon-stack .warn-icon-img { margin: 0; max-width: 88px; height: auto; }
+.warn-icon-stack .urgency-badge { margin: 0; }
 .warn-detail-head h1 { font-size: 1.15rem; margin-bottom: 6px; padding: 0 52px; }
 .warn-detail-head .sub { padding: 0 8px; }
+.warn-detail-head .warn-visual-tags { margin-top: 10px; justify-content: center; }
+.warn-search-hint {
+  font-size: .78rem; color: var(--muted); line-height: 1.5;
+  margin: 10px auto 0; padding: 0 16px; word-break: keep-all;
+}
+.warn-search-hint-line { display: block; }
+.warn-search-hint-line + .warn-search-hint-line { margin-top: 4px; }
 .share-btn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px;
@@ -452,6 +473,21 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .warn-section p { font-size: .85rem; color: var(--muted); line-height: 1.55; }
 .warn-section ul { margin: 0; padding-left: 18px; font-size: .85rem; color: var(--muted); }
 .warn-section li { margin-bottom: 6px; line-height: 1.45; }
+.warn-visual-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.warn-visual-tags li {
+  font-size: .72rem; font-weight: 500; color: var(--muted); background: #f8fafc;
+  border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px;
+}
+.warn-color-guide { margin-bottom: 18px; }
+.warn-color-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 14px; margin-bottom: 8px;
+}
+.warn-color-block h2 { font-size: .88rem; margin: 0 0 6px; color: var(--text); }
+.warn-color-block p { font-size: .82rem; color: var(--muted); line-height: 1.55; margin: 0; }
+.warn-color-note {
+  font-size: .75rem; color: var(--muted); line-height: 1.5; margin: 0 0 16px;
+}
 .warn-disclaimer {
   font-size: .72rem; color: var(--muted); background: #f8fafc; border: 1px solid var(--border);
   border-radius: 8px; padding: 10px 12px; margin-top: 12px; line-height: 1.45;
@@ -632,6 +668,7 @@ function metaHead({
   ogImageAlt,
   ogImageWidth,
   ogImageHeight,
+  keywords = "",
   jsonLd = [],
 }) {
   const ld = jsonLd.length
@@ -654,6 +691,7 @@ function metaHead({
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(documentTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}">
+  ${keywords ? `<meta name="keywords" content="${escapeHtml(keywords)}">` : ""}
   <meta name="robots" content="index, follow">
   <meta name="naver-site-verification" content="fc4e443bcdeac68828c15f3322069961d080d4d0">
   <link rel="canonical" href="${escapeHtml(canonical)}">
@@ -788,12 +826,15 @@ export function layout({
   breadcrumb = [],
   showBreadcrumb = false,
   jsonLd = [],
+  keywords = "",
   body,
   homePage = false,
+  coupangBanner = false,
 }) {
   const scriptBase = base || "";
   const jsSrc = `${scriptBase}/js/favorites.js`.replace(/\/+/g, "/");
   const shareSrc = `${scriptBase}/js/share.js`.replace(/\/+/g, "/");
+  const coupangSrc = `${scriptBase}/js/coupang-banner.js`.replace(/\/+/g, "/");
   const canonical = absoluteUrl(siteUrl, base, canonicalPath);
   const ogImage = defaultOgImageUrl(siteUrl, base);
   const ogAlt = DEFAULT_OG_IMAGE_ALT;
@@ -802,13 +843,14 @@ export function layout({
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
-  ${metaHead({ documentTitle, description, canonical, ogImage, ogImageAlt: ogAlt, ogImageWidth: 1200, ogImageHeight: 630, jsonLd })}
+  ${metaHead({ documentTitle, description, canonical, ogImage, ogImageAlt: ogAlt, ogImageWidth: 1200, ogImageHeight: 630, keywords, jsonLd })}
   ${faviconHead(base)}
   ${rssHead(siteUrl, base)}
   <style>${CSS}</style>
   <script>window.WIPER_BASE=${JSON.stringify(scriptBase)};</script>
   <script src="${jsSrc}" defer></script>
   <script src="${shareSrc}" defer></script>
+  ${coupangBanner ? `<script src="${coupangSrc}" defer></script>` : ""}
 </head>
 <body>
   ${renderAppHeader({ base, breadcrumb, showBreadcrumb, homePage })}
@@ -963,6 +1005,12 @@ function formatPrice(n) {
   return `${v.toLocaleString("ko-KR")}원`;
 }
 
+function coupangBannerHtml() {
+  return `<aside class="coupang-banner" id="coupang-banner" aria-label="쿠팡 파트너스 추천">
+    <div class="coupang-banner-slot" id="coupang-banner-slot"></div>
+  </aside>`;
+}
+
 function productGridHtml(productsEntry, gen) {
   if (!productsEntry?.products?.length) return "";
   const tiles = productsEntry.products
@@ -1017,6 +1065,7 @@ function productGridHtml(productsEntry, gen) {
       </li>
     </ul>
     <div class="product-grid">${tiles}</div>
+    ${coupangBannerHtml()}
     ${productFooter}
   </div>`;
 }
@@ -1160,6 +1209,7 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
     base,
     breadcrumb,
     showBreadcrumb: true,
+    coupangBanner: Boolean(productsEntry?.products?.length),
     jsonLd: buildJsonLd({
       siteUrl,
       base,
@@ -1195,24 +1245,180 @@ const URGENCY_LABEL = {
   info: "참고",
 };
 
-function listFromMultiline(text) {
+function parseWarningList(text) {
   return String(text ?? "")
-    .split("\n")
+    .split(/\n|\s*\/\s*/)
     .map((s) => s.trim())
-    .filter(Boolean)
+    .filter(Boolean);
+}
+
+function listFromMultiline(text) {
+  return parseWarningList(text)
     .map((s) => `<li>${escapeHtml(s)}</li>`)
     .join("");
 }
 
-function warningImgHtml(w, imageBase, { large = false } = {}) {
+function warningTopicShort(keyword) {
+  return String(keyword ?? "")
+    .replace(/ 경고등$/, "")
+    .replace(/ 부족$/, "")
+    .trim() || "경고등";
+}
+
+/** 확인하기 쉬운 순서 (키워드 포함 여부로 정렬) */
+const WARNING_CAUSE_ORDER = {
+  "check-engine": ["연료", "캡", "배기", "센서", "실화"],
+  engine_check_warning: ["연료", "캡", "배기", "센서", "실화"],
+  fuel: ["연료", "주유", "캡"],
+  low_fuel_warning: ["연료", "주유", "캡"],
+  tpms: ["공기압", "타이어", "펑크"],
+  tpms_warning: ["공기압", "타이어", "펑크"],
+  washer: ["워셔", "액"],
+  washer_fluid_warning: ["워셔", "액"],
+};
+
+function sortWarningCauses(causes, warningId) {
+  const order = WARNING_CAUSE_ORDER[warningId];
+  if (!order?.length) return causes;
+  return [...causes].sort((a, b) => {
+    const rank = (s) => {
+      const i = order.findIndex((k) => s.includes(k));
+      return i === -1 ? order.length : i;
+    };
+    return rank(a) - rank(b);
+  });
+}
+
+function formatCauseSuspected(text) {
+  let s = text.trim().replace(/\s*발생\s*$/, "");
+  if (!s.endsWith("의심")) s = `${s} 의심`;
+  return s;
+}
+
+function warningDetailSections(w, meta) {
+  const topic = warningTopicShort(meta.keyword);
+  const isInfo = w.urgency === "info";
+
+  if (isInfo) {
+    return {
+      causeTitle: "이 표시등 안내",
+      causeIntro: w.meaning || `${topic}에 대한 안내입니다.`,
+      guessTitle: "확인할 내용",
+      actionTitle: "이렇게 하세요",
+      useSuspected: false,
+    };
+  }
+
+  const meaning = String(w.meaning ?? "").trim();
+  const shortMeaning = !meaning || meaning.length < 30 || /문제발생!?/.test(meaning);
+  const colorLead = meta.colorLabel
+    ? isInfo
+      ? `${meta.colorLabel} ${topic} 표시등이 켜져 있다면 `
+      : `${meta.colorLabel} ${topic} 경고등이 점등되면, `
+    : "";
+  const causeIntro = shortMeaning
+    ? `${colorLead}${topic}에 문제가 발생한 것으로 보이며, 세부 원인은 아래와 같습니다.`
+    : colorLead
+      ? `${colorLead}${meaning}`
+      : meaning;
+
+  return {
+    causeTitle: "이 경고등이 점등된 원인",
+    causeIntro,
+    guessTitle: `추정되는 ${topic} 문제`,
+    actionTitle: `${topic} 문제는 이렇게 해결하세요!`,
+    useSuspected: true,
+  };
+}
+
+function buildWarningCauses(w, meta) {
+  const sections = warningDetailSections(w, meta);
+  const items = sortWarningCauses(parseWarningList(w.causes), w.id);
+  const formatted = sections.useSuspected ? items.map(formatCauseSuspected) : items;
+  return listFromMultiline(formatted.join("\n"));
+}
+
+function buildWarningActions(w, meta) {
+  const sections = warningDetailSections(w, meta);
+  const sheetItems = parseWarningList(w.actions);
+  const items = [];
+
+  if (w.urgency === "immediate") {
+    if (sheetItems.length) items.push(...sheetItems);
+    items.push("즉시 안전한 곳에 정차하세요.");
+    items.push(
+      "주행이 어렵거나 이상 증상이 있으면 더 이상 주행하지 말고, 보험사에 연락하여 견인을 요청하세요."
+    );
+  } else if (w.urgency === "soon") {
+    const sheetText = sheetItems.join(" ");
+    const needsDiagnostic = /진단|점검\s*수리/.test(sheetText);
+    items.push(
+      needsDiagnostic
+        ? "주행이 가능하다면 서행하여 주변 정비소로 이동하여 진단 장비로 점검받는 것을 권장합니다."
+        : "주행이 가능하다면 서행하여 주변 정비소로 이동하여 점검 받는 것을 권장합니다."
+    );
+    items.push(
+      "출력 저하·시동 불량·이상 소음 등 주행이 어렵다면 정차하고, 보험사에 연락하여 견인을 요청하세요."
+    );
+  } else {
+    items.push(...(sheetItems.length ? sheetItems : ["표시등 안내에 따라 조작하세요."]));
+  }
+
+  return { actionTitle: sections.actionTitle, html: listFromMultiline(items.join("\n")) };
+}
+
+function warningIconAlt(w, meta) {
+  const shape = meta?.visualTags?.[0]?.replace(/^자동차\s*/, "") ?? w.label;
+  const color = meta?.colorLabel ? `${meta.colorLabel} ` : "";
+  return `${color}${w.label} (${shape} 아이콘)`;
+}
+
+function warningImgHtml(w, imageBase, { large = false, meta = null } = {}) {
   const file = w.iconFile || `${w.id}.png`;
   if (w.hasIcon === false) {
     return `<div class="warn-placeholder">${escapeHtml(w.id)}<br>준비 중</div>`;
   }
   const cls = large ? "warn-icon-img" : "";
   const src = `${imageBase}${encodeURIComponent(file)}`;
-  return `<img class="${cls}" src="${src}" alt="${escapeHtml(w.label)}" loading="lazy">`;
+  const alt = meta ? warningIconAlt(w, meta) : w.label;
+  return `<img class="${cls}" src="${src}" alt="${escapeHtml(alt)}" loading="lazy">`;
 }
+
+function warningSearchHintHtml(meta) {
+  const hint = warningSearchHint(meta);
+  if (!hint) return "";
+  const colorPart = meta.colorLabel
+    ? `<strong>${escapeHtml(meta.colorLabel)}</strong> `
+    : "";
+  const line1 = `<span class="warn-search-hint-line">계기판 ${colorPart}${escapeHtml(hint.shapePhrase)} 모양으로 찾으셔도 <strong>${escapeHtml(meta.keyword)}</strong> 안내입니다.</span>`;
+  const examples = hint.searchExamples.slice(0, 2);
+  const line2 = examples.length
+    ? `<span class="warn-search-hint-line">${examples.map((s) => `<strong>${escapeHtml(s)}</strong>`).join(", ")} 등으로 보이는 경우에도 같은 원인입니다.</span>`
+    : "";
+  return `<p class="warn-search-hint">${line1}${line2}</p>`;
+}
+
+function warningVisualTagsHtml(meta) {
+  if (!meta.visualTags?.length) return "";
+  const tags = meta.visualTags.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+  return `<ul class="warn-visual-tags" aria-label="아이콘 검색 표현">${tags}</ul>`;
+}
+
+const WARNING_COLOR_GUIDE = `<div class="warn-color-guide">
+  <div class="warn-color-block">
+    <h2>빨간색 경고등</h2>
+    <p>차량의 안전이나 심각한 이상과 관련될 가능성이 있어 즉각적인 확인이 필요한 경우가 많습니다.</p>
+  </div>
+  <div class="warn-color-block">
+    <h2>노란색·주황색 경고등</h2>
+    <p>당장 운행이 불가능하다는 뜻은 아닐 수 있지만 차량에 이상이 감지됐거나 점검이 필요하다는 의미로 사용됩니다.</p>
+  </div>
+  <div class="warn-color-block">
+    <h2>초록색·파란색 표시등</h2>
+    <p>전조등, 방향지시등 등 특정 기능이 현재 작동하고 있다는 것을 알려주는 경우가 많습니다.</p>
+  </div>
+  <p class="warn-color-note">단, 색상만으로 모든 상황을 판단해서는 안 되며 차량 사용설명서의 정확한 의미를 확인하는 것이 가장 중요합니다.</p>
+</div>`;
 
 export function renderWarningListPage({ base, siteUrl, warnings, imageBase }) {
   const seo = seoWarningList();
@@ -1230,9 +1436,10 @@ export function renderWarningListPage({ base, siteUrl, warnings, imageBase }) {
     canonicalPath: seo.path,
     siteUrl,
     base,
-    breadcrumb: [],
+    keywords: seo.keywords ?? "",
     body: `<h1>${escapeHtml(WARNING_LIST_TITLE)}</h1>
-<p class="sub">아이콘을 눌러 경고등 의미·종류·조치 방법을 확인하세요</p>
+<p class="sub">계기판에 <strong>보이는 아이콘</strong>을 눌러 경고등 이름·원인·조치 방법을 확인하세요</p>
+${WARNING_COLOR_GUIDE}
 <div class="warn-grid">${cards}</div>`,
   });
 }
@@ -1241,13 +1448,16 @@ export function renderWarningDetailPage({ base, siteUrl, warning, imageBase }) {
   const w = warning;
   const seo = seoWarningDetail(w);
   const urgency = URGENCY_LABEL[w.urgency] || URGENCY_LABEL.info;
-  const causes = listFromMultiline(w.causes);
-  const actions = listFromMultiline(w.actions);
+  const sections = warningDetailSections(w, seo.meta);
+  const causes = buildWarningCauses(w, seo.meta);
+  const { actionTitle, html: actions } = buildWarningActions(w, seo.meta);
 
   const breadcrumb = [
     { label: "경고등 종류", href: "/warnings/" },
     { label: seo.breadcrumbLabel, href: `/warnings/${w.id}/` },
   ];
+
+  const faqLd = warningFaqJsonLd({ siteUrl, base, warning: w, meta: seo.meta });
 
   return layout({
     documentTitle: seo.documentTitle,
@@ -1257,24 +1467,29 @@ export function renderWarningDetailPage({ base, siteUrl, warning, imageBase }) {
     base,
     breadcrumb,
     showBreadcrumb: true,
-    jsonLd: buildJsonLd({ siteUrl, base, breadcrumb }),
+    keywords: seo.keywords ?? "",
+    jsonLd: buildJsonLd({ siteUrl, base, breadcrumb, extra: [faqLd] }),
     body: `<div class="warn-detail-head">
       <button type="button" class="share-btn share-btn--corner" data-share-title="${escapeHtml(seo.h1)}" data-share-text="${escapeHtml(w.summary)}" aria-label="공유하기">공유</button>
-      ${warningImgHtml(w, imageBase, { large: true })}
-      <span class="urgency-badge urgency-badge--${escapeHtml(w.urgency || "info")}">${escapeHtml(urgency)}</span>
+      <div class="warn-icon-stack">
+        ${warningImgHtml(w, imageBase, { large: true, meta: seo.meta })}
+        <span class="urgency-badge urgency-badge--${escapeHtml(w.urgency || "info")}">${escapeHtml(urgency)}</span>
+      </div>
       <h1>${escapeHtml(seo.h1)}</h1>
       <p class="sub" style="margin:0;">${escapeHtml(w.summary)}</p>
+      ${warningSearchHintHtml(seo.meta)}
+      ${warningVisualTagsHtml(seo.meta)}
     </div>
     <div class="warn-section">
-      <h2>이 경고등은?</h2>
-      <p>${escapeHtml(w.meaning)}</p>
+      <h2>${escapeHtml(sections.causeTitle)}</h2>
+      <p>${escapeHtml(sections.causeIntro)}</p>
     </div>
     <div class="warn-section">
-      <h2>흔한 원인</h2>
+      <h2>${escapeHtml(sections.guessTitle)}</h2>
       <ul>${causes}</ul>
     </div>
     <div class="warn-section">
-      <h2>해결·조치</h2>
+      <h2>${escapeHtml(actionTitle)}</h2>
       <ul>${actions}</ul>
     </div>
     <p class="warn-disclaimer">※ 차종·연식에 따라 경고등 모양과 의미가 다를 수 있습니다. 참고용이며, 정확한 진단은 정비소에서 받으세요.</p>`,
