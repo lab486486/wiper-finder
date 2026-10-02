@@ -196,7 +196,7 @@ export function buildResultFaq({ brand, model, gen, base }) {
     rearAnswer = `후방 와이퍼 사이즈는 ${gen.rear_mm}mm입니다.`;
   }
 
-  const vehicle = `${brand.name} ${gen.label}`;
+  const vehicle = gen.label.includes(brand.name) ? gen.label : `${brand.name} ${gen.label}`;
 
   return [
     {

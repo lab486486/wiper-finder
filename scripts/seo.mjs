@@ -9,16 +9,16 @@ export const SITE_ALTERNATE_NAMES = [
   "wiper-finder.com",
 ];
 export const WARNING_LIST_TITLE = "자동차 경고등 의미, 종류, 조치방법";
-export const SITE_TAGLINE = "현대·기아 차종별 와이퍼 사이즈, 한 번에";
+export const SITE_TAGLINE = "현대·기아·제네시스 차종별 와이퍼 사이즈, 한 번에";
 export const DEFAULT_OG_IMAGE_PATH = "/images/og-share.webp";
-export const DEFAULT_OG_IMAGE_ALT = "자동차 와이퍼 사이즈 검색기 — 현대·기아 차종별 mm 규격";
+export const DEFAULT_OG_IMAGE_ALT = "자동차 와이퍼 사이즈 검색기 — 현대·기아·제네시스 차종별 mm 규격";
 
 export function defaultOgImageUrl(siteUrl, base) {
   return absoluteUrl(siteUrl, base, DEFAULT_OG_IMAGE_PATH);
 }
 
 export const HOME_DESCRIPTION =
-  "자동차 와이퍼 사이즈 검색기는 현대·기아 차종·세대별 운전석·조수석·후방 와이퍼 사이즈(mm)를 빠르게 확인하는 무료 검색 서비스입니다. 계기판 경고등 안내도 함께 제공합니다.";
+  "자동차 와이퍼 사이즈 검색기는 현대·기아·제네시스 차종·세대별 운전석·조수석·후방 와이퍼 사이즈(mm)를 빠르게 확인하는 무료 검색 서비스입니다. 계기판 경고등 안내도 함께 제공합니다.";
 
 export function normalizeSiteUrl(raw, fallback = "https://wiper-finder.com") {
   const v = (raw || fallback).trim();
@@ -50,7 +50,7 @@ function rearSearchHint(gen) {
 
 export function seoHome() {
   return {
-    documentTitle: `${SITE_NAME} | 현대·기아 와이퍼 사이즈 조회`,
+    documentTitle: `${SITE_NAME} | 현대·기아·제네시스 와이퍼 사이즈 조회`,
     description: HOME_DESCRIPTION,
     path: "/",
   };
@@ -67,7 +67,7 @@ export function seoBrand(brand) {
 export function seoModel(brand, model) {
   return {
     documentTitle: titleSuffix(`${model.name} 와이퍼 사이즈`),
-    description: `${brand.name} ${model.name} 세대별 와이퍼 사이즈(mm). 연식·세대별 운전석·조수석·후방·뒷유리·리어 와이퍼 규격 확인 | ${SITE_NAME}`,
+    description: `${vehicleName(brand.name, model.name)} 세대별 와이퍼 사이즈(mm). 연식·세대별 운전석·조수석·후방·뒷유리·리어 와이퍼 규격 확인 | ${SITE_NAME}`,
     path: `/${brand.id}/${model.id}/`,
   };
 }
@@ -75,9 +75,14 @@ export function seoModel(brand, model) {
 export function seoGeneration(brand, model) {
   return {
     documentTitle: titleSuffix(`${model.name} 와이퍼 사이즈 · 세대 선택`),
-    description: `${brand.name} ${model.name} 세대별 와이퍼 사이즈 조회. 사진과 연식으로 내 차 세대를 선택하세요 | ${SITE_NAME}`,
+    description: `${vehicleName(brand.name, model.name)} 세대별 와이퍼 사이즈 조회. 사진과 연식으로 내 차 세대를 선택하세요 | ${SITE_NAME}`,
     path: `/${brand.id}/${model.id}/`,
   };
+}
+
+export function vehicleName(brandName, label) {
+  if (label.includes(brandName)) return label;
+  return `${brandName} ${label}`;
 }
 
 export function seoResult(brand, model, gen) {
@@ -86,7 +91,7 @@ export function seoResult(brand, model, gen) {
     documentTitle: titleSuffix(
       `${gen.label} 와이퍼 사이즈 ${gen.driver_mm}·${gen.passenger_mm}mm`
     ),
-    description: `${brand.name} ${gen.label}(${gen.years}) 와이퍼 사이즈 — ${sizes}.${rearSearchHint(gen)} 차종별 mm 규격·추천 와이퍼 | ${SITE_NAME}`,
+    description: `${vehicleName(brand.name, gen.label)}(${gen.years}) 와이퍼 사이즈 — ${sizes}.${rearSearchHint(gen)} 차종별 mm 규격·추천 와이퍼 | ${SITE_NAME}`,
     path: `/${brand.id}/${model.id}/${gen.id}/`,
   };
 }
@@ -611,6 +616,7 @@ export function buildLlmsTxt(siteUrl, base) {
   const privacy = absoluteUrl(siteUrl, base, "/privacy/");
   const hyundai = absoluteUrl(siteUrl, base, "/hyundai/");
   const kia = absoluteUrl(siteUrl, base, "/kia/");
+  const genesis = absoluteUrl(siteUrl, base, "/genesis/");
   const sitemap = absoluteUrl(siteUrl, base, "/sitemap.xml");
   const rss = absoluteUrl(siteUrl, base, "/rss.xml");
 
@@ -627,6 +633,7 @@ ${HOME_DESCRIPTION}
 - [개인정보처리방침](${privacy})
 - [현대 와이퍼 사이즈](${hyundai})
 - [기아 와이퍼 사이즈](${kia})
+- [제네시스 와이퍼 사이즈](${genesis})
 - [RSS 피드](${rss})
 - [사이트맵](${sitemap})
 `;

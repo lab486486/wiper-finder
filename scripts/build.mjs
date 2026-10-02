@@ -93,7 +93,44 @@ function normalizeBasePath(raw) {
   return p.replace(/\/$/, "");
 }
 
-function enrichGeneration(row) {
+function loadGenesisCatalog() {
+  const path = join(ROOT, "data/genesis.json");
+  if (!existsSync(path)) return { brands: [], models: [], generations: [] };
+  const data = JSON.parse(readFileSync(path, "utf8"));
+  const crossTitle = "사이드미러 발수코팅제";
+  const crossUrl = "https://link.coupang.com/a/e74nXxT7me";
+  const generations = (data.generations || []).map((row) => ({
+    rear_mm: "",
+    rear_note: "",
+    coupang_keyword: "",
+    product_title_front: "",
+    coupang_url_front: "",
+    product_title_rear: "",
+    coupang_url_rear: "",
+    cross_title: crossTitle,
+    cross_url: crossUrl,
+    verified: "TRUE",
+    ...row,
+  }));
+  return {
+    brands: data.brands || [],
+    models: data.models || [],
+    generations,
+  };
+}
+
+function mergeById(primary, extra) {
+  const seen = new Set(primary.map((row) => row.id).filter(Boolean));
+  const out = [...primary];
+  for (const row of extra) {
+    if (!row.id || seen.has(row.id)) continue;
+    seen.add(row.id);
+    out.push(row);
+  }
+  return out;
+}
+
+function enrichGeneration(row, carsDir) {
   const driver = row.driver_mm;
   const passenger = row.passenger_mm;
   const rearType = row.rear_type || "none";
@@ -120,7 +157,9 @@ function enrichGeneration(row) {
     if (row.rear_note) rearMessage = row.rear_note;
   }
 
-  const imageFile = row.image || `${row.id}.jpg`;
+  const requestedImage = (row.image || `${row.id}.jpg`).trim();
+  const imageFile =
+    carsDir && existsSync(join(carsDir, requestedImage)) ? requestedImage : "";
   const powerBadge = resolvePowerBadge(row.hybrid);
 
   return {
@@ -225,13 +264,23 @@ async function main() {
   const warningsIconsDir = join(ROOT, "public/images/warnings");
 
   console.log("Fetching Google Sheet...");
-  const [brands, models, generationsRaw] = await Promise.all([
+  const [sheetBrands, sheetModels, sheetGenerations] = await Promise.all([
     fetchSheet(sheetId, "brands"),
     fetchSheet(sheetId, "models"),
     fetchSheet(sheetId, "generations"),
   ]);
+  const genesis = loadGenesisCatalog();
+  const brands = mergeById(sheetBrands, genesis.brands);
+  const models = mergeById(sheetModels, genesis.models);
+  const generationsRaw = mergeById(sheetGenerations, genesis.generations);
+  if (genesis.generations.length) {
+    console.log(`Merged Genesis catalog: ${genesis.models.length} models, ${genesis.generations.length} generations`);
+  }
 
-  const generations = dedupeById(generationsRaw, "generations").map(enrichGeneration);
+  const carsDir = join(ROOT, "public/images/cars");
+  const generations = dedupeById(generationsRaw, "generations").map((row) =>
+    enrichGeneration(row, carsDir)
+  );
   const warnings = (await loadWarnings(sheetId, warningsIconsDir)).sort(
     (a, b) => Number(a.sort) - Number(b.sort)
   );
@@ -286,7 +335,7 @@ async function main() {
   const jsCount = copyDirFlat(join(ROOT, "public/js"), join(dist, "js"));
   console.log(`Copied ${jsCount} script(s) to dist/js/`);
 
-  for (const name of ["favicon.svg", "apple-touch-icon.svg", "manifest.json"]) {
+  for (const name of ["favicon.png", "apple-touch-icon.png", "manifest.json"]) {
     const src = join(ROOT, "public", name);
     if (existsSync(src)) {
       cpSync(src, join(dist, name));

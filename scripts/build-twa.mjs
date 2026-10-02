@@ -74,8 +74,9 @@ loadKeystoreEnv();
 // Text splash before build; bubblewrap update (if manifest changed) may overwrite icons.
 run("node", [join(ROOT, "scripts/generate-splash.mjs")], { cwd: ROOT });
 run("bubblewrap", ["build"]);
-// Re-apply text splash, rebuild bundle, re-sign (update restores wiper icon splash).
+// Re-apply text splash and launcher icons, then rebuild (update restores the previous art).
 run("node", [join(ROOT, "scripts/generate-splash.mjs")], { cwd: ROOT });
+run("node", [join(ROOT, "scripts/generate-icons.mjs")], { cwd: ROOT });
 run("./gradlew", ["bundleRelease"], { cwd: TWA_DIR });
 signBundle();
 

@@ -705,8 +705,8 @@ function faviconHead(base) {
   const prefix = iconBase ? iconBase : "";
   return `<link rel="manifest" href="${prefix}/manifest.json">
   <meta name="theme-color" content="#2563eb">
-  <link rel="icon" href="${prefix}/favicon.svg" type="image/svg+xml" sizes="any">
-  <link rel="apple-touch-icon" href="${prefix}/apple-touch-icon.svg">`;
+  <link rel="icon" href="${prefix}/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="${prefix}/apple-touch-icon.png">`;
 }
 
 function rssHead(siteUrl, base) {
