@@ -252,7 +252,7 @@ async function main() {
   const refreshCoupang = process.argv.includes("--refresh-coupang");
   const sheetId = env.SHEET_ID || env.GOOGLE_SHEET_ID;
   if (!sheetId) {
-    console.error("Missing SHEET_ID in .env");
+    console.error("Missing SHEET_ID. Set it in .env or as a build environment variable.");
     process.exit(1);
   }
 
