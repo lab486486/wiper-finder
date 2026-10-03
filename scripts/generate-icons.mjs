@@ -164,6 +164,97 @@ async function writePng(master, size, dest) {
   console.log(`✓ ${dest}`);
 }
 
+/**
+ * Favicon mark: drop the bottom "사이즈" word, then scale the wiper
+ * up slightly and center it. Home-screen icons keep the word.
+ * Bounds are in the 1024px source space.
+ */
+async function faviconMaster(filled, width, height) {
+  const sx = width / 1024;
+  const mark = {
+    x0: Math.round(131 * sx),
+    y0: Math.round(149 * sx),
+    x1: Math.round(892 * sx),
+    y1: Math.round(650 * sx),
+  };
+  const pad = Math.round(20 * sx);
+  const crop = {
+    x0: mark.x0 - pad,
+    y0: Math.max(0, mark.y0 - pad),
+    x1: Math.min(width - 1, mark.x1 + pad),
+    y1: Math.min(height - 1, mark.y1 + pad),
+  };
+  const cw = crop.x1 - crop.x0 + 1;
+  const ch = crop.y1 - crop.y0 + 1;
+  const sprite = Buffer.alloc(cw * ch * 4);
+  const sampleX = Math.round(96 * sx);
+
+  const bgAt = (y) => {
+    const yy = Math.min(height - 1, Math.max(0, y));
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    const span = 5;
+    for (let dy = -span; dy <= span; dy++) {
+      const y2 = Math.min(height - 1, Math.max(0, yy + dy));
+      const o = (y2 * width + sampleX) * 4;
+      r += filled[o];
+      g += filled[o + 1];
+      b += filled[o + 2];
+    }
+    const n = span * 2 + 1;
+    return [r / n, g / n, b / n];
+  };
+
+  for (let y = 0; y < ch; y++) {
+    const [br, bg, bb] = bgAt(crop.y0 + y);
+    for (let x = 0; x < cw; x++) {
+      const o = ((crop.y0 + y) * width + (crop.x0 + x)) * 4;
+      const r = filled[o];
+      const g = filled[o + 1];
+      const b = filled[o + 2];
+      const dist = Math.hypot(r - br, g - bg, b - bb);
+      const alpha = Math.max(0, Math.min(1, (dist - 34) / 40));
+      const so = (y * cw + x) * 4;
+      sprite[so] = r;
+      sprite[so + 1] = g;
+      sprite[so + 2] = b;
+      sprite[so + 3] = Math.round(alpha * 255);
+    }
+  }
+
+  const markW = mark.x1 - mark.x0 + 1;
+  const scale = (0.86 * width) / markW;
+  const outW = Math.max(1, Math.round(cw * scale));
+  const outH = Math.max(1, Math.round(ch * scale));
+  const markCx = ((mark.x0 + mark.x1) / 2 - crop.x0) * scale;
+  const markCy = ((mark.y0 + mark.y1) / 2 - crop.y0) * scale;
+  const left = Math.round(width / 2 - markCx);
+  const top = Math.round(height / 2 - markCy);
+
+  const canvas = Buffer.alloc(width * height * 4);
+  for (let y = 0; y < height; y++) {
+    const [br, bg, bb] = bgAt(y);
+    for (let x = 0; x < width; x++) {
+      const o = (y * width + x) * 4;
+      canvas[o] = Math.round(br);
+      canvas[o + 1] = Math.round(bg);
+      canvas[o + 2] = Math.round(bb);
+      canvas[o + 3] = 255;
+    }
+  }
+
+  const resized = await sharp(sprite, { raw: { width: cw, height: ch, channels: 4 } })
+    .resize(outW, outH, { kernel: "lanczos3" })
+    .png()
+    .toBuffer();
+
+  return sharp(canvas, { raw: { width, height, channels: 4 } })
+    .composite([{ input: resized, left, top }])
+    .png()
+    .toBuffer();
+}
+
 if (!existsSync(SOURCE)) {
   console.error("Missing public/icon-source.jpg");
   process.exit(1);
@@ -180,7 +271,8 @@ mkdirSync(iconsDir, { recursive: true });
 await writePng(master, 192, join(iconsDir, "icon-192.png"));
 await writePng(master, 512, join(iconsDir, "icon-512.png"));
 await writePng(master, 180, join(ROOT, "public/apple-touch-icon.png"));
-await writePng(master, 32, join(ROOT, "public/favicon.png"));
+const favicon = await faviconMaster(filled, info.width, info.height);
+await writePng(favicon, 192, join(ROOT, "public/favicon.png"));
 
 for (const [folder, size] of LAUNCHER) {
   await writePng(master, size, join(TWA_RES, folder, "ic_launcher.png"));
