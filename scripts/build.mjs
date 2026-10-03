@@ -93,6 +93,12 @@ function normalizeBasePath(raw) {
   return p.replace(/\/$/, "");
 }
 
+function loadSiteConfig() {
+  const path = join(ROOT, "data/site.json");
+  if (!existsSync(path)) return {};
+  return JSON.parse(readFileSync(path, "utf8"));
+}
+
 function loadGenesisCatalog() {
   const path = join(ROOT, "data/genesis.json");
   if (!existsSync(path)) return { brands: [], models: [], generations: [] };
@@ -249,15 +255,16 @@ async function loadWarnings(sheetId, iconsDir) {
 
 async function main() {
   const env = loadEnv();
+  const site = loadSiteConfig();
   const refreshCoupang = process.argv.includes("--refresh-coupang");
-  const sheetId = env.SHEET_ID || env.GOOGLE_SHEET_ID;
+  const sheetId = env.SHEET_ID || env.GOOGLE_SHEET_ID || site.sheetId;
   if (!sheetId) {
-    console.error("Missing SHEET_ID. Set it in .env or as a build environment variable.");
+    console.error("Missing SHEET_ID. Set it in .env, data/site.json, or as a build environment variable.");
     process.exit(1);
   }
 
   const base = normalizeBasePath(env.BASE_PATH || "");
-  const siteUrl = normalizeSiteUrl(env.SITE_URL);
+  const siteUrl = normalizeSiteUrl(env.SITE_URL || site.siteUrl);
   const dist = join(ROOT, "dist");
   const imageBase = `${base}/images/cars/`;
   const warningImageBase = `${base}/images/warnings/`;
