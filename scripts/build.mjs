@@ -18,6 +18,7 @@ import {
 } from "./render.mjs";
 import { GUIDES } from "./guides.mjs";
 import { loadProductsBySize, sizeCacheKey } from "./coupang.mjs";
+import { influencerProductsBySize, loadInfluencerCatalog } from "./influencer.mjs";
 import { buildLlmsTxt, buildRobotsTxt, buildRssXml, buildSitemapXml, collectRssItems, normalizeSiteUrl } from "./seo.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -312,13 +313,20 @@ async function main() {
     list.sort((a, b) => Number(a.sort) - Number(b.sort));
   }
 
-  console.log("Loading Coupang products...");
-  const productsBySize = await loadProductsBySize({
-    generations,
-    root: ROOT,
-    env,
-    refresh: refreshCoupang,
-  });
+  const influencer = loadInfluencerCatalog(ROOT);
+  let productsBySize;
+  if (influencer.products.length) {
+    console.log(`Influencer catalog: ${influencer.products.length} products`);
+    productsBySize = influencerProductsBySize(influencer.products, generations, influencer.homeUrl);
+  } else {
+    console.log("Loading Coupang products...");
+    productsBySize = await loadProductsBySize({
+      generations,
+      root: ROOT,
+      env,
+      refresh: refreshCoupang,
+    });
+  }
 
   if (existsSync(dist)) rmSync(dist, { recursive: true, force: true });
   mkdirSync(dist, { recursive: true });

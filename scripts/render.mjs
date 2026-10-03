@@ -1020,6 +1020,20 @@ function productGridHtml(productsEntry, gen) {
     : "";
   const sizeLabel =
     gen?.driver_mm && gen?.passenger_mm ? `${gen.driver_mm}·${gen.passenger_mm}mm` : "와이퍼 사이즈";
+  const shown = productsEntry.products.length;
+  const matched = productsEntry.matchedCount ?? shown;
+  const fitNote =
+    matched >= shown
+      ? `<li>${escapeHtml(sizeLabel)} 기준 설치 가능한 제품 리스트</li>`
+      : matched > 0
+        ? `<li>${escapeHtml(sizeLabel)}에 맞는 상품 ${matched}개를 앞에 두었습니다.</li>`
+        : `<li>이 사이즈 상품이 없어 다른 사이즈를 보여드립니다.</li>`;
+  const sameSizeNote =
+    matched >= shown
+      ? `<span class="product-note-more-text">다른 차종이 보여도 와이퍼 사이즈는 같아요!</span>`
+      : matched > 0
+        ? `<span class="product-note-more-text">뒤에 있는 상품은 다른 사이즈입니다.</span>`
+        : "";
   const crossBlock =
     gen?.cross_title && gen?.cross_url
       ? `<div class="product-cross-section">${productCard({
@@ -1040,10 +1054,10 @@ function productGridHtml(productsEntry, gen) {
   return `<div class="product-section">
     <p class="section-title" style="margin-top:0;">✅ 한번사면 오래 쓰는 가성비 와이퍼</p>
     <ul class="product-note">
-      <li>${escapeHtml(sizeLabel)} 기준 설치 가능한 제품 리스트</li>
+      ${fitNote}
       <li class="product-note-more">
         <div class="product-note-more-row">
-          <span class="product-note-more-text">다른 차종이 보여도 와이퍼 사이즈는 같아요!</span>
+          ${sameSizeNote}
           ${moreLink}
         </div>
       </li>
