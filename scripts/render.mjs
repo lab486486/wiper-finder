@@ -314,6 +314,13 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
 .product-section-head .section-title { margin: 0; flex: 1; min-width: 0; }
+.section-title-blink {
+  animation: title-blink 1.1s step-end infinite;
+}
+@keyframes title-blink {
+  0%, 49% { color: #1a202c; }
+  50%, 100% { color: #dc2626; }
+}
 .product-note {
   font-size: .75rem; color: var(--muted); margin: 8px 0 10px; line-height: 1.45;
   padding-left: 1.1em;
@@ -325,13 +332,9 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 }
 .product-trust p { margin: 0 0 .35em; }
 .product-trust p:last-child { margin-bottom: 0; }
-.product-trust-blink {
+.product-trust-note {
   font-weight: 700;
-  animation: trust-blink 1.1s step-end infinite;
-}
-@keyframes trust-blink {
-  0%, 49% { color: #1a202c; }
-  50%, 100% { color: #dc2626; }
+  color: var(--green);
 }
 .product-cross-section {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
@@ -1051,7 +1054,7 @@ function productGridHtml(productsEntry, gen) {
       : "";
   const productFooter = `<div class="product-footer">
     <div class="product-trust">
-      <p class="product-trust-blink">와이퍼 작동 시 '우드득' 소리가 나면 교체 시점입니다.</p>
+      <p class="product-trust-note">와이퍼 작동 시 '우드득' 소리가 나면 교체 시점입니다.</p>
     </div>
     ${crossBlock}
     <span class="product-ftc">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>
@@ -1059,7 +1062,7 @@ function productGridHtml(productsEntry, gen) {
 
   return `<div class="product-section">
     <div class="product-section-head">
-      <p class="section-title">✅ 한번사면 오래 쓰는 가성비 와이퍼</p>
+      <p class="section-title section-title-blink">✅ 한번사면 오래 쓰는 가성비 와이퍼</p>
       ${moreLink}
     </div>
     <ul class="product-note">
