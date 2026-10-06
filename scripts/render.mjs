@@ -822,10 +822,17 @@ export function layout({
   keywords = "",
   body,
   homePage = false,
+  extraScripts = [],
 }) {
   const scriptBase = base || "";
   const jsSrc = `${scriptBase}/js/favorites.js`.replace(/\/+/g, "/");
   const shareSrc = `${scriptBase}/js/share.js`.replace(/\/+/g, "/");
+  const extraScriptTags = (extraScripts || [])
+    .map((src) => {
+      const resolved = `${scriptBase}${src}`.replace(/\/+/g, "/");
+      return `<script src="${resolved}" defer></script>`;
+    })
+    .join("\n  ");
   const canonical = absoluteUrl(siteUrl, base, canonicalPath);
   const ogImage = defaultOgImageUrl(siteUrl, base);
   const ogAlt = DEFAULT_OG_IMAGE_ALT;
@@ -841,6 +848,7 @@ export function layout({
   <script>window.WIPER_BASE=${JSON.stringify(scriptBase)};</script>
   <script src="${jsSrc}" defer></script>
   <script src="${shareSrc}" defer></script>
+  ${extraScriptTags}
 </head>
 <body>
   ${renderAppHeader({ base, breadcrumb, showBreadcrumb, homePage })}
@@ -1215,7 +1223,7 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
         faqPageJsonLd({ siteUrl, base, brand, model, gen, faqItems }),
       ],
     }),
-    body: `${heroImg}<div class="result-head">
+    body: `${heroImg}<div class="result-head" id="result-head">
       <div class="head-row">
         <h1>${escapeHtml(gen.label)}${powerBadgeHtml(gen.powerBadge, gen.hybrid)} <span class="badge">${escapeHtml(gen.years)}</span></h1>
         ${headFav}
@@ -1232,6 +1240,7 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
     ${frontCard ? `<p class="section-title">바로 구매</p><p class="section-sub">mm 확인 후 아래에서 바로 이동하세요.</p>${frontCard}${rearCard}` : ""}
     ${faqSection}
     ${relatedSection}`,
+    extraScripts: ["/js/result-scroll.js"],
   });
 }
 
