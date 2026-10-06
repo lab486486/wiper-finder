@@ -310,19 +310,16 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 12px; margin-top: 14px;
 }
+.product-section-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.product-section-head .section-title { margin: 0; flex: 1; min-width: 0; }
 .product-note {
   font-size: .75rem; color: var(--muted); margin: 8px 0 10px; line-height: 1.45;
   padding-left: 1.1em;
 }
 .product-note li { margin-bottom: .25em; }
 .product-note li:last-child { margin-bottom: 0; }
-.product-note-more {
-  list-style: disc;
-}
-.product-note-more-row {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
-}
-.product-note-more-text { flex: 1; min-width: 0; }
 .product-trust {
   font-size: .78rem; color: var(--text); line-height: 1.5;
 }
@@ -1022,18 +1019,19 @@ function productGridHtml(productsEntry, gen) {
     gen?.driver_mm && gen?.passenger_mm ? `${gen.driver_mm}·${gen.passenger_mm}mm` : "와이퍼 사이즈";
   const shown = productsEntry.products.length;
   const matched = productsEntry.matchedCount ?? shown;
-  const fitNote =
+  const notes =
     matched >= shown
-      ? `<li>${escapeHtml(sizeLabel)} 기준 설치 가능한 제품 리스트</li>`
+      ? [
+          "현재 차종의 와이퍼 사이즈와 일치하는 제품 리스트",
+          "오프라인보다 저렴하게 구매해서 오래 사용해보세요!",
+        ]
       : matched > 0
-        ? `<li>${escapeHtml(sizeLabel)}에 맞는 상품 ${matched}개를 앞에 두었습니다.</li>`
-        : `<li>이 사이즈 상품이 없어 다른 사이즈를 보여드립니다.</li>`;
-  const sameSizeNote =
-    matched >= shown
-      ? `<span class="product-note-more-text">다른 차종이 보여도 와이퍼 사이즈는 같아요!</span>`
-      : matched > 0
-        ? `<span class="product-note-more-text">뒤에 있는 상품은 다른 사이즈입니다.</span>`
-        : "";
+        ? [
+            "제품 구매페이지에서 사이즈 수정이 가능합니다",
+            `${sizeLabel}대로 옵션에서 선택하여 구매하세요!`,
+          ]
+        : [`아래 제품을 클릭하여 ${sizeLabel}를 선택하시면 구매가능합니다`];
+  const noteItems = notes.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
   const crossBlock =
     gen?.cross_title && gen?.cross_url
       ? `<div class="product-cross-section">${productCard({
@@ -1052,15 +1050,12 @@ function productGridHtml(productsEntry, gen) {
   </div>`;
 
   return `<div class="product-section">
-    <p class="section-title" style="margin-top:0;">✅ 한번사면 오래 쓰는 가성비 와이퍼</p>
+    <div class="product-section-head">
+      <p class="section-title">✅ 한번사면 오래 쓰는 가성비 와이퍼</p>
+      ${moreLink}
+    </div>
     <ul class="product-note">
-      ${fitNote}
-      <li class="product-note-more">
-        <div class="product-note-more-row">
-          ${sameSizeNote}
-          ${moreLink}
-        </div>
-      </li>
+      ${noteItems}
     </ul>
     <div class="product-grid">${tiles}</div>
     ${productFooter}
