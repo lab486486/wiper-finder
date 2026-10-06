@@ -1038,8 +1038,8 @@ function productGridHtml(productsEntry, gen) {
         ]
       : matched > 0
         ? [
-            "제품 구매페이지에서 사이즈 수정이 가능합니다",
-            `${sizeLabel}대로 옵션에서 선택하여 구매하세요!`,
+            "제품 페이지에서 사이즈 수정이 가능합니다",
+            `${sizeLabel} 옵션에서 선택하여 구매하세요!`,
           ]
         : [`아래 제품을 클릭하여 ${sizeLabel}를 선택하시면 구매가능합니다`];
   const noteItems = notes.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
