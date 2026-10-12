@@ -10,6 +10,9 @@ export const GUIDE_HUB_SUMMARY =
 const REPLACEMENT_VIDEO_ID = "V3GaAwOzPa0";
 const REPLACEMENT_VIDEO_START = 60;
 
+/** 레인센서(오토 와이퍼) 원리 설명 영상 */
+const RAIN_SENSOR_VIDEO_ID = "zFDsYRGtoW8";
+
 /** @type {Guide[]} */
 export const GUIDES = [
   {
@@ -165,6 +168,46 @@ export const GUIDES = [
       {
         type: "p",
         text: "※ 클립 타입(U·J·핀 등)은 차종별로 다릅니다. 구매 전 내 차 클립 타입을 확인하세요.",
+      },
+    ],
+  },
+  {
+    id: "rain-sensor-auto-wiper",
+    title: "오토 와이퍼는 어떻게 작동할까? 레인센서 원리",
+    summary:
+      "AUTO 모드에서 비가 올 때만 움직이는 이유 — 레인센서(광량 반사) 원리를 쉽게 정리했습니다.",
+    relatedIds: ["how-to-choose-wiper", "wiper-replacement"],
+    blocks: [
+      {
+        type: "p",
+        text: "예전 차는 AUTO로 두면 비가 없어도 주기적으로 움직였습니다. 요즘 차는 비가 감지되지 않으면 거의 멈춥니다. 그 차이는 앞유리 룸미러 쪽에 있는 레인센서 때문입니다.",
+      },
+      { type: "h2", text: "레인센서가 비를 감지하는 방식" },
+      {
+        type: "p",
+        text: "레인센서는 LED(발광)와 포토다이오드(수신)로 구성됩니다. LED가 유리 쪽으로 빛을 쏘면, 물기가 없을 때는 빛이 거의 전부 반사되어 수신부로 들어갑니다.",
+      },
+      {
+        type: "ul",
+        items: [
+          "유리에 물방울이 있으면 난반사가 생겨 수신부로 가는 광량이 줄어듦",
+          "광량이 줄면 ‘비가 온다’고 판단해 와이퍼가 작동",
+          "빗줄기가 세면 광량이 더 빨리·더 많이 줄어들어 와이퍼 속도가 빨라짐",
+        ],
+      },
+      { type: "h2", text: "영상으로 보기" },
+      {
+        type: "youtube",
+        videoId: RAIN_SENSOR_VIDEO_ID,
+      },
+      { type: "h2", text: "운전할 때 알아둘 점" },
+      {
+        type: "ul",
+        items: [
+          "자동 세차 전에는 와이퍼를 OFF — AUTO면 물이 닿는 순간 세게 움직일 수 있음",
+          "룸미러 근처 센서 부위가 더럽거나 필름·스티커로 가려지면 오작동할 수 있음",
+          "AUTO는 편의 기능일 뿐, 폭우·순간 호우에서는 수동으로 속도를 올리는 편이 안전함",
+        ],
       },
     ],
   },
