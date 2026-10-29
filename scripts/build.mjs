@@ -17,7 +17,6 @@ import {
   resolvePowerBadge,
 } from "./render.mjs";
 import { GUIDES } from "./guides.mjs";
-import { sizeCacheKey } from "./coupang.mjs";
 import { influencerProductsBySize, loadInfluencerCatalog } from "./influencer.mjs";
 import { buildLlmsTxt, buildRobotsTxt, buildRssXml, buildSitemapXml, collectRssItems, normalizeSiteUrl } from "./seo.mjs";
 
@@ -276,11 +275,6 @@ async function loadWarnings(sheetId, iconsDir) {
 async function main() {
   const env = loadEnv();
   const site = loadSiteConfig();
-  if (process.argv.includes("--refresh-coupang")) {
-    console.warn(
-      "⚠ --refresh-coupang is disabled (Coupang search API off). Refresh products with: node scripts/sync-influencer.mjs"
-    );
-  }
   const sheetId = env.SHEET_ID || env.GOOGLE_SHEET_ID || site.sheetId;
   if (!sheetId) {
     console.error("Missing SHEET_ID. Set it in .env, data/site.json, or as a build environment variable.");
@@ -468,7 +462,7 @@ async function main() {
           path: `/${brand.id}/${model.id}/${gen.id}/`,
           priority: "0.9",
         });
-        const productsEntry = productsBySize[sizeCacheKey(gen.driver_mm, gen.passenger_mm)];
+        const productsEntry = productsBySize[`${gen.driver_mm}-${gen.passenger_mm}`];
         writeHtml(
           join(dist, brand.id, model.id, `${gen.id}`, "index.html"),
           renderResultPage({ base, siteUrl, brand, model, gen, productsEntry, imageBase })

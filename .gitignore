@@ -1,6 +1,5 @@
 .env
 data/products/
-data/coupang-rate-limit.json
 dist/
 node_modules/
 .DS_Store

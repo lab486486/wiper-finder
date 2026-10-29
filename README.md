@@ -33,14 +33,14 @@ $NODE scripts/build.mjs
 4. HTML에 정적 `link.coupang.com` 카드로 삽입
 
 ```bash
-# 상품 CSV 갱신 (스토어프론트 → CSV). 검색 API 아님.
+# 상품 CSV 갱신 (스토어프론트 → CSV)
 $NODE scripts/sync-influencer.mjs
 
 # 사이트 빌드
 $NODE scripts/build.mjs
 ```
 
-`--refresh-coupang` 은 **비활성**입니다(검색 API 호출 안 함). 위 sync 스크립트를 쓰세요.  
+쿠팡 검색 API 코드·`--refresh-coupang` 옵션은 제거했습니다. 상품 갱신은 sync-influencer만 쓰면 됩니다.  
 다이나믹 배너(`ads-partners` / `g.js`)도 사용하지 않습니다.
 
 `.env.example` 참고. **`.env`는 Git에 올리지 마세요.**
