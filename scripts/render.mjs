@@ -1026,22 +1026,23 @@ function productGridHtml(productsEntry, gen) {
   const moreLink = moreUrl
     ? `<a class="product-more" href="${escapeHtml(moreUrl)}" target="_blank" rel="noopener noreferrer sponsored">더 보기 ›</a>`
     : "";
-  const sizeLabel =
-    gen?.driver_mm && gen?.passenger_mm ? `${gen.driver_mm}·${gen.passenger_mm}mm` : "와이퍼 사이즈";
+  const driverLabel = gen?.driver_mm ? `운전석 ${gen.driver_mm}mm` : "운전석 사이즈";
+  const pairLabel =
+    gen?.driver_mm && gen?.passenger_mm ? `${gen.driver_mm}·${gen.passenger_mm}mm` : driverLabel;
   const shown = productsEntry.products.length;
   const matched = productsEntry.matchedCount ?? shown;
   const notes =
     matched >= shown
       ? [
-          "현재 차종의 와이퍼 사이즈와 일치하는 제품 리스트",
-          "오프라인보다 저렴하게 구매해서 오래 사용해보세요!",
+          `운전석 ${gen?.driver_mm || ""}mm 기준으로 맞춘 제품 리스트`,
+          "조수석 사이즈는 상품 페이지에서 함께 확인하세요!",
         ]
       : matched > 0
         ? [
-            "제품 페이지에서 사이즈 수정이 가능합니다",
-            `${sizeLabel} 옵션에서 선택하여 구매하세요!`,
+            `아래는 ${driverLabel}에 맞는 상품입니다`,
+            `구매 시 ${pairLabel} 옵션을 확인하세요!`,
           ]
-        : [`아래 제품을 클릭하여 ${sizeLabel}를 선택하시면 구매가능합니다`];
+        : [`아래 제품을 클릭해 ${driverLabel} / ${pairLabel} 옵션을 선택하세요`];
   const noteItems = notes.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
   const crossBlock =
     gen?.cross_title && gen?.cross_url

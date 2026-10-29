@@ -114,15 +114,27 @@ export function influencerProductsBySize(catalog, generations, homeUrl) {
     if (map[key]) continue;
     const driver = String(gen.driver_mm || "");
     const passenger = String(gen.passenger_mm || "");
-    const matched = order.filter(
-      (item) => item.driver_mm && item.passenger_mm && item.driver_mm === driver && item.passenger_mm === passenger
-    );
-    const rest = order.filter((item) => !matched.includes(item));
+    // Match on driver size first (exact pair is rare). Also treat a product as a
+    // hit when the car's driver mm appears as either blade on the product.
+    const exact = [];
+    const driverAsDriver = [];
+    const driverAsPassenger = [];
+    const rest = [];
+    for (const item of order) {
+      const d = item.driver_mm;
+      const p = item.passenger_mm;
+      if (d && p && d === driver && p === passenger) exact.push(item);
+      else if (d && d === driver) driverAsDriver.push(item);
+      else if (p && p === driver) driverAsPassenger.push(item);
+      else rest.push(item);
+    }
+    const matched = [...exact, ...driverAsDriver, ...driverAsPassenger];
     const picked = [...matched, ...rest].slice(0, PRODUCT_LIMIT);
     map[key] = {
       products: picked.map(toCard),
       searchMoreUrl: homeUrl,
       matchedCount: Math.min(matched.length, picked.length),
+      matchMode: "driver",
     };
   }
   return map;
