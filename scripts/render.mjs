@@ -153,6 +153,14 @@ h2 { font-size: 1.15rem; margin-bottom: 4px; font-weight: 700; }
 h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text); }
 .sub { color: var(--muted); font-size: .9rem; margin-bottom: 16px; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.brand-home { display: flex; flex-direction: column; gap: 10px; }
+.brand-home-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.brand-home-row.brand-home-center {
+  grid-template-columns: 1fr;
+  max-width: 50%;
+  margin: 0 auto;
+  width: 100%;
+}
 .grid-responsive {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
 }
@@ -862,17 +870,55 @@ export function layout({
 </html>`;
 }
 
-export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
-  const seo = seoHome();
-  const cards = brands
-    .map((b) => {
-      const count = (modelsByBrand[b.id] || []).length;
-      return `<a class="brand-btn" href="${base}/${b.id}/">
-        <strong>${escapeHtml(b.name)}</strong>
+function brandButtonHtml(base, brand, modelsByBrand) {
+  if (!brand) return "";
+  const count = (modelsByBrand[brand.id] || []).length;
+  return `<a class="brand-btn" href="${base}/${brand.id}/">
+        <strong>${escapeHtml(brand.name)}</strong>
         <span>${count}개 차종</span>
       </a>`;
-    })
-    .join("");
+}
+
+/** Home layout: 현대|기아 / 제네시스 / 쉐보레|대우 (+ leftover brands). */
+export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
+  const seo = seoHome();
+  const byId = Object.fromEntries(brands.map((b) => [b.id, b]));
+  const used = new Set();
+  const take = (id) => {
+    const b = byId[id];
+    if (!b) return null;
+    used.add(id);
+    return b;
+  };
+
+  const rows = [];
+  const hyundai = take("hyundai");
+  const kia = take("kia");
+  if (hyundai || kia) {
+    rows.push(
+      `<div class="brand-home-row">${brandButtonHtml(base, hyundai, modelsByBrand)}${brandButtonHtml(base, kia, modelsByBrand)}</div>`
+    );
+  }
+  const genesis = take("genesis");
+  if (genesis) {
+    rows.push(
+      `<div class="brand-home-row brand-home-center">${brandButtonHtml(base, genesis, modelsByBrand)}</div>`
+    );
+  }
+  const chevrolet = take("chevrolet");
+  const daewoo = take("daewoo");
+  if (chevrolet || daewoo) {
+    rows.push(
+      `<div class="brand-home-row">${brandButtonHtml(base, chevrolet, modelsByBrand)}${brandButtonHtml(base, daewoo, modelsByBrand)}</div>`
+    );
+  }
+
+  const leftovers = brands.filter((b) => !used.has(b.id));
+  for (let i = 0; i < leftovers.length; i += 2) {
+    rows.push(
+      `<div class="brand-home-row">${brandButtonHtml(base, leftovers[i], modelsByBrand)}${brandButtonHtml(base, leftovers[i + 1], modelsByBrand)}</div>`
+    );
+  }
 
   return layout({
     documentTitle: seo.documentTitle,
@@ -885,7 +931,7 @@ export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
     homePage: true,
     body: `<h2>${escapeHtml(SITE_TAGLINE)}</h2>
 <p class="sub">${escapeHtml(seo.description)}</p>
-<div class="grid-2">${cards}</div>
+<div class="brand-home">${rows.join("")}</div>
 <h3>와이퍼에 대한 모든 궁금증 해결</h3>
 <a class="guide-card" href="${base}/guide/">
   <strong>${escapeHtml(GUIDE_HUB_TITLE)}</strong>

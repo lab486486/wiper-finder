@@ -9,6 +9,17 @@ import { join } from "path";
 export const CATALOG_FILE = "data/influencer-products.csv";
 export const PRODUCT_LIMIT = 6;
 
+/** When size match is thin, fill remaining slots from these common pairs (no API). */
+export const POPULAR_SIZE_KEYS = [
+  "650-450",
+  "600-450",
+  "650-400",
+  "600-400",
+  "650-500",
+  "500-450",
+  "600-500",
+];
+
 const COLUMNS = ["url", "driver_mm", "passenger_mm", "name", "price", "image", "rocket", "free_shipping"];
 
 export function sizesFromTitle(name) {
@@ -106,8 +117,25 @@ export function loadInfluencerCatalog(root) {
   };
 }
 
+function itemSizeKey(item) {
+  return `${item.driver_mm}-${item.passenger_mm}`;
+}
+
+function popularRank(item) {
+  const idx = POPULAR_SIZE_KEYS.indexOf(itemSizeKey(item));
+  return idx === -1 ? POPULAR_SIZE_KEYS.length : idx;
+}
+
+/** Prefer common sizes (650-450, 600-450, …) over random leftover catalog rows. */
+function sortByPopularSize(items) {
+  return [...items].sort((a, b) => {
+    const rank = popularRank(a) - popularRank(b);
+    if (rank !== 0) return rank;
+    return String(a.name || "").localeCompare(String(b.name || ""), "ko");
+  });
+}
+
 export function influencerProductsBySize(catalog, generations, homeUrl) {
-  const order = shuffle(catalog);
   const map = {};
   for (const gen of generations) {
     const key = `${gen.driver_mm}-${gen.passenger_mm}`;
@@ -120,7 +148,7 @@ export function influencerProductsBySize(catalog, generations, homeUrl) {
     const driverAsDriver = [];
     const driverAsPassenger = [];
     const rest = [];
-    for (const item of order) {
+    for (const item of catalog) {
       const d = item.driver_mm;
       const p = item.passenger_mm;
       if (d && p && d === driver && p === passenger) exact.push(item);
@@ -129,7 +157,8 @@ export function influencerProductsBySize(catalog, generations, homeUrl) {
       else rest.push(item);
     }
     const matched = [...exact, ...driverAsDriver, ...driverAsPassenger];
-    const picked = [...matched, ...rest].slice(0, PRODUCT_LIMIT);
+    const fallback = sortByPopularSize(rest);
+    const picked = [...matched, ...fallback].slice(0, PRODUCT_LIMIT);
     map[key] = {
       products: picked.map(toCard),
       searchMoreUrl: homeUrl,
@@ -149,15 +178,6 @@ function toCard(item) {
     rocket: Boolean(item.rocket),
     freeShipping: Boolean(item.freeShipping),
   };
-}
-
-function shuffle(items) {
-  const out = [...items];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
 }
 
 function csvField(value) {

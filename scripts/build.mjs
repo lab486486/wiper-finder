@@ -100,13 +100,10 @@ function loadSiteConfig() {
   return JSON.parse(readFileSync(path, "utf8"));
 }
 
-function loadGenesisCatalog() {
-  const path = join(ROOT, "data/genesis.json");
-  if (!existsSync(path)) return { brands: [], models: [], generations: [] };
-  const data = JSON.parse(readFileSync(path, "utf8"));
+function withCrossDefaults(row, { verified = "TRUE" } = {}) {
   const crossTitle = "사이드미러 발수코팅제";
   const crossUrl = "https://link.coupang.com/a/e74nXxT7me";
-  const generations = (data.generations || []).map((row) => ({
+  return {
     rear_mm: "",
     rear_note: "",
     coupang_keyword: "",
@@ -116,9 +113,31 @@ function loadGenesisCatalog() {
     coupang_url_rear: "",
     cross_title: crossTitle,
     cross_url: crossUrl,
-    verified: "TRUE",
+    verified,
     ...row,
-  }));
+  };
+}
+
+function loadGenesisCatalog() {
+  const path = join(ROOT, "data/genesis.json");
+  if (!existsSync(path)) return { brands: [], models: [], generations: [] };
+  const data = JSON.parse(readFileSync(path, "utf8"));
+  const generations = (data.generations || []).map((row) => withCrossDefaults(row, { verified: "TRUE" }));
+  return {
+    brands: data.brands || [],
+    models: data.models || [],
+    generations,
+  };
+}
+
+/** Chevrolet/Daewoo draft catalog. Generations without sizes stay off the live result pages. */
+function loadChevroletDaewooCatalog() {
+  const path = join(ROOT, "data/chevrolet-daewoo.json");
+  if (!existsSync(path)) return { brands: [], models: [], generations: [] };
+  const data = JSON.parse(readFileSync(path, "utf8"));
+  const generations = (data.generations || [])
+    .filter((row) => String(row.driver_mm || "").trim() && String(row.passenger_mm || "").trim())
+    .map((row) => withCrossDefaults(row, { verified: row.verified || "FALSE" }));
   return {
     brands: data.brands || [],
     models: data.models || [],
@@ -278,11 +297,17 @@ async function main() {
     fetchSheet(sheetId, "generations"),
   ]);
   const genesis = loadGenesisCatalog();
-  const brands = mergeById(sheetBrands, genesis.brands);
-  const models = mergeById(sheetModels, genesis.models);
-  const generationsRaw = mergeById(sheetGenerations, genesis.generations);
+  const chevyDaewoo = loadChevroletDaewooCatalog();
+  const brands = mergeById(mergeById(sheetBrands, genesis.brands), chevyDaewoo.brands);
+  const models = mergeById(mergeById(sheetModels, genesis.models), chevyDaewoo.models);
+  const generationsRaw = mergeById(mergeById(sheetGenerations, genesis.generations), chevyDaewoo.generations);
   if (genesis.generations.length) {
     console.log(`Merged Genesis catalog: ${genesis.models.length} models, ${genesis.generations.length} generations`);
+  }
+  if (chevyDaewoo.brands.length) {
+    console.log(
+      `Merged Chevrolet/Daewoo catalog: ${chevyDaewoo.models.length} models, ${chevyDaewoo.generations.length} sized generations (photos/sizes still pending fill in)`
+    );
   }
 
   const carsDir = join(ROOT, "public/images/cars");
