@@ -24,19 +24,42 @@ $NODE scripts/build.mjs
 
 ### 쿠팡 상품 자동 노출
 
-`.env`에 파트너스 API 키를 넣으면, **사이즈 조합(14종)** 별로 쿠팡 검색 결과를 가져와 결과 페이지에 가로 상품 카드를 표시합니다.
+`.env`에 파트너스 API 키를 넣으면, 빌드 시 **고유 사이즈 조합**별로 쿠팡 검색 결과를 가져와 결과 페이지에 가로 상품 카드를 표시합니다.  
+방문자가 페이지를 열 때는 검색 API를 호출하지 않습니다(캐시된 HTML + 정적 제휴 링크만 사용).
 
 | 변수 | 설명 |
 |------|------|
 | `COUPANG_ACCESS_KEY` | 파트너스 Access Key |
 | `COUPANG_SECRET_KEY` | 파트너스 Secret Key |
 | `COUPANG_SUB_ID` | (선택) 채널 subId |
+| `COUPANG_MAX_SEARCH_PER_HOUR` | (선택) 시간당 검색 상한, 기본 `6` (공식 한도 10 미만) |
 
-- 캐시: `data/products/{운전}-{조수}.json` (7일 유효). 검색어 예: `불스원 500 450`
-- API 호출 제한 대비: 빌드당 최대 8회만 새로 조회. 14종 사이즈 전부 채우려면 빌드 2번
-- 강제 갱신: `$NODE scripts/build.mjs --refresh-coupang`
+**공식 호출 한도 (계정 단위, 경고 3회 시 이용 제한 가능)**
 
-`.env.example` 참고. **`.env`는 Git에 올리지 마세요.**
+| 구분 | 한도 |
+|------|------|
+| 검색 API | 1시간 10회 |
+| 리포트 API | 1시간 50회 |
+| 모든 API | 1분 100회 |
+| 파트너스 웹 링크생성 | 1분 50회 |
+
+**이 레포 가드**
+
+- 캐시 키: `{운전mm}-{조수mm}` (예: `650-450`). 검색어: `coupang_keyword` 또는 기본 `불스원 650 450`
+- 캐시 파일: `data/products/{키}.json` (7일 유효)
+- 시간당 검색 API **최대 6회** (공식 10회보다 여유). 빌드당도 최대 6회
+- 연속 호출 간격 1.5초. `403`/제한 응답 시 **하드스톱** (`data/coupang-rate-limit.json`)
+- `--refresh-coupang`도 시간당 한도·하드스톱을 **우회하지 않음**
+- 고유 조합이 6개를 넘으면 나머지는 다음 빌드/다음 시간에 이어서 채움
+- 다이나믹 배너(`ads-partners` / `g.js`) 사용 안 함
+
+```bash
+# 강제 갱신(한도 내에서만). 이용 제한 중에는 실행하지 마세요.
+$NODE scripts/build.mjs --refresh-coupang
+```
+
+`.env.example` 참고. **`.env`는 Git에 올리지 마세요.**  
+`data/products/`, `data/coupang-rate-limit.json`도 Git에 올리지 않습니다.
 
 
 결과물: `dist/` 폴더
