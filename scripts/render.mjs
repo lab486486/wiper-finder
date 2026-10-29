@@ -155,12 +155,13 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .brand-home { display: flex; flex-direction: column; gap: 10px; }
 .brand-home-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.brand-home-row.brand-home-center {
-  grid-template-columns: 1fr;
-  max-width: 50%;
-  margin: 0 auto;
-  width: 100%;
+.brand-btn-soon {
+  display: block; background: var(--surface); border: 1px dashed var(--border);
+  border-radius: var(--radius); padding: 24px 16px; text-align: center;
+  color: var(--muted); box-shadow: none; cursor: default; user-select: none;
 }
+.brand-btn-soon strong { display: block; font-size: 1.35rem; margin-bottom: 4px; color: var(--text); opacity: .72; }
+.brand-btn-soon span { font-size: .85rem; }
 .grid-responsive {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
 }
@@ -879,7 +880,14 @@ function brandButtonHtml(base, brand, modelsByBrand) {
       </a>`;
 }
 
-/** Home layout: 현대|기아 / 제네시스 / 쉐보레|대우 (+ leftover brands). */
+function brandComingSoonHtml(name = "수입차") {
+  return `<div class="brand-btn-soon" aria-disabled="true">
+        <strong>${escapeHtml(name)}</strong>
+        <span>준비중</span>
+      </div>`;
+}
+
+/** Home layout: 현대|기아 / 제네시스|수입차(준비중) / 쉐보레|대우 (+ leftover brands). */
 export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
   const seo = seoHome();
   const byId = Object.fromEntries(brands.map((b) => [b.id, b]));
@@ -900,11 +908,9 @@ export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
     );
   }
   const genesis = take("genesis");
-  if (genesis) {
-    rows.push(
-      `<div class="brand-home-row brand-home-center">${brandButtonHtml(base, genesis, modelsByBrand)}</div>`
-    );
-  }
+  rows.push(
+    `<div class="brand-home-row">${brandButtonHtml(base, genesis, modelsByBrand)}${brandComingSoonHtml("수입차")}</div>`
+  );
   const chevrolet = take("chevrolet");
   const daewoo = take("daewoo");
   if (chevrolet || daewoo) {
