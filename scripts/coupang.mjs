@@ -1,3 +1,8 @@
+/**
+ * Legacy Coupang OpenAPI helpers.
+ * Site builds must NOT call searchCoupangProducts / loadProductsBySize anymore.
+ * Product cards are filled from data/influencer-products.csv only.
+ */
 import crypto from "crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";

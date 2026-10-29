@@ -17,7 +17,7 @@ import {
   resolvePowerBadge,
 } from "./render.mjs";
 import { GUIDES } from "./guides.mjs";
-import { loadProductsBySize, sizeCacheKey } from "./coupang.mjs";
+import { sizeCacheKey } from "./coupang.mjs";
 import { influencerProductsBySize, loadInfluencerCatalog } from "./influencer.mjs";
 import { buildLlmsTxt, buildRobotsTxt, buildRssXml, buildSitemapXml, collectRssItems, normalizeSiteUrl } from "./seo.mjs";
 
@@ -276,7 +276,11 @@ async function loadWarnings(sheetId, iconsDir) {
 async function main() {
   const env = loadEnv();
   const site = loadSiteConfig();
-  const refreshCoupang = process.argv.includes("--refresh-coupang");
+  if (process.argv.includes("--refresh-coupang")) {
+    console.warn(
+      "⚠ --refresh-coupang is disabled (Coupang search API off). Refresh products with: node scripts/sync-influencer.mjs"
+    );
+  }
   const sheetId = env.SHEET_ID || env.GOOGLE_SHEET_ID || site.sheetId;
   if (!sheetId) {
     console.error("Missing SHEET_ID. Set it in .env, data/site.json, or as a build environment variable.");
@@ -338,19 +342,19 @@ async function main() {
     list.sort((a, b) => Number(a.sort) - Number(b.sort));
   }
 
+  // Products: CSV catalog only. Never call Coupang search API here.
+  // Thin matches fall back to popular sizes (650-450, 650-400, 600-450, …) inside influencerProductsBySize.
   const influencer = loadInfluencerCatalog(ROOT);
-  let productsBySize;
+  let productsBySize = {};
   if (influencer.products.length) {
-    console.log(`Influencer catalog: ${influencer.products.length} products`);
+    console.log(
+      `Influencer catalog: ${influencer.products.length} products (CSV only — search API disabled)`
+    );
     productsBySize = influencerProductsBySize(influencer.products, generations, influencer.homeUrl);
   } else {
-    console.log("Loading Coupang products...");
-    productsBySize = await loadProductsBySize({
-      generations,
-      root: ROOT,
-      env,
-      refresh: refreshCoupang,
-    });
+    console.warn(
+      "⚠ data/influencer-products.csv has no products. Product cards skipped (search API will not be used). Run: node scripts/sync-influencer.mjs"
+    );
   }
 
   if (existsSync(dist)) rmSync(dist, { recursive: true, force: true });

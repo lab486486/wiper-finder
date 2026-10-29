@@ -9,15 +9,19 @@ import { join } from "path";
 export const CATALOG_FILE = "data/influencer-products.csv";
 export const PRODUCT_LIMIT = 6;
 
-/** When size match is thin, fill remaining slots from these common pairs (no API). */
+/**
+ * When size match is thin (or no better CSV hit), fill from these common pairs.
+ * Order follows real generation frequency on this site (no Coupang search API).
+ */
 export const POPULAR_SIZE_KEYS = [
   "650-450",
-  "600-450",
   "650-400",
+  "600-450",
+  "600-500",
+  "650-350",
   "600-400",
   "650-500",
   "500-450",
-  "600-500",
 ];
 
 const COLUMNS = ["url", "driver_mm", "passenger_mm", "name", "price", "image", "rocket", "free_shipping"];
