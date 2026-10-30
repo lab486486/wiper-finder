@@ -1,39 +1,186 @@
 {
-  "_note": "사이즈(driver_mm/passenger_mm)는 검증 후 채울 것. verified=FALSE인 세대는 빌드에 아직 연결하지 않음. image 파일은 public/images/cars/ 에 PNG로 두면 됨.",
+  "_note": "운전석/조수석 mm는 불스원 호환표, 미쉐린 차종표, AC델코 부품명을 맞춰 채움. 사진 파일은 public/images/cars/ 에 image 값 그대로 두면 된다.",
   "brands": [
-    { "id": "chevrolet", "name": "쉐보레", "sort": "4" },
-    { "id": "daewoo", "name": "대우", "sort": "5" }
+    {
+      "id": "chevrolet",
+      "name": "쉐보레",
+      "sort": "4"
+    },
+    {
+      "id": "daewoo",
+      "name": "대우",
+      "sort": "5"
+    }
   ],
   "models": [
-    { "id": "spark", "brand_id": "chevrolet", "name": "스파크", "sort": "1" },
-    { "id": "cruze", "brand_id": "chevrolet", "name": "크루즈", "sort": "2" },
-    { "id": "malibu", "brand_id": "chevrolet", "name": "말리부", "sort": "3" },
-    { "id": "orlando", "brand_id": "chevrolet", "name": "올란도", "sort": "4" },
-    { "id": "trax", "brand_id": "chevrolet", "name": "트랙스", "sort": "5" },
-    { "id": "trax-crossover", "brand_id": "chevrolet", "name": "트랙스 크로스오버", "sort": "6" },
-    { "id": "trailblazer", "brand_id": "chevrolet", "name": "트레일블레이저", "sort": "7" },
-    { "id": "equinox", "brand_id": "chevrolet", "name": "이쿼녹스", "sort": "8" },
-    { "id": "colorado", "brand_id": "chevrolet", "name": "콜로라도", "sort": "9" },
-    { "id": "bolt-ev", "brand_id": "chevrolet", "name": "볼트 EV", "sort": "10" },
-    { "id": "bolt-euv", "brand_id": "chevrolet", "name": "볼트 EUV", "sort": "11" },
-    { "id": "captiva", "brand_id": "chevrolet", "name": "캡티바", "sort": "12" },
-    { "id": "aveo", "brand_id": "chevrolet", "name": "아베오", "sort": "13" },
-    { "id": "damas", "brand_id": "chevrolet", "name": "다마스", "sort": "14" },
-    { "id": "labo", "brand_id": "chevrolet", "name": "라보", "sort": "15" },
-
-    { "id": "matiz", "brand_id": "daewoo", "name": "마티즈", "sort": "1" },
-    { "id": "kalos", "brand_id": "daewoo", "name": "칼로스", "sort": "2" },
-    { "id": "lacetti", "brand_id": "daewoo", "name": "라세티", "sort": "3" },
-    { "id": "gentra", "brand_id": "daewoo", "name": "젠트라", "sort": "4" },
-    { "id": "tosca", "brand_id": "daewoo", "name": "토스카", "sort": "5" },
-    { "id": "magnus", "brand_id": "daewoo", "name": "매그너스", "sort": "6" },
-    { "id": "veritas", "brand_id": "daewoo", "name": "베리타스", "sort": "7" },
-    { "id": "winstorm", "brand_id": "daewoo", "name": "윈스톰", "sort": "8" },
-    { "id": "rezzo", "brand_id": "daewoo", "name": "레조", "sort": "9" },
-    { "id": "nubira", "brand_id": "daewoo", "name": "누비라", "sort": "10" },
-    { "id": "leganza", "brand_id": "daewoo", "name": "레간자", "sort": "11" },
-    { "id": "damas-dw", "brand_id": "daewoo", "name": "다마스(대우)", "sort": "12" },
-    { "id": "labo-dw", "brand_id": "daewoo", "name": "라보(대우)", "sort": "13" }
+    {
+      "id": "spark",
+      "brand_id": "chevrolet",
+      "name": "스파크",
+      "sort": "1"
+    },
+    {
+      "id": "cruze",
+      "brand_id": "chevrolet",
+      "name": "크루즈",
+      "sort": "2"
+    },
+    {
+      "id": "malibu",
+      "brand_id": "chevrolet",
+      "name": "말리부",
+      "sort": "3"
+    },
+    {
+      "id": "orlando",
+      "brand_id": "chevrolet",
+      "name": "올란도",
+      "sort": "4"
+    },
+    {
+      "id": "trax",
+      "brand_id": "chevrolet",
+      "name": "트랙스",
+      "sort": "5"
+    },
+    {
+      "id": "trax-crossover",
+      "brand_id": "chevrolet",
+      "name": "트랙스 크로스오버",
+      "sort": "6"
+    },
+    {
+      "id": "trailblazer",
+      "brand_id": "chevrolet",
+      "name": "트레일블레이저",
+      "sort": "7"
+    },
+    {
+      "id": "equinox",
+      "brand_id": "chevrolet",
+      "name": "이쿼녹스",
+      "sort": "8"
+    },
+    {
+      "id": "colorado",
+      "brand_id": "chevrolet",
+      "name": "콜로라도",
+      "sort": "9"
+    },
+    {
+      "id": "bolt-ev",
+      "brand_id": "chevrolet",
+      "name": "볼트 EV",
+      "sort": "10"
+    },
+    {
+      "id": "bolt-euv",
+      "brand_id": "chevrolet",
+      "name": "볼트 EUV",
+      "sort": "11"
+    },
+    {
+      "id": "captiva",
+      "brand_id": "chevrolet",
+      "name": "캡티바",
+      "sort": "12"
+    },
+    {
+      "id": "aveo",
+      "brand_id": "chevrolet",
+      "name": "아베오",
+      "sort": "13"
+    },
+    {
+      "id": "damas",
+      "brand_id": "chevrolet",
+      "name": "다마스",
+      "sort": "14"
+    },
+    {
+      "id": "labo",
+      "brand_id": "chevrolet",
+      "name": "라보",
+      "sort": "15"
+    },
+    {
+      "id": "matiz",
+      "brand_id": "daewoo",
+      "name": "마티즈",
+      "sort": "1"
+    },
+    {
+      "id": "kalos",
+      "brand_id": "daewoo",
+      "name": "칼로스",
+      "sort": "2"
+    },
+    {
+      "id": "lacetti",
+      "brand_id": "daewoo",
+      "name": "라세티",
+      "sort": "3"
+    },
+    {
+      "id": "gentra",
+      "brand_id": "daewoo",
+      "name": "젠트라",
+      "sort": "4"
+    },
+    {
+      "id": "tosca",
+      "brand_id": "daewoo",
+      "name": "토스카",
+      "sort": "5"
+    },
+    {
+      "id": "magnus",
+      "brand_id": "daewoo",
+      "name": "매그너스",
+      "sort": "6"
+    },
+    {
+      "id": "veritas",
+      "brand_id": "daewoo",
+      "name": "베리타스",
+      "sort": "7"
+    },
+    {
+      "id": "winstorm",
+      "brand_id": "daewoo",
+      "name": "윈스톰",
+      "sort": "8"
+    },
+    {
+      "id": "rezzo",
+      "brand_id": "daewoo",
+      "name": "레조",
+      "sort": "9"
+    },
+    {
+      "id": "nubira",
+      "brand_id": "daewoo",
+      "name": "누비라",
+      "sort": "10"
+    },
+    {
+      "id": "leganza",
+      "brand_id": "daewoo",
+      "name": "레간자",
+      "sort": "11"
+    },
+    {
+      "id": "damas-dw",
+      "brand_id": "daewoo",
+      "name": "다마스(대우)",
+      "sort": "12"
+    },
+    {
+      "id": "labo-dw",
+      "brand_id": "daewoo",
+      "name": "라보(대우)",
+      "sort": "13"
+    }
   ],
   "generations": [
     {
@@ -44,38 +191,38 @@
       "years": "2018~2022",
       "hint": "전면 그릴·헤드램프 디테일 변경 페이스리프트",
       "image": "spark-m400-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "600",
+      "passenger_mm": "350",
+      "rear_type": "dedicated",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
       "id": "spark-m400",
       "model_id": "spark",
       "code": "M400",
-      "label": "스파크 (신형)",
+      "label": "더 넥스트 스파크",
       "years": "2015~2018",
-      "hint": "각진 헤드램프, 쉐보레 듀얼 포트 그릴",
+      "hint": "M400 초기형. 각진 헤드램프, 듀얼 포트 그릴",
       "image": "spark-m400.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "600",
+      "passenger_mm": "350",
+      "rear_type": "dedicated",
+      "verified": "TRUE",
       "sort": "2"
     },
     {
       "id": "spark-m300-pe",
       "model_id": "spark",
       "code": "M300",
-      "label": "더 넥스트 스파크",
+      "label": "스파크 (페이스리프트)",
       "years": "2013~2015",
-      "hint": "페이스리프트, 전면부 디자인 변경",
+      "hint": "M300 중기형. 전면 램프·범퍼만 변경",
       "image": "spark-m300-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "600",
+      "passenger_mm": "400",
+      "rear_type": "dedicated",
+      "verified": "TRUE",
       "sort": "3"
     },
     {
@@ -86,55 +233,81 @@
       "years": "2010~2013",
       "hint": "마티즈 후속 쉐보레 브랜드 전환 초기",
       "image": "spark-m300.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "600",
+      "passenger_mm": "400",
+      "rear_type": "dedicated",
+      "verified": "TRUE",
       "sort": "4"
     },
-
+    {
+      "id": "cruze-d2lc",
+      "model_id": "cruze",
+      "code": "D2LC",
+      "label": "올 뉴 크루즈",
+      "years": "2017~2018",
+      "hint": "2세대. 낮고 넓은 그릴, 날렵한 헤드램프",
+      "image": "cruze-d2lc.png",
+      "driver_mm": "700",
+      "passenger_mm": "600",
+      "rear_type": "none",
+      "verified": "TRUE",
+      "sort": "1"
+    },
     {
       "id": "cruze-pe",
       "model_id": "cruze",
       "code": "CRUZE",
       "label": "더 뉴 크루즈",
-      "years": "2014~2018",
-      "hint": "페이스리프트, 전면 그릴·램프 변경",
+      "years": "2015~2016",
+      "hint": "J300 페이스리프트. 전면 그릴·램프 변경",
       "image": "cruze-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
-      "sort": "1"
+      "verified": "TRUE",
+      "sort": "2"
     },
     {
       "id": "cruze",
       "model_id": "cruze",
       "code": "CRUZE",
       "label": "크루즈",
-      "years": "2008~2014",
+      "years": "2009~2014",
       "hint": "라세티 프리미어 후속, 유선형 세단",
       "image": "cruze.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
-      "sort": "2"
+      "verified": "TRUE",
+      "sort": "3"
     },
-
     {
       "id": "malibu-pe",
       "model_id": "malibu",
       "code": "MALIBU",
       "label": "더 뉴 말리부",
-      "years": "2016~2018",
-      "hint": "페이스리프트, 듀얼 포트 그릴 강조",
+      "years": "2018~2022",
+      "hint": "페이스리프트. 듀얼 포트 그릴이 더 넓음",
       "image": "malibu-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "650",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
+    },
+    {
+      "id": "malibu-allnew",
+      "model_id": "malibu",
+      "code": "MALIBU",
+      "label": "올 뉴 말리부",
+      "years": "2016~2018",
+      "hint": "2세대 출시형. 가로로 긴 헤드램프",
+      "image": "malibu-allnew.png",
+      "driver_mm": "650",
+      "passenger_mm": "450",
+      "rear_type": "none",
+      "verified": "TRUE",
+      "sort": "2"
     },
     {
       "id": "malibu",
@@ -144,13 +317,12 @@
       "years": "2011~2016",
       "hint": "토스카 후속 중형 세단",
       "image": "malibu.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
-      "sort": "2"
+      "verified": "TRUE",
+      "sort": "3"
     },
-
     {
       "id": "orlando-pe",
       "model_id": "orlando",
@@ -159,10 +331,10 @@
       "years": "2014~2018",
       "hint": "페이스리프트 MPV",
       "image": "orlando-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -173,13 +345,12 @@
       "years": "2011~2014",
       "hint": "박스형 5도어 MPV",
       "image": "orlando.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "2"
     },
-
     {
       "id": "trax-pe",
       "model_id": "trax",
@@ -188,10 +359,10 @@
       "years": "2017~2020",
       "hint": "페이스리프트 소형 SUV",
       "image": "trax-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "350",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -202,13 +373,12 @@
       "years": "2013~2017",
       "hint": "초기형 소형 SUV",
       "image": "trax.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "350",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "2"
     },
-
     {
       "id": "trax-crossover",
       "model_id": "trax-crossover",
@@ -217,13 +387,12 @@
       "years": "2023~현재",
       "hint": "완전변경 신형 트랙스",
       "image": "trax-crossover.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "650",
+      "passenger_mm": "400",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "trailblazer",
       "model_id": "trailblazer",
@@ -232,13 +401,12 @@
       "years": "2020~현재",
       "hint": "소형 크로스오버 SUV",
       "image": "trailblazer.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "equinox",
       "model_id": "equinox",
@@ -247,13 +415,12 @@
       "years": "2018~현재",
       "hint": "중형 SUV",
       "image": "equinox.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "colorado",
       "model_id": "colorado",
@@ -262,13 +429,12 @@
       "years": "2019~현재",
       "hint": "픽업트럭",
       "image": "colorado.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "bolt-ev",
       "model_id": "bolt-ev",
@@ -277,10 +443,10 @@
       "years": "2017~2023",
       "hint": "소형 전기차 해치백",
       "image": "bolt-ev.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "650",
+      "passenger_mm": "650",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -291,13 +457,12 @@
       "years": "2021~2023",
       "hint": "볼트 기반 소형 전기 SUV",
       "image": "bolt-euv.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "400",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "captiva-pe",
       "model_id": "captiva",
@@ -306,10 +471,10 @@
       "years": "2011~2018",
       "hint": "페이스리프트 / 후기형",
       "image": "captiva-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "400",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -320,13 +485,12 @@
       "years": "2006~2011",
       "hint": "윈스톰 후속 SUV (쉐보레 전환)",
       "image": "captiva.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "400",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "2"
     },
-
     {
       "id": "aveo-sedan",
       "model_id": "aveo",
@@ -335,10 +499,10 @@
       "years": "2011~2016",
       "hint": "칼로스 후속 세단",
       "image": "aveo-sedan.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "650",
+      "passenger_mm": "400",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -349,13 +513,12 @@
       "years": "2011~2016",
       "hint": "칼로스 후속 해치백",
       "image": "aveo-hatch.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "650",
+      "passenger_mm": "400",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "2"
     },
-
     {
       "id": "damas-chevy",
       "model_id": "damas",
@@ -364,10 +527,11 @@
       "years": "2011~2021",
       "hint": "쉐보레 브랜드 경상용",
       "image": "damas-chevy.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "400",
+      "passenger_mm": "350",
+      "rear_type": "size",
+      "rear_mm": "350",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -378,13 +542,12 @@
       "years": "2011~2021",
       "hint": "쉐보레 브랜드 경트럭",
       "image": "labo-chevy.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "400",
+      "passenger_mm": "350",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "matiz-creative",
       "model_id": "matiz",
@@ -393,10 +556,10 @@
       "years": "2009~2011",
       "hint": "스파크 직전 마지막 마티즈",
       "image": "matiz-creative.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "600",
+      "passenger_mm": "400",
+      "rear_type": "dedicated",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -407,10 +570,10 @@
       "years": "2005~2009",
       "hint": "페이스리프트 소형차",
       "image": "matiz-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "550",
+      "passenger_mm": "350",
+      "rear_type": "dedicated",
+      "verified": "TRUE",
       "sort": "2"
     },
     {
@@ -421,13 +584,13 @@
       "years": "1998~2005",
       "hint": "초기형 경차",
       "image": "matiz.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "500",
+      "passenger_mm": "400",
+      "rear_type": "size",
+      "rear_mm": "350",
+      "verified": "TRUE",
       "sort": "3"
     },
-
     {
       "id": "kalos-pe",
       "model_id": "kalos",
@@ -436,10 +599,11 @@
       "years": "2005~2011",
       "hint": "페이스리프트",
       "image": "kalos-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "400",
       "rear_type": "none",
-      "verified": "FALSE",
+      "rear_note": "세단은 후방 와이퍼가 없습니다. 해치백은 350mm입니다.",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -450,13 +614,13 @@
       "years": "2002~2005",
       "hint": "소형 세단/해치",
       "image": "kalos.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "400",
       "rear_type": "none",
-      "verified": "FALSE",
+      "rear_note": "세단은 후방 와이퍼가 없습니다. 해치백은 350mm입니다.",
+      "verified": "TRUE",
       "sort": "2"
     },
-
     {
       "id": "lacetti-premiere",
       "model_id": "lacetti",
@@ -465,10 +629,10 @@
       "years": "2008~2011",
       "hint": "크루즈 직전 준중형",
       "image": "lacetti-premiere.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -479,10 +643,11 @@
       "years": "2006~2008",
       "hint": "페이스리프트",
       "image": "lacetti-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
+      "rear_note": "세단은 후방 와이퍼가 없습니다. 해치백·왜건은 450mm입니다.",
+      "verified": "TRUE",
       "sort": "2"
     },
     {
@@ -493,13 +658,13 @@
       "years": "2002~2006",
       "hint": "초기형 준중형",
       "image": "lacetti.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
+      "rear_note": "세단은 후방 와이퍼가 없습니다. 해치백·왜건은 450mm입니다.",
+      "verified": "TRUE",
       "sort": "3"
     },
-
     {
       "id": "gentra",
       "model_id": "gentra",
@@ -508,13 +673,12 @@
       "years": "2005~2011",
       "hint": "소형 세단·해치 (X)",
       "image": "gentra.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "400",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "tosca-pe",
       "model_id": "tosca",
@@ -523,10 +687,10 @@
       "years": "2008~2011",
       "hint": "후기형 중형 세단",
       "image": "tosca-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "500",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -537,13 +701,12 @@
       "years": "2006~2008",
       "hint": "매그너스 후속",
       "image": "tosca.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "500",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "2"
     },
-
     {
       "id": "magnus-pe",
       "model_id": "magnus",
@@ -552,10 +715,10 @@
       "years": "2003~2006",
       "hint": "페이스리프트",
       "image": "magnus-pe.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "500",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -566,13 +729,12 @@
       "years": "2000~2003",
       "hint": "중형 세단",
       "image": "magnus.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "500",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "2"
     },
-
     {
       "id": "veritas",
       "model_id": "veritas",
@@ -581,13 +743,12 @@
       "years": "2005~2011",
       "hint": "준대형 세단",
       "image": "veritas.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "650",
+      "passenger_mm": "350",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "winstorm",
       "model_id": "winstorm",
@@ -596,13 +757,12 @@
       "years": "2006~2011",
       "hint": "캡티바 직전 SUV (대우/GM대우)",
       "image": "winstorm.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "600",
+      "passenger_mm": "400",
       "rear_type": "dedicated",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "rezzo",
       "model_id": "rezzo",
@@ -611,13 +771,13 @@
       "years": "2000~2008",
       "hint": "미니밴/MPV",
       "image": "rezzo.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "dedicated",
-      "verified": "FALSE",
+      "driver_mm": "600",
+      "passenger_mm": "450",
+      "rear_type": "size",
+      "rear_mm": "350",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "nubira",
       "model_id": "nubira",
@@ -626,13 +786,12 @@
       "years": "1997~2003",
       "hint": "준중형 세단",
       "image": "nubira.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "500",
+      "passenger_mm": "500",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "leganza",
       "model_id": "leganza",
@@ -641,13 +800,12 @@
       "years": "1997~2002",
       "hint": "중형 세단",
       "image": "leganza.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "550",
+      "passenger_mm": "450",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     },
-
     {
       "id": "damas-dw",
       "model_id": "damas-dw",
@@ -656,10 +814,11 @@
       "years": "1991~2011",
       "hint": "대우 브랜드 경상용",
       "image": "damas-dw.png",
-      "driver_mm": "",
-      "passenger_mm": "",
-      "rear_type": "none",
-      "verified": "FALSE",
+      "driver_mm": "400",
+      "passenger_mm": "350",
+      "rear_type": "size",
+      "rear_mm": "350",
+      "verified": "TRUE",
       "sort": "1"
     },
     {
@@ -670,10 +829,10 @@
       "years": "1991~2011",
       "hint": "대우 브랜드 경트럭",
       "image": "labo-dw.png",
-      "driver_mm": "",
-      "passenger_mm": "",
+      "driver_mm": "400",
+      "passenger_mm": "350",
       "rear_type": "none",
-      "verified": "FALSE",
+      "verified": "TRUE",
       "sort": "1"
     }
   ]

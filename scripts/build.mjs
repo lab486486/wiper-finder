@@ -304,7 +304,7 @@ async function main() {
   }
   if (chevyDaewoo.brands.length) {
     console.log(
-      `Merged Chevrolet/Daewoo catalog: ${chevyDaewoo.models.length} models, ${chevyDaewoo.generations.length} sized generations (photos/sizes still pending fill in)`
+      `Merged Chevrolet/Daewoo catalog: ${chevyDaewoo.models.length} models, ${chevyDaewoo.generations.length} sized generations`
     );
   }
 
