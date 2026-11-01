@@ -460,6 +460,10 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .result-hero img {
   width: 100%; height: auto; display: block; aspect-ratio: 16/10; object-fit: cover;
 }
+.photo-credit {
+  margin: -6px 2px 14px; font-size: .68rem; line-height: 1.45; color: var(--muted);
+}
+.photo-credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .urgency-badge {
   display: inline-block; font-size: .72rem; font-weight: 700; padding: 3px 10px;
   border-radius: 999px; margin-bottom: 8px;
@@ -653,6 +657,19 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .privacy-section ul { margin: 0 0 1em; padding-left: 1.2em; }
 .privacy-section li { margin-bottom: .35em; }
 `;
+
+function photoCreditHtml(gen) {
+  const credit = gen.image_credit;
+  if (!credit?.source_url) return "";
+  const author = escapeHtml(credit.author || "위키미디어 공용");
+  const source = escapeHtml(credit.source_url);
+  const license = String(credit.license || "");
+  const isPublicDomain = /public domain|cc0|cc-zero/i.test(license);
+  const licenseHtml = isPublicDomain
+    ? "퍼블릭 도메인"
+    : `<a href="${escapeHtml(credit.license_url || credit.source_url)}" rel="noopener noreferrer">${escapeHtml(license)}</a>`;
+  return `<p class="photo-credit">사진: <a href="${source}" rel="noopener noreferrer">${author}</a>, 위키미디어 공용 · ${licenseHtml} · 배경을 제거한 편집본</p>`;
+}
 
 export function escapeHtml(str) {
   return String(str ?? "")
@@ -936,7 +953,7 @@ export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
     jsonLd: [siteBrandJsonLd(siteUrl, base)],
     homePage: true,
     body: `<h2>${escapeHtml(SITE_TAGLINE)}</h2>
-<p class="sub">${escapeHtml(seo.description)}</p>
+<p class="sub">${escapeHtml(seo.description).replace("입니다. 더불어", "입니다.<br>더불어")}</p>
 <div class="brand-home">${rows.join("")}</div>
 <h3>와이퍼에 대한 모든 궁금증 해결</h3>
 <a class="guide-card" href="${base}/guide/">
@@ -1248,6 +1265,7 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
   const heroImg = gen.imageFile
     ? `<div class="result-hero"><img src="${imageBase}${escapeHtml(gen.imageFile)}" alt="${escapeHtml(gen.label)}" loading="eager" fetchpriority="high">${favBtnHtml({ brand, model, gen, imageFile: gen.imageFile, labeled: true })}</div>`
     : "";
+  const photoCredit = photoCreditHtml(gen);
   const headFav = gen.imageFile
     ? ""
     : favBtnHtml({ brand, model, gen, imageFile: gen.imageFile, labeled: true });
@@ -1274,7 +1292,7 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
         faqPageJsonLd({ siteUrl, base, brand, model, gen, faqItems }),
       ],
     }),
-    body: `${heroImg}<div class="result-head" id="result-head">
+    body: `${heroImg}${photoCredit}<div class="result-head" id="result-head">
       <div class="head-row">
         <h1>${escapeHtml(gen.label)}${powerBadgeHtml(gen.powerBadge, gen.hybrid)} <span class="badge">${escapeHtml(gen.years)}</span></h1>
         ${headFav}

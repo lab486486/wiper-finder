@@ -9,16 +9,16 @@ export const SITE_ALTERNATE_NAMES = [
   "wiper-finder.com",
 ];
 export const WARNING_LIST_TITLE = "자동차 경고등 의미, 종류, 조치방법";
-export const SITE_TAGLINE = "현대·기아·제네시스 차종별 와이퍼 사이즈, 한 번에";
+export const SITE_TAGLINE = "국산 / 수입차 차종별 와이퍼 사이즈 정보";
 export const DEFAULT_OG_IMAGE_PATH = "/images/og-share.webp";
-export const DEFAULT_OG_IMAGE_ALT = "자동차 와이퍼 사이즈 검색기 — 현대·기아·제네시스 차종별 mm 규격";
+export const DEFAULT_OG_IMAGE_ALT = "자동차 와이퍼 사이즈 검색기 — 국산 / 수입차 차종별 와이퍼 사이즈";
 
 export function defaultOgImageUrl(siteUrl, base) {
   return absoluteUrl(siteUrl, base, DEFAULT_OG_IMAGE_PATH);
 }
 
 export const HOME_DESCRIPTION =
-  "자동차 와이퍼 사이즈 검색기는 현대·기아·제네시스 차종·세대별 운전석·조수석·후방 와이퍼 사이즈(mm)를 빠르게 확인하는 무료 검색 서비스입니다. 계기판 경고등 안내도 함께 제공합니다.";
+  "자동차 와이퍼 사이즈 검색기는 국산 및 수입차 차종 세대별 와이퍼 사이즈(mm)를 빠르게 알려드리는 무료 서비스입니다. 더불어 계기판 경고등을 비롯해서 다양한 자동차 정보를 제공하니 즐겨찾기 해두시고 사용해보세요!";
 
 export function normalizeSiteUrl(raw, fallback = "https://wiper-finder.com") {
   const v = (raw || fallback).trim();
@@ -50,7 +50,7 @@ function rearSearchHint(gen) {
 
 export function seoHome() {
   return {
-    documentTitle: `${SITE_NAME} | 현대·기아·제네시스 와이퍼 사이즈 조회`,
+    documentTitle: `${SITE_NAME} | 국산 / 수입차 차종별 와이퍼 사이즈 정보`,
     description: HOME_DESCRIPTION,
     path: "/",
   };
@@ -617,6 +617,8 @@ export function buildLlmsTxt(siteUrl, base) {
   const hyundai = absoluteUrl(siteUrl, base, "/hyundai/");
   const kia = absoluteUrl(siteUrl, base, "/kia/");
   const genesis = absoluteUrl(siteUrl, base, "/genesis/");
+  const chevrolet = absoluteUrl(siteUrl, base, "/chevrolet/");
+  const daewoo = absoluteUrl(siteUrl, base, "/daewoo/");
   const sitemap = absoluteUrl(siteUrl, base, "/sitemap.xml");
   const rss = absoluteUrl(siteUrl, base, "/rss.xml");
 
@@ -634,6 +636,8 @@ ${HOME_DESCRIPTION}
 - [현대 와이퍼 사이즈](${hyundai})
 - [기아 와이퍼 사이즈](${kia})
 - [제네시스 와이퍼 사이즈](${genesis})
+- [쉐보레 와이퍼 사이즈](${chevrolet})
+- [대우 와이퍼 사이즈](${daewoo})
 - [RSS 피드](${rss})
 - [사이트맵](${sitemap})
 `;
