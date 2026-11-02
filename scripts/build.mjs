@@ -15,6 +15,8 @@ import {
   renderGuidePage,
   renderPrivacyPage,
   resolvePowerBadge,
+  hasVisibleConsumables,
+  withConsumables,
 } from "./render.mjs";
 import { GUIDES } from "./guides.mjs";
 import { influencerProductsBySize, loadInfluencerCatalog } from "./influencer.mjs";
@@ -151,6 +153,18 @@ function mergeById(primary, extra) {
     if (!row.id || seen.has(row.id)) continue;
     seen.add(row.id);
     out.push(row);
+  }
+  return out;
+}
+
+function loadConsumables() {
+  const path = join(ROOT, "data/consumables.json");
+  if (!existsSync(path)) return {};
+  const data = JSON.parse(readFileSync(path, "utf8"));
+  const out = {};
+  for (const [id, row] of Object.entries(data)) {
+    if (!id || id.startsWith("_")) continue;
+    out[id] = row;
   }
   return out;
 }
@@ -336,9 +350,14 @@ async function main() {
   }
 
   const carsDir = join(ROOT, "public/images/cars");
+  const consumables = loadConsumables();
   const sizeSources = loadSizeSources();
   const generations = dedupeById(generationsRaw, "generations").map((row) =>
-    enrichGeneration(applySizeSource(row, sizeSources), carsDir)
+    withConsumables(enrichGeneration(applySizeSource(row, sizeSources), carsDir), consumables[row.id])
+  );
+  const consumableCount = generations.filter((row) => hasVisibleConsumables(row)).length;
+  console.log(
+    `Consumables: ${consumableCount} generations show the section, ${generations.length - consumableCount} hidden (no data)`
   );
   const warnings = (await loadWarnings(sheetId, warningsIconsDir)).sort(
     (a, b) => Number(a.sort) - Number(b.sort)
