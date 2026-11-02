@@ -72,10 +72,23 @@ export function seoModel(brand, model) {
   };
 }
 
-export function seoGeneration(brand, model) {
+export function seoGeneration(brand, model, generations = []) {
+  const latest = generations[0];
+  if (!latest) {
+    return {
+      documentTitle: titleSuffix(`${model.name} 와이퍼 사이즈`),
+      description: `${vehicleName(brand.name, model.name)} 세대별 와이퍼 사이즈(mm)를 확인하세요 | ${SITE_NAME}`,
+      path: `/${brand.id}/${model.id}/`,
+    };
+  }
+  const sizeLine = generations
+    .map((g) => `${g.label}(${g.years}) ${g.driver_mm}/${g.passenger_mm}mm`)
+    .join(", ");
   return {
-    documentTitle: titleSuffix(`${model.name} 와이퍼 사이즈 · 세대 선택`),
-    description: `${vehicleName(brand.name, model.name)} 세대별 와이퍼 사이즈 조회. 사진과 연식으로 내 차 세대를 선택하세요 | ${SITE_NAME}`,
+    documentTitle: titleSuffix(
+      `${model.name} 와이퍼 사이즈 ${latest.driver_mm}·${latest.passenger_mm}mm`
+    ),
+    description: `${vehicleName(brand.name, model.name)} 와이퍼는 세대마다 다릅니다. ${sizeLine}.`,
     path: `/${brand.id}/${model.id}/`,
   };
 }

@@ -251,6 +251,10 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .gen-body { padding: 10px 12px; }
 .gen-body strong { display: block; font-size: .92rem; margin-bottom: 2px; }
 .gen-body .years { color: var(--muted); font-size: .78rem; }
+.gen-body .gen-size { margin-top: 4px; font-size: .8rem; font-weight: 700; }
+.model-latest { margin: 6px 0 22px; }
+.model-latest h2 { font-size: 1.15rem; margin: 0 0 6px; }
+.model-older { margin-top: 8px; }
 .gen-body .hint {
   color: var(--muted); font-size: .72rem; margin-top: 4px; line-height: 1.35;
   word-break: keep-all; overflow-wrap: break-word;
@@ -483,6 +487,10 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   margin: -6px 2px 14px; font-size: .68rem; line-height: 1.45; color: var(--muted);
 }
 .photo-credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.size-source {
+  margin: 8px 2px 14px; font-size: .75rem; line-height: 1.55; color: var(--muted);
+}
+.size-source a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .urgency-badge {
   display: inline-block; font-size: .72rem; font-weight: 700; padding: 3px 10px;
   border-radius: 999px; margin-bottom: 8px;
@@ -676,6 +684,18 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .privacy-section ul { margin: 0 0 1em; padding-left: 1.2em; }
 .privacy-section li { margin-bottom: .35em; }
 `;
+
+function sizeSourceHtml(gen) {
+  const sources = Array.isArray(gen.size_sources) ? gen.size_sources.filter((s) => s?.url && s?.name) : [];
+  if (!sources.length) return "";
+  const links = sources
+    .map(
+      (s) =>
+        `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}</a>`
+    )
+    .join(", ");
+  return `<p class="size-source">출처: ${links}</p>`;
+}
 
 function photoCreditHtml(gen) {
   const credit = gen.image_credit;
@@ -1025,7 +1045,39 @@ export function renderMyCarsPage({ base, siteUrl }) {
   });
 }
 
-export function renderGenerationPage({ base, siteUrl, brand, model, generations, imageBase }) {
+function latestOfferHtml({ gen, imageBase, productsEntry, base }) {
+  const rearCell = gen.rearDisplay?.value
+    ? `<div class="value">${escapeHtml(gen.rearDisplay.value)}</div>${
+        gen.rearDisplay.unit === "mm"
+          ? mmUnitHtml(gen.rearDisplay.value)
+          : gen.rearDisplay.unit
+            ? `<div class="unit">${escapeHtml(gen.rearDisplay.unit)}</div>`
+            : ""
+      }`
+    : `<div class="value">—</div>`;
+  const rearMsg = gen.rearMessage
+    ? `<div class="rear-msg">${escapeHtml(gen.rearMessage)}</div>`
+    : "";
+  const hero = gen.imageFile
+    ? `<div class="result-hero"><img src="${imageBase}${escapeHtml(gen.imageFile)}" alt="${escapeHtml(gen.label)}" loading="eager"></div>`
+    : "";
+  return `<section class="model-latest">
+    ${hero}
+    <h2>${escapeHtml(gen.label)}${powerBadgeHtml(gen.powerBadge, gen.hybrid)} <span class="badge">${escapeHtml(gen.years)}</span></h2>
+    <p class="sub">${escapeHtml(gen.label)} 와이퍼는 운전석 ${escapeHtml(gen.driver_mm)}mm, 조수석 ${escapeHtml(gen.passenger_mm)}mm입니다.</p>
+    <div class="size-table">
+      <div class="size-cell"><div class="label">운전석</div><div class="value">${escapeHtml(gen.driver_mm)}</div>${mmUnitHtml(gen.driver_mm)}</div>
+      <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div>${mmUnitHtml(gen.passenger_mm)}</div>
+      <div class="size-cell"><div class="label">후방</div>${rearCell}</div>
+    </div>
+    ${sizeSourceHtml(gen)}
+    ${rearMsg}
+    ${productGridHtml(productsEntry, gen, base)}
+  </section>`;
+}
+
+export function renderGenerationPage({ base, siteUrl, brand, model, generations, imageBase, productsEntry }) {
+  const latest = generations[0];
   const cards = generations
     .map((g) => {
       const img = g.imageFile;
@@ -1044,6 +1096,7 @@ export function renderGenerationPage({ base, siteUrl, brand, model, generations,
           <div class="gen-body">
             <strong>${escapeHtml(g.label)}</strong>
             <div class="years">${escapeHtml(g.years)}</div>
+            <div class="gen-size">${escapeHtml(g.driver_mm)}·${escapeHtml(g.passenger_mm)}mm</div>
             ${g.hint ? `<div class="hint">${escapeHtml(g.hint)}</div>` : ""}
           </div>
         </a>
@@ -1051,11 +1104,12 @@ export function renderGenerationPage({ base, siteUrl, brand, model, generations,
     })
     .join("");
 
-  const seo = seoGeneration(brand, model);
+  const seo = seoGeneration(brand, model, generations);
   const breadcrumb = [
     { label: brand.name, href: `/${brand.id}/` },
     { label: model.name, href: `/${brand.id}/${model.id}/` },
   ];
+  const offer = latest ? latestOfferHtml({ gen: latest, imageBase, productsEntry, base }) : "";
 
   return layout({
     documentTitle: seo.documentTitle,
@@ -1067,7 +1121,9 @@ export function renderGenerationPage({ base, siteUrl, brand, model, generations,
     showBreadcrumb: true,
     jsonLd: buildJsonLd({ siteUrl, base, breadcrumb }),
     body: `<h1>${escapeHtml(model.name)} 와이퍼 사이즈</h1>
-<p class="sub">내 차와 비슷한 세대를 선택하세요</p>
+${offer}
+<h2 class="model-older">세대별 사이즈</h2>
+<p class="sub">최신 모델이 아니면 아래에서 내 차 세대를 골라 구매하세요.</p>
 <div class="gen-grid">${cards}</div>`,
   });
 }
@@ -1493,6 +1549,7 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
       <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div>${mmUnitHtml(gen.passenger_mm)}</div>
       <div class="size-cell"><div class="label">후방</div>${rearCell}</div>
     </div>
+    ${sizeSourceHtml(gen)}
     ${rearMsg}
     ${productGrid}
     ${signalOutside}
