@@ -1,8 +1,8 @@
 (function () {
-  const TARGET_ID = "wiper-size";
   const DELAY_MS = 1000;
 
-  const target = document.getElementById(TARGET_ID);
+  const target =
+    document.getElementById("model-scroll-hint") || document.getElementById("wiper-size");
   if (!target) return;
 
   let cancelled = false;

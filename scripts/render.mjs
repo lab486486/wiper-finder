@@ -454,9 +454,9 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .consumable-card .note {
   font-size: .78rem; color: var(--muted); line-height: 1.45; margin-top: 6px;
 }
-.tire-spec p { margin: 0; font-size: .78rem; line-height: 1.45; }
-.tire-spec p + p { margin-top: 4px; }
-.tire-spec .note { font-weight: 600; }
+.tire-spec p { margin: 0; font-size: .88rem; font-weight: 700; line-height: 1.22; }
+.tire-spec p + p { margin-top: 2px; }
+.tire-spec .note { font-size: .78rem; font-weight: 600; line-height: 1.22; margin-top: 2px; }
 .consumable-link {
   display: inline-block; margin-top: 8px;
   font-size: .82rem; font-weight: 600; color: var(--accent); text-decoration: none;
@@ -1102,7 +1102,7 @@ function latestOfferHtml({ gen, model, imageBase, productsEntry, base }) {
   return `<section class="model-latest">
     ${hero}
     <h2>${escapeHtml(gen.label)}${powerBadgeHtml(gen.powerBadge, gen.hybrid)} <span class="badge">${escapeHtml(gen.years)}</span></h2>
-    <p class="model-scroll-hint"><span>${escapeHtml(model.name)} 다른 모델은 스크롤 내리면 아래에 있습니다.</span></p>
+    <p class="model-scroll-hint" id="model-scroll-hint"><span>${escapeHtml(model.name)} 다른 모델은 스크롤 내리면 아래에 있습니다.</span></p>
     <div class="size-table">
       <div class="size-cell"><div class="label">운전석</div><div class="value">${escapeHtml(gen.driver_mm)}</div>${mmUnitHtml(gen.driver_mm)}</div>
       <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div>${mmUnitHtml(gen.passenger_mm)}</div>
@@ -1158,6 +1158,7 @@ export function renderGenerationPage({ base, siteUrl, brand, model, generations,
     breadcrumb,
     showBreadcrumb: true,
     jsonLd: buildJsonLd({ siteUrl, base, breadcrumb }),
+    extraScripts: ["/js/result-scroll.js"],
     body: `<h1>${escapeHtml(model.name)} 와이퍼 사이즈</h1>
 ${offer}
 <h2 class="model-older">세대별 사이즈</h2>
@@ -1454,7 +1455,7 @@ function tireCardHtml(tire, base) {
   const rearPsi = tire?.pressure_rear_psi;
   const pressure =
     frontPsi != null && rearPsi != null
-      ? `<p class="note">- 공기압 정보 : 전륜(${escapeHtml(formatAmount(frontPsi))}psi), 후륜(${escapeHtml(formatAmount(rearPsi))}psi)</p>`
+      ? `<p class="note">• 공기압 정보 : 전륜(${escapeHtml(formatAmount(frontPsi))}psi), 후륜(${escapeHtml(formatAmount(rearPsi))}psi)</p>`
       : "";
   return `<article class="consumable-card">
     <div class="label">타이어(순정)</div>
