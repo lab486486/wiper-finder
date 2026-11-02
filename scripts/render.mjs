@@ -1397,6 +1397,7 @@ export function withConsumables(row, extra) {
       pressure_front_psi: nullableNumber(tire.pressure_front_psi),
       pressure_rear_psi: nullableNumber(tire.pressure_rear_psi),
       pressure_note: nullableText(tire.pressure_note),
+      note: nullableText(tire.note),
       link: nullableLink(tire.link),
     },
     battery: {
@@ -1457,9 +1458,10 @@ function tireCardHtml(tire, base) {
     frontPsi != null && rearPsi != null
       ? `<p class="note">• 공기압 정보 : 전륜(${escapeHtml(formatAmount(frontPsi))}psi), 후륜(${escapeHtml(formatAmount(rearPsi))}psi)</p>`
       : "";
+  const trimNote = tire?.note ? `<p class="note">${escapeHtml(tire.note)}</p>` : "";
   return `<article class="consumable-card">
     <div class="label">타이어(순정)</div>
-    <div class="value tire-spec">${lines}${pressure}</div>
+    <div class="value tire-spec">${lines}${pressure}${trimNote}</div>
     ${consumableLinkHtml(tire?.link, base)}
   </article>`;
 }
