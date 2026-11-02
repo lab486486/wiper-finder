@@ -477,11 +477,23 @@ async function main() {
     pageCount++;
 
     for (const model of brandModels) {
-      sitemapUrls.push({ path: `/${brand.id}/${model.id}/`, priority: "0.75" });
+      sitemapUrls.push({ path: `/${brand.id}/${model.id}/`, priority: "0.9" });
       const gens = gensByModel[model.id] || [];
+      const latest = gens[0];
+      const latestProducts = latest
+        ? productsBySize[`${latest.driver_mm}-${latest.passenger_mm}`]
+        : null;
       writeHtml(
         join(dist, brand.id, model.id, "index.html"),
-        renderGenerationPage({ base, siteUrl, brand, model, generations: gens, imageBase })
+        renderGenerationPage({
+          base,
+          siteUrl,
+          brand,
+          model,
+          generations: gens,
+          imageBase,
+          productsEntry: latestProducts,
+        })
       );
       pageCount++;
 

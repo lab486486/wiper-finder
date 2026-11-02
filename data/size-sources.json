@@ -3,6 +3,36 @@
   "generations": [
     {
       "model_id": "morning",
+      "id": "ja-pe2",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (600·350mm)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/모닝/올뉴모닝_와이퍼/2017-01_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (600·350mm)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "morning",
+      "id": "ja-pe",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (600·350mm)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/모닝/올뉴모닝_와이퍼/2017-01_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (600·350mm)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "morning",
       "id": "ja",
       "status": "confirmed",
       "sources": [
@@ -80,6 +110,51 @@
     },
     {
       "model_id": "avante",
+      "id": "cn7-pe",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (600·450mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/아반떼/아반떼_CN7_와이퍼/2020-04_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (600·450mm, 2020년 4월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "avante",
+      "id": "cn7-pe-n",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (600·450mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/아반떼/아반떼_CN7_와이퍼/2020-04_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (600·450mm, 2020년 4월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "avante",
+      "id": "cn7-n",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (600·450mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/아반떼/아반떼_CN7_와이퍼/2020-04_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (600·450mm, 2020년 4월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "avante",
       "id": "cn7",
       "status": "confirmed",
       "sources": [
@@ -89,6 +164,21 @@
         },
         {
           "name": "카시즌 보쉬 적용표 (600·450mm, 2020년 4월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "avante",
+      "id": "ad-pe",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (650·400mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/아반떼/아반떼_AD_와이퍼/2015-09_2020-03/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (650·400mm)",
           "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
         }
       ]
