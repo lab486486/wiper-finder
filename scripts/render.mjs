@@ -396,10 +396,12 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 }
 .product-more:hover { color: var(--accent); text-decoration: underline; }
 .product-footer {
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 0;
   margin-top: 10px; text-align: left;
 }
 .product-ftc {
+  display: block;
+  margin-top: 2px;
   font-size: .72rem; color: var(--muted); line-height: 1.45;
 }
 .replacement-signal {
@@ -409,25 +411,45 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   border-radius: var(--radius);
   padding: 12px 14px;
 }
+.product-footer .consumable-section,
+.replacement-signal + .consumable-section { margin-top: 8px; }
 .consumable-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-@media (min-width: 640px) {
-  .consumable-grid { grid-template-columns: 1fr 1fr; }
-}
 .consumable-card {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 14px 14px 12px;
+  padding: 34px 12px 12px;
+  min-width: 0;
 }
-.consumable-card .label { font-size: .75rem; color: var(--muted); }
+.consumable-card .label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  background: #334155;
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  padding: 5px 8px 4px;
+  border-radius: 11px 0 8px 0;
+  white-space: nowrap;
+}
 .consumable-card .value {
-  font-size: .95rem; font-weight: 700; line-height: 1.45; margin-top: 4px;
+  font-size: .88rem; font-weight: 700; line-height: 1.45;
   word-break: keep-all;
+}
+.consumable-card .value-empty {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 .consumable-card .note {
   font-size: .78rem; color: var(--muted); line-height: 1.45; margin-top: 6px;
@@ -1085,7 +1107,7 @@ function latestOfferHtml({ gen, model, imageBase, productsEntry, base }) {
     </div>
     ${sizeSourceHtml(gen)}
     ${rearMsg}
-    ${productGridHtml(productsEntry, gen, base)}
+    ${productGridHtml(productsEntry, gen, base, model)}
   </section>`;
 }
 
@@ -1160,7 +1182,7 @@ function formatPrice(n) {
   return `${v.toLocaleString("ko-KR")}원`;
 }
 
-function productGridHtml(productsEntry, gen, base) {
+function productGridHtml(productsEntry, gen, base, model) {
   if (!productsEntry?.products?.length) return "";
   const tiles = productsEntry.products
     .slice(0, 6)
@@ -1205,8 +1227,8 @@ function productGridHtml(productsEntry, gen, base) {
     <div class="product-trust">
       ${replacementSignalHtml()}
     </div>
-    ${consumablesSectionHtml(gen, base)}
-    <span class="product-ftc">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>
+    ${ftcHtml()}
+    ${consumablesSectionHtml(gen, base, model)}
   </div>`;
 
   return `<div class="product-section">
@@ -1351,6 +1373,10 @@ function replacementSignalHtml() {
   return `<p class="product-trust-note">와이퍼 작동 시 '우드득' 소리가 나면 교체 시점입니다.</p>`;
 }
 
+function ftcHtml() {
+  return `<span class="product-ftc">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>`;
+}
+
 export function withConsumables(row, extra) {
   const oil = extra?.oil && typeof extra.oil === "object" ? extra.oil : {};
   const tire = extra?.tire && typeof extra.tire === "object" ? extra.tire : {};
@@ -1393,10 +1419,12 @@ function consumableLinkHtml(link, base) {
 }
 
 function consumableCardHtml({ label, value, note, link }, base) {
-  if (!value) return "";
+  const valueHtml = value
+    ? `<div class="value">${escapeHtml(value)}</div>`
+    : `<div class="value value-empty">준비 중</div>`;
   return `<article class="consumable-card">
     <div class="label">${escapeHtml(label)}</div>
-    <div class="value">${escapeHtml(value)}</div>
+    ${valueHtml}
     ${note ? `<p class="note">${escapeHtml(note)}</p>` : ""}
     ${consumableLinkHtml(link, base)}
   </article>`;
@@ -1405,9 +1433,9 @@ function consumableCardHtml({ label, value, note, link }, base) {
 function oilValue(oil) {
   if (!oil) return "";
   const parts = [];
-  if (oil.viscosity) parts.push(oil.viscosity);
-  if (oil.capacity_l != null) parts.push(`${formatAmount(oil.capacity_l)}L`);
-  return parts.join(" · ");
+  if (oil.viscosity) parts.push(`점도(${oil.viscosity})`);
+  if (oil.capacity_l != null) parts.push(`교환량(${formatAmount(oil.capacity_l)}L)`);
+  return parts.join(" / ");
 }
 
 function tireValue(tire) {
@@ -1437,7 +1465,9 @@ function keyBatteryValue(key) {
   return parts.join(" · ");
 }
 
-export function consumablesSectionHtml(gen, base = "") {
+export function consumablesSectionHtml(gen, base = "", model) {
+  const vehicleName = model?.name || gen?.label || "이 차";
+  const title = `${vehicleName} 엔진오일 / 타이어 / 배터리 정보`;
   const tireSize = tireValue(gen.tire);
   const cards = [
     consumableCardHtml(
@@ -1446,7 +1476,7 @@ export function consumablesSectionHtml(gen, base = "") {
     ),
     consumableCardHtml(
       {
-        label: "순정 타이어",
+        label: "타이어(순정)",
         value: tireSize || gen.tire?.pressure_note || "",
         note: tireSize ? gen.tire?.pressure_note : "",
         link: gen.tire?.link,
@@ -1466,13 +1496,10 @@ export function consumablesSectionHtml(gen, base = "") {
       },
       base
     ),
-  ]
-    .filter(Boolean)
-    .join("");
+  ].join("");
 
-  if (!cards) return "";
-  return `<section class="content-block consumable-section" aria-label="이 차의 소모품 정보">
-    ${blockTitleHtml("이 차의 소모품 정보")}
+  return `<section class="content-block consumable-section" aria-label="${escapeHtml(title)}">
+    ${blockTitleHtml(title)}
     <div class="consumable-grid">${cards}</div>
   </section>`;
 }
@@ -1512,10 +1539,10 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
         })
       : "";
 
-  const productGrid = productGridHtml(productsEntry, gen, base);
+  const productGrid = productGridHtml(productsEntry, gen, base, model);
   const signalOutside = productGrid
     ? ""
-    : `<div class="replacement-signal">${replacementSignalHtml()}</div>${consumablesSectionHtml(gen, base)}`;
+    : `<div class="replacement-signal">${replacementSignalHtml()}${ftcHtml()}</div>${consumablesSectionHtml(gen, base, model)}`;
   const seo = seoResult(brand, model, gen);
   const faqItems = buildResultFaq({ brand, model, gen, base });
   const faqSection = faqSectionHtml({ brand, model, gen, base });
