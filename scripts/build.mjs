@@ -155,6 +155,33 @@ function mergeById(primary, extra) {
   return out;
 }
 
+function loadSizeSources() {
+  const path = join(ROOT, "data/size-sources.json");
+  if (!existsSync(path)) return new Map();
+  const data = JSON.parse(readFileSync(path, "utf8"));
+  const map = new Map();
+  for (const row of data.generations || []) {
+    if (!row.model_id || !row.id) continue;
+    map.set(`${row.model_id}/${row.id}`, row);
+  }
+  return map;
+}
+
+function applySizeSource(row, sources) {
+  const found = sources.get(`${row.model_id}/${row.id}`);
+  if (!found) return row;
+  const next = { ...row, size_sources: found.sources || [] };
+  if (found.status !== "corrected") return next;
+  const before = `${row.driver_mm}/${row.passenger_mm}`;
+  if (found.driver_mm) next.driver_mm = String(found.driver_mm);
+  if (found.passenger_mm) next.passenger_mm = String(found.passenger_mm);
+  const after = `${next.driver_mm}/${next.passenger_mm}`;
+  if (before !== after) {
+    console.log(`Size corrected ${row.model_id}/${row.id}: ${before} -> ${after}`);
+  }
+  return next;
+}
+
 function enrichGeneration(row, carsDir) {
   const driver = row.driver_mm;
   const passenger = row.passenger_mm;
@@ -309,8 +336,9 @@ async function main() {
   }
 
   const carsDir = join(ROOT, "public/images/cars");
+  const sizeSources = loadSizeSources();
   const generations = dedupeById(generationsRaw, "generations").map((row) =>
-    enrichGeneration(row, carsDir)
+    enrichGeneration(applySizeSource(row, sizeSources), carsDir)
   );
   const warnings = (await loadWarnings(sheetId, warningsIconsDir)).sort(
     (a, b) => Number(a.sort) - Number(b.sort)

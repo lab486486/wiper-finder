@@ -464,6 +464,10 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   margin: -6px 2px 14px; font-size: .68rem; line-height: 1.45; color: var(--muted);
 }
 .photo-credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.size-source {
+  margin: 8px 2px 14px; font-size: .75rem; line-height: 1.55; color: var(--muted);
+}
+.size-source a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .urgency-badge {
   display: inline-block; font-size: .72rem; font-weight: 700; padding: 3px 10px;
   border-radius: 999px; margin-bottom: 8px;
@@ -657,6 +661,18 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .privacy-section ul { margin: 0 0 1em; padding-left: 1.2em; }
 .privacy-section li { margin-bottom: .35em; }
 `;
+
+function sizeSourceHtml(gen) {
+  const sources = Array.isArray(gen.size_sources) ? gen.size_sources.filter((s) => s?.url && s?.name) : [];
+  if (!sources.length) return "";
+  const links = sources
+    .map(
+      (s) =>
+        `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}</a>`
+    )
+    .join(", ");
+  return `<p class="size-source">출처: ${links}</p>`;
+}
 
 function photoCreditHtml(gen) {
   const credit = gen.image_credit;
@@ -1304,6 +1320,7 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
       <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div><div class="unit">mm</div></div>
       <div class="size-cell"><div class="label">후방</div>${rearCell}</div>
     </div>
+    ${sizeSourceHtml(gen)}
     ${rearMsg}
     ${productGrid}
     ${frontCard ? `<p class="section-title">바로 구매</p><p class="section-sub">mm 확인 후 아래에서 바로 이동하세요.</p>${frontCard}${rearCard}` : ""}

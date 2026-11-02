@@ -1,0 +1,193 @@
+{
+  "checked": "2026-11-02",
+  "generations": [
+    {
+      "model_id": "morning",
+      "id": "ja",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (600·350mm)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/모닝/올뉴모닝_와이퍼/2017-01_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (600·350mm)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "santafe",
+      "id": "mx5",
+      "status": "corrected",
+      "driver_mm": "650",
+      "passenger_mm": "450",
+      "sources": [
+        {
+          "name": "카시즌 보쉬 적용표 (650·450mm, 2023년 8월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        },
+        {
+          "name": "MX5 교체 기록 (운전석 650·조수석 450mm)",
+          "url": "https://m.blog.naver.com/watneym/224102830773"
+        }
+      ]
+    },
+    {
+      "model_id": "santafe",
+      "id": "tm",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (650·400mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/싼타페/싼타페_TM_와이퍼/2018-02_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (650·400mm, 2018년 2월~2022년 12월)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "santafe",
+      "id": "tm-pe",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (650·400mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/싼타페/싼타페_TM_와이퍼/2018-02_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (650·400mm, 2018년 2월~2022년 12월)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "sorento",
+      "id": "um",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (650·400mm)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (650·400mm, 2014년 8월~2020년 4월)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "avante",
+      "id": "cn7",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (600·450mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/아반떼/아반떼_CN7_와이퍼/2020-04_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (600·450mm, 2020년 4월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "avante",
+      "id": "ad",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (650·400mm)",
+          "url": "http://mcl.carseason.co.kr/ko/현대_와이퍼/아반떼/아반떼_AD_와이퍼/2015-09_2020-03/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (650·400mm)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "niro",
+      "id": "de",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (650·400mm)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (650·400mm)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "bongo",
+      "id": "bongo3",
+      "status": "corrected",
+      "driver_mm": "550",
+      "passenger_mm": "450",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (550·450mm, 2004년~)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/봉고/봉고2,3_와이퍼/2004-01_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (550·450mm, 2004년 1월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "bongo",
+      "id": "bongo3-pe",
+      "status": "corrected",
+      "driver_mm": "550",
+      "passenger_mm": "450",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (550·450mm, 2004년~)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/봉고/봉고2,3_와이퍼/2004-01_/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (550·450mm, 2004년 1월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "carnival",
+      "id": "yp",
+      "status": "confirmed",
+      "sources": [
+        {
+          "name": "미쉐린와이퍼 한국총판 적용표 (650·450mm)",
+          "url": "http://mcl.carseason.co.kr/ko/기아_와이퍼/"
+        },
+        {
+          "name": "카시즌 보쉬 적용표 (650·450mm, 2014년 6월~)",
+          "url": "https://carseason.co.kr/category/보쉬-와이퍼/757/"
+        }
+      ]
+    },
+    {
+      "model_id": "staria",
+      "id": "staria",
+      "status": "corrected",
+      "driver_mm": "700",
+      "passenger_mm": "400",
+      "sources": [
+        {
+          "name": "캐프 스타리아 규격 (700·400mm)",
+          "url": "https://ohj.kr/m/product_list.html?mcode=001&scode=085&type=M&viewtype=gallery&xcode=008"
+        },
+        {
+          "name": "TopWipers 적용표 (700·400mm)",
+          "url": "https://topwipers.com/en-de/auto/wiper-blades/hyundai/staria/2021"
+        }
+      ]
+    }
+  ]
+}
