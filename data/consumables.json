@@ -9,10 +9,13 @@
       "link": null
     },
     "tire": {
-      "front": "195/65R15 · 205/55R16 · 225/45R17 · 235/40R18",
-      "rear": "195/65R15 · 205/55R16 · 225/45R17 · 235/40R18",
-      "pressure_note": "205/55R16 앞 235kPa(34psi)·뒤 215kPa(31psi). N Line 235/40R18 앞·뒤 230kPa(33psi).",
-      "link": null
+      "front": "205/55R16",
+      "rear": "205/55R16",
+      "pressure_front_psi": 34,
+      "pressure_rear_psi": 31,
+      "pressure_note": null,
+      "link": null,
+      "_all": "195/65R15 · 205/55R16 · 225/45R17 · 235/40R18"
     },
     "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
     "key_battery": { "type": "CR2450", "count": 1, "link": null }
@@ -55,10 +58,13 @@
       "link": null
     },
     "tire": {
-      "front": "235/60R18 · 255/45R20 · 245/45R21",
-      "rear": "235/60R18 · 255/45R20 · 245/45R21",
-      "pressure_note": "235/60R18·255/45R20 앞·뒤 240kPa(35psi). 245/45R21 앞·뒤 250kPa(36psi).",
-      "link": null
+      "front": "255/45R20",
+      "rear": "255/45R20",
+      "pressure_front_psi": 35,
+      "pressure_rear_psi": 35,
+      "pressure_note": null,
+      "link": null,
+      "_all": "235/60R18 · 255/45R20 · 245/45R21"
     },
     "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
     "key_battery": { "type": null, "count": null, "link": null }
@@ -72,10 +78,13 @@
       "link": null
     },
     "tire": {
-      "front": "235/60R18 · 255/45R20",
-      "rear": "235/60R18 · 255/45R20",
-      "pressure_note": "235/60R18 앞·뒤 240kPa(35psi).",
-      "link": null
+      "front": "235/60R18",
+      "rear": "235/60R18",
+      "pressure_front_psi": 35,
+      "pressure_rear_psi": 35,
+      "pressure_note": null,
+      "link": null,
+      "_all": "235/60R18 · 255/45R20"
     },
     "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
     "key_battery": { "type": null, "count": null, "link": null }

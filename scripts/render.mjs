@@ -454,6 +454,9 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .consumable-card .note {
   font-size: .78rem; color: var(--muted); line-height: 1.45; margin-top: 6px;
 }
+.tire-spec p { margin: 0; font-size: .78rem; line-height: 1.45; }
+.tire-spec p + p { margin-top: 4px; }
+.tire-spec .note { font-weight: 600; }
 .consumable-link {
   display: inline-block; margin-top: 8px;
   font-size: .82rem; font-weight: 600; color: var(--accent); text-decoration: none;
@@ -1390,6 +1393,8 @@ export function withConsumables(row, extra) {
     tire: {
       front: nullableText(tire.front),
       rear: nullableText(tire.rear),
+      pressure_front_psi: nullableNumber(tire.pressure_front_psi),
+      pressure_rear_psi: nullableNumber(tire.pressure_rear_psi),
       pressure_note: nullableText(tire.pressure_note),
       link: nullableLink(tire.link),
     },
@@ -1435,15 +1440,27 @@ function oilValue(oil) {
   return parts.join(" / ");
 }
 
-function tireValue(tire) {
-  if (!tire) return "";
-  const front = tire.front || "";
-  const rear = tire.rear || "";
-  if (front && rear && front === rear) return `전륜·후륜 ${front}`;
-  if (front && rear) return `전륜 ${front} · 후륜 ${rear}`;
-  if (front) return `전륜 ${front}`;
-  if (rear) return `후륜 ${rear}`;
-  return "";
+function tireCardHtml(tire, base) {
+  const front = tire?.front || "";
+  const rear = tire?.rear || "";
+  if (!front && !rear) {
+    return consumableCardHtml({ label: "타이어(순정)", value: "", note: "", link: tire?.link }, base);
+  }
+  const lines = [
+    front ? `<p>전륜(앞타이어) : ${escapeHtml(front)}</p>` : "",
+    rear ? `<p>후륜(뒤타이어) : ${escapeHtml(rear)}</p>` : "",
+  ].join("");
+  const frontPsi = tire?.pressure_front_psi;
+  const rearPsi = tire?.pressure_rear_psi;
+  const pressure =
+    frontPsi != null && rearPsi != null
+      ? `<p class="note">- 공기압 정보 : 전륜(${escapeHtml(formatAmount(frontPsi))}psi), 후륜(${escapeHtml(formatAmount(rearPsi))}psi)</p>`
+      : "";
+  return `<article class="consumable-card">
+    <div class="label">타이어(순정)</div>
+    <div class="value tire-spec">${lines}${pressure}</div>
+    ${consumableLinkHtml(tire?.link, base)}
+  </article>`;
 }
 
 function batteryValue(battery) {
@@ -1465,21 +1482,12 @@ function keyBatteryValue(key) {
 export function consumablesSectionHtml(gen, base = "", model) {
   const vehicleName = model?.name || gen?.label || "이 차";
   const title = `${vehicleName} 엔진오일 / 타이어 / 배터리 정보`;
-  const tireSize = tireValue(gen.tire);
   const cards = [
     consumableCardHtml(
       { label: "엔진오일", value: oilValue(gen.oil), note: gen.oil?.note, link: gen.oil?.link },
       base
     ),
-    consumableCardHtml(
-      {
-        label: "타이어(순정)",
-        value: tireSize || gen.tire?.pressure_note || "",
-        note: tireSize ? gen.tire?.pressure_note : "",
-        link: gen.tire?.link,
-      },
-      base
-    ),
+    tireCardHtml(gen.tire, base),
     consumableCardHtml(
       { label: "배터리", value: batteryValue(gen.battery), note: gen.battery?.note, link: gen.battery?.link },
       base
