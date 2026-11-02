@@ -1217,10 +1217,7 @@ function productGridHtml(productsEntry, gen, base, model) {
           "조수석 사이즈는 상품 페이지에서 함께 확인하세요!",
         ]
       : matched > 0
-        ? [
-            `아래는 ${driverLabel}에 맞는 상품입니다`,
-            `구매 시 ${pairLabel} 옵션을 확인하세요!`,
-          ]
+        ? [`구매 시 ${pairLabel} 옵션을 확인하세요!`]
         : [`아래 제품을 클릭해 ${driverLabel} / ${pairLabel} 옵션을 선택하세요`];
   const noteItems = notes.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
   const productFooter = `<div class="product-footer">
@@ -1499,7 +1496,6 @@ export function consumablesSectionHtml(gen, base = "", model) {
   ].join("");
 
   return `<section class="content-block consumable-section" aria-label="${escapeHtml(title)}">
-    ${blockTitleHtml(title)}
     <div class="consumable-grid">${cards}</div>
   </section>`;
 }
