@@ -1,0 +1,119 @@
+{
+  "_note": "세대 id별 소모품. 없는 값은 null. 화면은 값이 있는 항목만 보여주고, 4종이 모두 비면 섹션을 숨긴다. link.href가 있을 때만 항목 링크를 표시한다. 수치는 국내 취급설명서에서 확인한 것만 넣는다.",
+  "cn7-pe": {
+    "_source": "현대 아반떼 CN7 2026 국내 취급설명서",
+    "oil": {
+      "viscosity": "0W-20",
+      "capacity_l": 3.8,
+      "note": "Smartstream G1.6 교환량. 1.6 LPI는 5W-20, 3.6L.",
+      "link": null
+    },
+    "tire": {
+      "front": "195/65R15 · 205/55R16 · 225/45R17 · 235/40R18",
+      "rear": "195/65R15 · 205/55R16 · 225/45R17 · 235/40R18",
+      "pressure_note": "205/55R16 앞 235kPa(34psi)·뒤 215kPa(31psi). N Line 235/40R18 앞·뒤 230kPa(33psi).",
+      "link": null
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": "CR2450", "count": 1, "link": null }
+  },
+  "cn7-pe-n": {
+    "_source": "현대 아반떼 N CN7 2026 국내 취급설명서",
+    "oil": {
+      "viscosity": "0W-30",
+      "capacity_l": 5.2,
+      "note": "2.0 T-GDi 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
+      "link": null
+    },
+    "tire": {
+      "front": "245/35ZR19",
+      "rear": "245/35ZR19",
+      "pressure_note": null,
+      "link": null
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": "CR2450", "count": 1, "link": null }
+  },
+  "cn7-n": {
+    "_source": "현대 아반떼 N 2021 국내 취급설명서와 2026 설명서의 엔진오일 표가 동일",
+    "oil": {
+      "viscosity": "0W-30",
+      "capacity_l": 5.2,
+      "note": "2.0 T-GDi 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
+      "link": null
+    },
+    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": null, "count": null, "link": null }
+  },
+  "mx5": {
+    "_source": "현대 싼타페 MX5 2024 국내 취급설명서. 하이브리드 1.6T는 2024 하이브리드 취급설명서",
+    "oil": {
+      "viscosity": "0W-30",
+      "capacity_l": 5.8,
+      "note": "가솔린 2.5 T-GDi 교환량. 하이브리드 1.6T는 0W-20, 4.8L.",
+      "link": null
+    },
+    "tire": {
+      "front": "235/60R18 · 255/45R20 · 245/45R21",
+      "rear": "235/60R18 · 255/45R20 · 245/45R21",
+      "pressure_note": "235/60R18·255/45R20 앞·뒤 240kPa(35psi). 245/45R21 앞·뒤 250kPa(36psi).",
+      "link": null
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": null, "count": null, "link": null }
+  },
+  "mq4-pe": {
+    "_source": "기아 쏘렌토 MQ4 2024 추천 오일, 2026 타이어 및 휠",
+    "oil": {
+      "viscosity": "0W-30",
+      "capacity_l": 5.8,
+      "note": "가솔린 2.5 T-GDi 교환량. 디젤 2.2는 5.6L, ACEA C5·C2·C3.",
+      "link": null
+    },
+    "tire": {
+      "front": "235/60R18 · 255/45R20",
+      "rear": "235/60R18 · 255/45R20",
+      "pressure_note": "235/60R18 앞·뒤 240kPa(35psi).",
+      "link": null
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": null, "count": null, "link": null }
+  },
+  "ka4": {
+    "_source": "기아 카니발 KA4 2022~2025 국내 취급설명서",
+    "oil": {
+      "viscosity": "0W-20",
+      "capacity_l": 6.1,
+      "note": "가솔린 3.5 GDi 교환량. 디젤 2.2는 5.6L, ACEA C5·C2·C3.",
+      "link": null
+    },
+    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": null, "count": null, "link": null }
+  },
+  "ka4-pe": {
+    "_source": "기아 카니발 KA4 2026 국내 취급설명서 요약본",
+    "oil": {
+      "viscosity": "0W-20",
+      "capacity_l": 6.1,
+      "note": "가솔린 3.5 GDi 교환량. 디젤 2.2는 5.6L, ACEA C5·C2·C3.",
+      "link": null
+    },
+    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": null, "count": null, "link": null }
+  },
+  "ja-pe2": {
+    "_source": "기아 모닝 JA 2024 국내 취급설명서",
+    "oil": {
+      "viscosity": "0W-20",
+      "capacity_l": 3.1,
+      "note": "스마트스트림 G1.0 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
+      "link": null
+    },
+    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
+    "key_battery": { "type": null, "count": null, "link": null }
+  }
+}

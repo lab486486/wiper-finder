@@ -345,22 +345,6 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
   font-weight: 700;
   color: var(--green);
 }
-.product-cross-section {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 10px 12px; margin-top: 8px;
-}
-.product-cross-section .product-card {
-  margin-bottom: 0; border: none; padding: 0; background: transparent;
-}
-.product-cross-section .info {
-  display: flex; align-items: center; gap: 6px; min-width: 0;
-}
-.product-cross-section .tag {
-  margin-bottom: 0; flex-shrink: 0;
-}
-.product-cross-section .title {
-  min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
 .product-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
 }
@@ -401,6 +385,41 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .product-ftc {
   font-size: .72rem; color: var(--muted); line-height: 1.45;
 }
+.replacement-signal {
+  margin-top: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.consumable-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 640px) {
+  .consumable-grid { grid-template-columns: 1fr 1fr; }
+}
+.consumable-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 14px 12px;
+}
+.consumable-card .label { font-size: .75rem; color: var(--muted); }
+.consumable-card .value {
+  font-size: .95rem; font-weight: 700; line-height: 1.45; margin-top: 4px;
+  word-break: keep-all;
+}
+.consumable-card .note {
+  font-size: .78rem; color: var(--muted); line-height: 1.45; margin-top: 6px;
+}
+.consumable-link {
+  display: inline-block; margin-top: 8px;
+  font-size: .82rem; font-weight: 600; color: var(--accent); text-decoration: none;
+}
+.consumable-link:hover { text-decoration: underline; }
 .site-footer {
   margin-top: 24px; padding-top: 12px;
   border-top: 1px solid var(--border);
@@ -1072,7 +1091,7 @@ function formatPrice(n) {
   return `${v.toLocaleString("ko-KR")}원`;
 }
 
-function productGridHtml(productsEntry, gen) {
+function productGridHtml(productsEntry, gen, base) {
   if (!productsEntry?.products?.length) return "";
   const tiles = productsEntry.products
     .slice(0, 6)
@@ -1113,20 +1132,11 @@ function productGridHtml(productsEntry, gen) {
           ]
         : [`아래 제품을 클릭해 ${driverLabel} / ${pairLabel} 옵션을 선택하세요`];
   const noteItems = notes.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
-  const crossBlock =
-    gen?.cross_title && gen?.cross_url
-      ? `<div class="product-cross-section">${productCard({
-          title: gen.cross_title,
-          url: gen.cross_url,
-          tag: "추천",
-          ctaLabel: "쿠팡에서 보기",
-        })}</div>`
-      : "";
   const productFooter = `<div class="product-footer">
     <div class="product-trust">
-      <p class="product-trust-note">와이퍼 작동 시 '우드득' 소리가 나면 교체 시점입니다.</p>
+      ${replacementSignalHtml()}
     </div>
-    ${crossBlock}
+    ${consumablesSectionHtml(gen, base)}
     <span class="product-ftc">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>
   </div>`;
 
@@ -1232,9 +1242,185 @@ function relatedGuidesForGuide(base, guide) {
   return relatedGuidesSectionHtml(base, ids.filter((id) => id !== guide.id), { panel: true });
 }
 
+function nullableText(value) {
+  if (value === null || value === undefined) return null;
+  const text = String(value).trim();
+  return text ? text : null;
+}
+
+function nullableNumber(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function nullableLink(link) {
+  if (!link || typeof link !== "object") return null;
+  const href = nullableText(link.href);
+  if (!href) return null;
+  return { href, label: nullableText(link.label) };
+}
+
+function formatAmount(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? String(n) : "";
+}
+
+/** 와이퍼 판매 규격과 같이 mm를 가장 가까운 인치로 병기한다. mm 원값은 바꾸지 않는다. */
+function mmToInchLabel(mm) {
+  const n = Number(String(mm ?? "").replace(/[^\d.]/g, ""));
+  if (!Number.isFinite(n) || n <= 0) return "";
+  return `${Math.round(n / 25.4)}인치`;
+}
+
+function mmUnitHtml(mm) {
+  const inch = mmToInchLabel(mm);
+  return `<div class="unit">mm${inch ? ` · ${escapeHtml(inch)}` : ""}</div>`;
+}
+
+function replacementSignalHtml() {
+  return `<p class="product-trust-note">와이퍼 작동 시 '우드득' 소리가 나면 교체 시점입니다.</p>`;
+}
+
+export function withConsumables(row, extra) {
+  const oil = extra?.oil && typeof extra.oil === "object" ? extra.oil : {};
+  const tire = extra?.tire && typeof extra.tire === "object" ? extra.tire : {};
+  const battery = extra?.battery && typeof extra.battery === "object" ? extra.battery : {};
+  const key = extra?.key_battery && typeof extra.key_battery === "object" ? extra.key_battery : {};
+  return {
+    ...row,
+    oil: {
+      viscosity: nullableText(oil.viscosity),
+      capacity_l: nullableNumber(oil.capacity_l),
+      note: nullableText(oil.note),
+      link: nullableLink(oil.link),
+    },
+    tire: {
+      front: nullableText(tire.front),
+      rear: nullableText(tire.rear),
+      pressure_note: nullableText(tire.pressure_note),
+      link: nullableLink(tire.link),
+    },
+    battery: {
+      model: nullableText(battery.model),
+      capacity_ah: nullableNumber(battery.capacity_ah),
+      note: nullableText(battery.note),
+      link: nullableLink(battery.link),
+    },
+    key_battery: {
+      type: nullableText(key.type),
+      count: nullableNumber(key.count),
+      link: nullableLink(key.link),
+    },
+  };
+}
+
+function consumableLinkHtml(link, base) {
+  if (!link?.href) return "";
+  const external = /^https?:/i.test(link.href);
+  const href = link.href.startsWith("/") ? `${base}${link.href}` : link.href;
+  const attrs = external ? ` target="_blank" rel="noopener noreferrer"` : "";
+  return `<a class="consumable-link" href="${escapeHtml(href)}"${attrs}>${escapeHtml(link.label || "관련 안내")}</a>`;
+}
+
+function consumableCardHtml({ label, value, note, link }, base) {
+  if (!value) return "";
+  return `<article class="consumable-card">
+    <div class="label">${escapeHtml(label)}</div>
+    <div class="value">${escapeHtml(value)}</div>
+    ${note ? `<p class="note">${escapeHtml(note)}</p>` : ""}
+    ${consumableLinkHtml(link, base)}
+  </article>`;
+}
+
+function oilValue(oil) {
+  if (!oil) return "";
+  const parts = [];
+  if (oil.viscosity) parts.push(oil.viscosity);
+  if (oil.capacity_l != null) parts.push(`${formatAmount(oil.capacity_l)}L`);
+  return parts.join(" · ");
+}
+
+function tireValue(tire) {
+  if (!tire) return "";
+  const front = tire.front || "";
+  const rear = tire.rear || "";
+  if (front && rear && front === rear) return `전륜·후륜 ${front}`;
+  if (front && rear) return `전륜 ${front} · 후륜 ${rear}`;
+  if (front) return `전륜 ${front}`;
+  if (rear) return `후륜 ${rear}`;
+  return "";
+}
+
+function batteryValue(battery) {
+  if (!battery) return "";
+  const parts = [];
+  if (battery.model) parts.push(battery.model);
+  if (battery.capacity_ah != null) parts.push(`${formatAmount(battery.capacity_ah)}Ah`);
+  return parts.join(" · ");
+}
+
+function keyBatteryValue(key) {
+  if (!key) return "";
+  const parts = [];
+  if (key.type) parts.push(key.type);
+  if (key.count != null) parts.push(`${formatAmount(key.count)}개`);
+  return parts.join(" · ");
+}
+
+export function consumablesSectionHtml(gen, base = "") {
+  const tireSize = tireValue(gen.tire);
+  const cards = [
+    consumableCardHtml(
+      { label: "엔진오일", value: oilValue(gen.oil), note: gen.oil?.note, link: gen.oil?.link },
+      base
+    ),
+    consumableCardHtml(
+      {
+        label: "순정 타이어",
+        value: tireSize || gen.tire?.pressure_note || "",
+        note: tireSize ? gen.tire?.pressure_note : "",
+        link: gen.tire?.link,
+      },
+      base
+    ),
+    consumableCardHtml(
+      { label: "배터리", value: batteryValue(gen.battery), note: gen.battery?.note, link: gen.battery?.link },
+      base
+    ),
+    consumableCardHtml(
+      {
+        label: "스마트키 배터리",
+        value: keyBatteryValue(gen.key_battery),
+        note: "",
+        link: gen.key_battery?.link,
+      },
+      base
+    ),
+  ]
+    .filter(Boolean)
+    .join("");
+
+  if (!cards) return "";
+  return `<section class="content-block consumable-section" aria-label="이 차의 소모품 정보">
+    ${blockTitleHtml("이 차의 소모품 정보")}
+    <div class="consumable-grid">${cards}</div>
+  </section>`;
+}
+
+export function hasVisibleConsumables(gen) {
+  return consumablesSectionHtml(gen, "") !== "";
+}
+
 export function renderResultPage({ base, siteUrl, brand, model, gen, productsEntry, imageBase }) {
   const rearCell = gen.rearDisplay.value
-    ? `<div class="value">${escapeHtml(gen.rearDisplay.value)}</div>${gen.rearDisplay.unit ? `<div class="unit">${escapeHtml(gen.rearDisplay.unit)}</div>` : ""}`
+    ? `<div class="value">${escapeHtml(gen.rearDisplay.value)}</div>${
+        gen.rearDisplay.unit === "mm"
+          ? mmUnitHtml(gen.rearDisplay.value)
+          : gen.rearDisplay.unit
+            ? `<div class="unit">${escapeHtml(gen.rearDisplay.unit)}</div>`
+            : ""
+      }`
     : `<div class="value">—</div>`;
 
   const rearMsg = gen.rearMessage
@@ -1257,7 +1443,10 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
         })
       : "";
 
-  const productGrid = productGridHtml(productsEntry, gen);
+  const productGrid = productGridHtml(productsEntry, gen, base);
+  const signalOutside = productGrid
+    ? ""
+    : `<div class="replacement-signal">${replacementSignalHtml()}</div>${consumablesSectionHtml(gen, base)}`;
   const seo = seoResult(brand, model, gen);
   const faqItems = buildResultFaq({ brand, model, gen, base });
   const faqSection = faqSectionHtml({ brand, model, gen, base });
@@ -1297,15 +1486,16 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
         <h1>${escapeHtml(gen.label)}${powerBadgeHtml(gen.powerBadge, gen.hybrid)} <span class="badge">${escapeHtml(gen.years)}</span></h1>
         ${headFav}
       </div>
-      <p class="sub">와이퍼 사이즈 (mm)</p>
+      <p class="sub">와이퍼 사이즈</p>
     </div>
-    <div class="size-table">
-      <div class="size-cell"><div class="label">운전석</div><div class="value">${escapeHtml(gen.driver_mm)}</div><div class="unit">mm</div></div>
-      <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div><div class="unit">mm</div></div>
+    <div class="size-table" id="wiper-size">
+      <div class="size-cell"><div class="label">운전석</div><div class="value">${escapeHtml(gen.driver_mm)}</div>${mmUnitHtml(gen.driver_mm)}</div>
+      <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div>${mmUnitHtml(gen.passenger_mm)}</div>
       <div class="size-cell"><div class="label">후방</div>${rearCell}</div>
     </div>
     ${rearMsg}
     ${productGrid}
+    ${signalOutside}
     ${frontCard ? `<p class="section-title">바로 구매</p><p class="section-sub">mm 확인 후 아래에서 바로 이동하세요.</p>${frontCard}${rearCard}` : ""}
     ${faqSection}
     ${relatedSection}`,
