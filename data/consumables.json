@@ -1,81 +1,54 @@
 {
-  "_note": "세대 id별 소모품. 없는 값은 null. 화면은 값이 있는 항목만 보여주고, 4종이 모두 비면 섹션을 숨긴다. link.href가 있을 때만 항목 링크를 표시한다. 수치는 국내 취급설명서에서 확인한 것만 넣는다.",
-  "cn7-pe": {
-    "_source": "현대 아반떼 CN7 2026 국내 취급설명서",
+  "_note": "세대 id별 소모품. 없는 값은 null. source_note는 화면 미표시. 규격 수치는 공식 문서 2곳이 일치할 때만 넣는다. 엔진오일 용량은 필터 교환(일반 교체) 기준. 타이어는 표의 첫 행(기본 트림)이고, 다른 규격이 있으면 note에 트림별 상이.",
+  "ja-pe": {
     "oil": {
       "viscosity": "0W-20",
-      "capacity_l": 3.8,
-      "note": "Smartstream G1.6 교환량. 1.6 LPI는 5W-20, 3.6L.",
-      "link": null
-    },
-    "tire": {
-      "front": "205/55R16",
-      "rear": "205/55R16",
-      "pressure_front_psi": 34,
-      "pressure_rear_psi": 31,
-      "pressure_note": null,
+      "capacity_l": 3.1,
+      "note": "스마트스트림 G1.0 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
       "link": null,
-      "_all": "195/65R15 · 205/55R16 · 225/45R17 · 235/40R18"
-    },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": "CR2450", "count": 1, "link": null }
-  },
-  "cn7-pe-n": {
-    "_source": "현대 아반떼 N CN7 2026 국내 취급설명서",
-    "oil": {
-      "viscosity": "0W-30",
-      "capacity_l": 5.2,
-      "note": "2.0 T-GDi 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
-      "link": null
+      "source_note": "기아 모닝 JA 2022 국내 취급설명서 추천오일 및 용량, 기아 모닝 JA 2026 국내 취급설명서 추천 오일 및 용량. 둘 다 필터 교환 포함 3.1L, SAE 0W-20."
     },
     "tire": {
-      "front": "245/35ZR19",
-      "rear": "245/35ZR19",
+      "front": "175/65R14",
+      "rear": "175/65R14",
+      "pressure_front_psi": 33,
+      "pressure_rear_psi": 33,
       "pressure_note": null,
-      "link": null
-    },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": "CR2450", "count": 1, "link": null }
-  },
-  "cn7-n": {
-    "_source": "현대 아반떼 N 2021 국내 취급설명서와 2026 설명서의 엔진오일 표가 동일",
-    "oil": {
-      "viscosity": "0W-30",
-      "capacity_l": 5.2,
-      "note": "2.0 T-GDi 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
-      "link": null
-    },
-    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": null, "count": null, "link": null }
-  },
-  "mx5": {
-    "_source": "현대 싼타페 MX5 2024 국내 취급설명서. 하이브리드 1.6T는 2024 하이브리드 취급설명서",
-    "oil": {
-      "viscosity": "0W-30",
-      "capacity_l": 5.8,
-      "note": "가솔린 2.5 T-GDi 교환량. 하이브리드 1.6T는 0W-20, 4.8L.",
-      "link": null
-    },
-    "tire": {
-      "front": "255/45R20",
-      "rear": "255/45R20",
-      "pressure_front_psi": 35,
-      "pressure_rear_psi": 35,
-      "pressure_note": null,
+      "note": "트림별 상이",
       "link": null,
-      "_all": "235/60R18 · 255/45R20 · 245/45R21"
+      "source_note": "기아 모닝 JA 2022 국내 취급설명서 타이어 및 휠, 기아 모닝 JA 2026 국내 취급설명서 타이어 및 휠. 기본 175/65R14 앞뒤 230kPa(33psi). 195/45R16은 공기압 칸이 비어 있어 공기압은 넣지 않음."
     },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": null, "count": null, "link": null }
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null, "source_note": null },
+    "key_battery": { "type": null, "count": null, "link": null, "source_note": null }
   },
-  "mq4-pe": {
-    "_source": "기아 쏘렌토 MQ4 2024 추천 오일, 2026 타이어 및 휠",
+  "ja-pe2": {
+    "oil": {
+      "viscosity": "0W-20",
+      "capacity_l": 3.1,
+      "note": "스마트스트림 G1.0 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
+      "link": null,
+      "source_note": "기아 모닝 JA 2022 국내 취급설명서 추천오일 및 용량, 기아 모닝 JA 2026 국내 취급설명서 추천 오일 및 용량. 둘 다 필터 교환 포함 3.1L, SAE 0W-20."
+    },
+    "tire": {
+      "front": "175/65R14",
+      "rear": "175/65R14",
+      "pressure_front_psi": 33,
+      "pressure_rear_psi": 33,
+      "pressure_note": null,
+      "note": "트림별 상이",
+      "link": null,
+      "source_note": "기아 모닝 JA 2022 국내 취급설명서 타이어 및 휠, 기아 모닝 JA 2026 국내 취급설명서 타이어 및 휠. 기본 175/65R14 앞뒤 230kPa(33psi). 195/45R16은 공기압 칸이 비어 있어 공기압은 넣지 않음."
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null, "source_note": null },
+    "key_battery": { "type": null, "count": null, "link": null, "source_note": null }
+  },
+  "mq4": {
     "oil": {
       "viscosity": "0W-30",
       "capacity_l": 5.8,
       "note": "가솔린 2.5 T-GDi 교환량. 디젤 2.2는 5.6L, ACEA C5·C2·C3.",
-      "link": null
+      "link": null,
+      "source_note": "기아 쏘렌토 MQ4 2023 국내 취급설명서 추천 오일 및 용량, 기아 쏘렌토 MQ4 2024 국내 취급설명서 추천 오일 및 용량. 가솔린 스마트스트림 G2.5 T-GDi 필터 교환 포함 5.8L SAE 0W-30. 디젤 스마트스트림 D2.2 5.6L."
     },
     "tire": {
       "front": "235/60R18",
@@ -83,46 +56,100 @@
       "pressure_front_psi": 35,
       "pressure_rear_psi": 35,
       "pressure_note": null,
+      "note": "트림별 상이",
       "link": null,
-      "_all": "235/60R18 · 255/45R20"
+      "source_note": "기아 쏘렌토 MQ4 2023 국내 취급설명서 타이어 및 휠, 기아 쏘렌토 MQ4 2025 국내 취급설명서 타이어 및 휠. 기본 235/60R18 앞뒤 240kPa(35psi). 255/45R20 공기압 칸은 비어 있음."
     },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": null, "count": null, "link": null }
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null, "source_note": null },
+    "key_battery": { "type": null, "count": null, "link": null, "source_note": null }
+  },
+  "mq4-pe": {
+    "oil": {
+      "viscosity": "0W-30",
+      "capacity_l": 5.8,
+      "note": "가솔린 2.5 T-GDi 교환량. 디젤 2.2는 5.6L, ACEA C5·C2·C3.",
+      "link": null,
+      "source_note": "기아 쏘렌토 MQ4 2023 국내 취급설명서 추천 오일 및 용량, 기아 쏘렌토 MQ4 2024 국내 취급설명서 추천 오일 및 용량. 가솔린 스마트스트림 G2.5 T-GDi 필터 교환 포함 5.8L SAE 0W-30. 디젤 스마트스트림 D2.2 5.6L."
+    },
+    "tire": {
+      "front": "235/60R18",
+      "rear": "235/60R18",
+      "pressure_front_psi": 35,
+      "pressure_rear_psi": 35,
+      "pressure_note": null,
+      "note": "트림별 상이",
+      "link": null,
+      "source_note": "기아 쏘렌토 MQ4 2023 국내 취급설명서 타이어 및 휠, 기아 쏘렌토 MQ4 2025 국내 취급설명서 타이어 및 휠. 기본 235/60R18 앞뒤 240kPa(35psi). 255/45R20 공기압 칸은 비어 있음."
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null, "source_note": null },
+    "key_battery": {
+      "type": "CR2450",
+      "count": 1,
+      "link": null,
+      "source_note": "기아 쏘렌토 MQ4 2024 국내 취급설명서 건전지 교체, 기아 쏘렌토 MQ4 2026 국내 취급설명서 건전지 교체, 기아 쏘렌토 MQ4 2027 국내 취급설명서 건전지 교체. 스마트키 CR2450 1개."
+    }
+  },
+  "mx5": {
+    "oil": {
+      "viscosity": "0W-30",
+      "capacity_l": 5.8,
+      "note": "취급설명서 엔진오일 표는 5.8L·0W-30 한 줄. 하이브리드 별도 수치는 이 표에 없음.",
+      "link": null,
+      "source_note": "현대 싼타페 MX5 2024 국내 취급설명서 추천 오일 및 용량, 현대 싼타페 MX5 2026 국내 취급설명서 추천 오일 및 용량. 엔진오일 5.8L, SAE 0W-30, API SN PLUS/SP 또는 ILSAC GF-6. 용량 문구는 일반적인 오일 교체 시 주입 용량. 엔진 이름이 표에 없고 하이브리드 별도 행도 없음."
+    },
+    "tire": {
+      "front": "235/60R18",
+      "rear": "235/60R18",
+      "pressure_front_psi": 35,
+      "pressure_rear_psi": 35,
+      "pressure_note": null,
+      "note": "트림별 상이",
+      "link": null,
+      "source_note": "현대 싼타페 MX5 2024 국내 취급설명서 타이어 및 휠, 현대 싼타페 MX5 2026 국내 취급설명서 타이어 및 휠. 기본 235/60R18 앞뒤 240kPa(35psi). 255/45R20도 35psi, 245/45R21은 36psi."
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null, "source_note": null },
+    "key_battery": { "type": null, "count": null, "link": null, "source_note": null }
   },
   "ka4": {
-    "_source": "기아 카니발 KA4 2022~2025 국내 취급설명서",
     "oil": {
       "viscosity": "0W-20",
       "capacity_l": 6.1,
       "note": "가솔린 3.5 GDi 교환량. 디젤 2.2는 5.6L, ACEA C5·C2·C3.",
-      "link": null
+      "link": null,
+      "source_note": "기아 카니발 KA4 2022 국내 취급설명서 추천 오일 및 용량, 기아 카니발 KA4 2024 국내 취급설명서 추천 오일 및 용량. 가솔린 스마트스트림 G3.5 GDi 필터 교환 포함 6.1L SAE 0W-20. 디젤 스마트스트림 D2.2 5.6L."
     },
-    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": null, "count": null, "link": null }
+    "tire": {
+      "front": "235/60R18",
+      "rear": "235/60R18",
+      "pressure_front_psi": null,
+      "pressure_rear_psi": null,
+      "pressure_note": null,
+      "note": "트림별 상이",
+      "link": null,
+      "source_note": "기아 카니발 KA4 2022 국내 취급설명서 타이어 및 휠, 기아 카니발 KA4 2024 국내 취급설명서 타이어 및 휠. 규격 235/60R18·235/55R19는 일치. 18인치 공기압은 2022년 35psi, 2024년 36psi로 달라 공기압은 비움."
+    },
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null, "source_note": null },
+    "key_battery": { "type": null, "count": null, "link": null, "source_note": null }
   },
   "ka4-pe": {
-    "_source": "기아 카니발 KA4 2026 국내 취급설명서 요약본",
     "oil": {
       "viscosity": "0W-20",
       "capacity_l": 6.1,
       "note": "가솔린 3.5 GDi 교환량. 디젤 2.2는 5.6L, ACEA C5·C2·C3.",
-      "link": null
+      "link": null,
+      "source_note": "기아 카니발 KA4 2022 국내 취급설명서 추천 오일 및 용량, 기아 카니발 KA4 2024 국내 취급설명서 추천 오일 및 용량. 가솔린 스마트스트림 G3.5 GDi 필터 교환 포함 6.1L SAE 0W-20. 디젤 스마트스트림 D2.2 5.6L."
     },
-    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": null, "count": null, "link": null }
-  },
-  "ja-pe2": {
-    "_source": "기아 모닝 JA 2024 국내 취급설명서",
-    "oil": {
-      "viscosity": "0W-20",
-      "capacity_l": 3.1,
-      "note": "스마트스트림 G1.0 교환량. API SN PLUS/SP 또는 ILSAC GF-6.",
-      "link": null
+    "tire": {
+      "front": "235/60R18",
+      "rear": "235/60R18",
+      "pressure_front_psi": null,
+      "pressure_rear_psi": null,
+      "pressure_note": null,
+      "note": "트림별 상이",
+      "link": null,
+      "source_note": "기아 카니발 KA4 2022 국내 취급설명서 타이어 및 휠, 기아 카니발 KA4 2024 국내 취급설명서 타이어 및 휠. 규격 235/60R18·235/55R19는 일치. 18인치 공기압은 2022년 35psi, 2024년 36psi로 달라 공기압은 비움."
     },
-    "tire": { "front": null, "rear": null, "pressure_note": null, "link": null },
-    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null },
-    "key_battery": { "type": null, "count": null, "link": null }
+    "battery": { "model": null, "capacity_ah": null, "note": null, "link": null, "source_note": null },
+    "key_battery": { "type": null, "count": null, "link": null, "source_note": null }
   }
 }
