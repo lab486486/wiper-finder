@@ -254,6 +254,19 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .gen-body .gen-size { margin-top: 4px; font-size: .8rem; font-weight: 700; }
 .model-latest { margin: 6px 0 22px; }
 .model-latest h2 { font-size: 1.15rem; margin: 0 0 6px; }
+.model-scroll-hint {
+  margin: 2px 0 12px;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+}
+.model-scroll-hint span {
+  background: linear-gradient(to bottom, transparent 50%, #fef08a 50%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 2px;
+}
 .model-older { margin-top: 8px; }
 .gen-body .hint {
   color: var(--muted); font-size: .72rem; margin-top: 4px; line-height: 1.35;
@@ -1045,7 +1058,7 @@ export function renderMyCarsPage({ base, siteUrl }) {
   });
 }
 
-function latestOfferHtml({ gen, imageBase, productsEntry, base }) {
+function latestOfferHtml({ gen, model, imageBase, productsEntry, base }) {
   const rearCell = gen.rearDisplay?.value
     ? `<div class="value">${escapeHtml(gen.rearDisplay.value)}</div>${
         gen.rearDisplay.unit === "mm"
@@ -1064,7 +1077,7 @@ function latestOfferHtml({ gen, imageBase, productsEntry, base }) {
   return `<section class="model-latest">
     ${hero}
     <h2>${escapeHtml(gen.label)}${powerBadgeHtml(gen.powerBadge, gen.hybrid)} <span class="badge">${escapeHtml(gen.years)}</span></h2>
-    <p class="sub">${escapeHtml(gen.label)} 와이퍼는 운전석 ${escapeHtml(gen.driver_mm)}mm, 조수석 ${escapeHtml(gen.passenger_mm)}mm입니다.</p>
+    <p class="model-scroll-hint"><span>${escapeHtml(model.name)} 다른 모델은 스크롤 내리면 아래에 있습니다.</span></p>
     <div class="size-table">
       <div class="size-cell"><div class="label">운전석</div><div class="value">${escapeHtml(gen.driver_mm)}</div>${mmUnitHtml(gen.driver_mm)}</div>
       <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div>${mmUnitHtml(gen.passenger_mm)}</div>
@@ -1109,7 +1122,7 @@ export function renderGenerationPage({ base, siteUrl, brand, model, generations,
     { label: brand.name, href: `/${brand.id}/` },
     { label: model.name, href: `/${brand.id}/${model.id}/` },
   ];
-  const offer = latest ? latestOfferHtml({ gen: latest, imageBase, productsEntry, base }) : "";
+  const offer = latest ? latestOfferHtml({ gen: latest, model, imageBase, productsEntry, base }) : "";
 
   return layout({
     documentTitle: seo.documentTitle,
