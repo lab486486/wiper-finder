@@ -38,6 +38,7 @@ export function titleSuffix(main) {
 }
 
 function rearSummary(gen) {
+  if (gen.sizePending || gen.rear_type === "unknown") return "후방 데이터 필요";
   if (gen.rear_type === "none") return "후방·뒷유리·리어 없음";
   if (gen.rear_type === "dedicated") return "후방·뒷유리·리어 전용";
   return `후방·뒷유리·리어 ${gen.rear_mm}mm`;
@@ -99,12 +100,20 @@ export function vehicleName(brandName, label) {
 }
 
 export function seoResult(brand, model, gen) {
+  const name = vehicleName(brand.name, gen.label);
+  if (gen.sizePending) {
+    return {
+      documentTitle: titleSuffix(`${gen.label} 와이퍼 사이즈`),
+      description: `${name} 와이퍼 사이즈는 아직 확인 전입니다. 데이터 필요 | ${SITE_NAME}`,
+      path: `/${brand.id}/${model.id}/${gen.id}/`,
+    };
+  }
   const sizes = `운전석 ${gen.driver_mm}mm · 조수석 ${gen.passenger_mm}mm · ${rearSummary(gen)}`;
   return {
     documentTitle: titleSuffix(
       `${gen.label} 와이퍼 사이즈 ${gen.driver_mm}·${gen.passenger_mm}mm`
     ),
-    description: `${vehicleName(brand.name, gen.label)}(${gen.years}) 와이퍼 사이즈 — ${sizes}.${rearSearchHint(gen)} 차종별 mm 규격·추천 와이퍼 | ${SITE_NAME}`,
+    description: `${name}(${gen.years}) 와이퍼 사이즈 — ${sizes}.${rearSearchHint(gen)} 차종별 mm 규격·추천 와이퍼 | ${SITE_NAME}`,
     path: `/${brand.id}/${model.id}/${gen.id}/`,
   };
 }

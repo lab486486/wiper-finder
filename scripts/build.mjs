@@ -131,6 +131,24 @@ function loadGenesisCatalog() {
   };
 }
 
+/** Brands and generations added locally. Sizes stay empty until an official source is filled in. */
+function loadAdditionsCatalog() {
+  const path = join(ROOT, "data/additions.json");
+  if (!existsSync(path)) return { brands: [], models: [], generations: [] };
+  const data = JSON.parse(readFileSync(path, "utf8"));
+  const generations = (data.generations || []).map((row) =>
+    withCrossDefaults(
+      { rear_type: "unknown", driver_mm: "", passenger_mm: "", verified: "FALSE", ...row },
+      { verified: "FALSE" }
+    )
+  );
+  return {
+    brands: data.brands || [],
+    models: data.models || [],
+    generations,
+  };
+}
+
 /** Chevrolet/Daewoo draft catalog. Generations without sizes stay off the live result pages. */
 function loadChevroletDaewooCatalog() {
   const path = join(ROOT, "data/chevrolet-daewoo.json");
@@ -197,22 +215,25 @@ function applySizeSource(row, sources) {
 }
 
 function enrichGeneration(row, carsDir) {
-  const driver = row.driver_mm;
-  const passenger = row.passenger_mm;
-  const rearType = row.rear_type || "none";
+  const driver = String(row.driver_mm || "").trim();
+  const passenger = String(row.passenger_mm || "").trim();
+  const sizePending = !driver || !passenger;
+  const rearType = row.rear_type || (sizePending ? "unknown" : "none");
 
-  const product_title_front =
-    row.product_title_front ||
-    `가성비 ${driver}+${passenger}mm 세트`;
+  const product_title_front = sizePending
+    ? ""
+    : row.product_title_front || `가성비 ${driver}+${passenger}mm 세트`;
 
   const product_title_rear =
     row.product_title_rear ||
-    (rearType !== "none" ? "후방 전용 와이퍼" : "");
+    (!sizePending && rearType !== "none" && rearType !== "unknown" ? "후방 전용 와이퍼" : "");
 
   let rearDisplay = { value: "—", unit: "" };
   let rearMessage = "";
 
-  if (rearType === "none") {
+  if (sizePending || rearType === "unknown") {
+    rearDisplay = { value: "데이터 필요", unit: "" };
+  } else if (rearType === "none") {
     rearMessage = row.rear_note || "이 차종은 후방 와이퍼가 없습니다.";
     rearDisplay = { value: "없음", unit: "" };
   } else if (rearType === "dedicated") {
@@ -230,13 +251,17 @@ function enrichGeneration(row, carsDir) {
 
   return {
     ...row,
+    driver_mm: driver,
+    passenger_mm: passenger,
+    rear_type: rearType,
+    sizePending,
     product_title_front,
     product_title_rear,
     rearDisplay,
     rearMessage,
     imageFile,
     powerBadge,
-    coupang_keyword: row.coupang_keyword || `불스원 ${driver} ${passenger}`,
+    coupang_keyword: sizePending ? "" : row.coupang_keyword || `불스원 ${driver} ${passenger}`,
   };
 }
 
@@ -337,15 +362,25 @@ async function main() {
   ]);
   const genesis = loadGenesisCatalog();
   const chevyDaewoo = loadChevroletDaewooCatalog();
-  const brands = mergeById(mergeById(sheetBrands, genesis.brands), chevyDaewoo.brands);
-  const models = mergeById(mergeById(sheetModels, genesis.models), chevyDaewoo.models);
-  const generationsRaw = mergeById(mergeById(sheetGenerations, genesis.generations), chevyDaewoo.generations);
+  const additions = loadAdditionsCatalog();
+  const brands = mergeById(mergeById(mergeById(sheetBrands, genesis.brands), chevyDaewoo.brands), additions.brands);
+  const models = mergeById(mergeById(mergeById(sheetModels, genesis.models), chevyDaewoo.models), additions.models);
+  const generationsRaw = mergeById(
+    mergeById(mergeById(sheetGenerations, genesis.generations), chevyDaewoo.generations),
+    additions.generations
+  );
   if (genesis.generations.length) {
     console.log(`Merged Genesis catalog: ${genesis.models.length} models, ${genesis.generations.length} generations`);
   }
   if (chevyDaewoo.brands.length) {
     console.log(
       `Merged Chevrolet/Daewoo catalog: ${chevyDaewoo.models.length} models, ${chevyDaewoo.generations.length} sized generations`
+    );
+  }
+  if (additions.brands.length || additions.models.length || additions.generations.length) {
+    const pending = additions.generations.filter((row) => !String(row.driver_mm || "").trim()).length;
+    console.log(
+      `Merged additions: ${additions.brands.length} brands, ${additions.models.length} models, ${additions.generations.length} generations (${pending} without sizes)`
     );
   }
 
@@ -521,7 +556,9 @@ async function main() {
           path: `/${brand.id}/${model.id}/${gen.id}/`,
           priority: "0.9",
         });
-        const productsEntry = productsBySize[`${gen.driver_mm}-${gen.passenger_mm}`];
+        const productsEntry = gen.sizePending
+          ? null
+          : productsBySize[`${gen.driver_mm}-${gen.passenger_mm}`];
         writeHtml(
           join(dist, brand.id, model.id, `${gen.id}`, "index.html"),
           renderResultPage({ base, siteUrl, brand, model, gen, productsEntry, imageBase })

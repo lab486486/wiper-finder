@@ -1,0 +1,729 @@
+{
+  "_note": "추가 브랜드·차종. 와이퍼 mm는 마이카 와이퍼 규격 표에 적힌 값만 넣었다. 표에 없으면 비워 두고 화면은 데이터 필요로 표시한다. 후방이 '없습니다'라고 적힌 차만 rear_type none이다.",
+  "brands": [
+    {
+      "id": "kgm",
+      "name": "KGM",
+      "sort": "6"
+    },
+    {
+      "id": "renault",
+      "name": "르노코리아",
+      "sort": "7"
+    },
+    {
+      "id": "mercedes",
+      "name": "벤츠",
+      "sort": "8"
+    },
+    {
+      "id": "bmw",
+      "name": "BMW",
+      "sort": "9"
+    },
+    {
+      "id": "audi",
+      "name": "아우디",
+      "sort": "10"
+    },
+    {
+      "id": "volkswagen",
+      "name": "폭스바겐",
+      "sort": "11"
+    },
+    {
+      "id": "tesla",
+      "name": "테슬라",
+      "sort": "12"
+    },
+    {
+      "id": "volvo",
+      "name": "볼보",
+      "sort": "13"
+    },
+    {
+      "id": "lexus",
+      "name": "렉서스",
+      "sort": "14"
+    },
+    {
+      "id": "mini",
+      "name": "미니",
+      "sort": "15"
+    },
+    {
+      "id": "byd",
+      "name": "BYD",
+      "sort": "16"
+    }
+  ],
+  "models": [
+    {
+      "id": "nexo",
+      "brand_id": "hyundai",
+      "name": "넥쏘",
+      "sort": "21"
+    },
+    {
+      "id": "carens",
+      "brand_id": "kia",
+      "name": "카렌스",
+      "sort": "16"
+    },
+    {
+      "id": "pride",
+      "brand_id": "kia",
+      "name": "프라이드",
+      "sort": "17"
+    },
+    {
+      "id": "soul",
+      "brand_id": "kia",
+      "name": "쏘울",
+      "sort": "18"
+    },
+    {
+      "id": "stinger",
+      "brand_id": "kia",
+      "name": "스팅어",
+      "sort": "19"
+    },
+    {
+      "id": "tasman",
+      "brand_id": "kia",
+      "name": "타스만",
+      "sort": "20"
+    },
+    {
+      "id": "impala",
+      "brand_id": "chevrolet",
+      "name": "임팔라",
+      "sort": "16"
+    },
+    {
+      "id": "actyon",
+      "brand_id": "kgm",
+      "name": "액티언",
+      "sort": "1"
+    },
+    {
+      "id": "korando",
+      "brand_id": "kgm",
+      "name": "코란도",
+      "sort": "2"
+    },
+    {
+      "id": "korando-sports",
+      "brand_id": "kgm",
+      "name": "코란도 스포츠",
+      "sort": "3"
+    },
+    {
+      "id": "rexton",
+      "brand_id": "kgm",
+      "name": "렉스턴",
+      "sort": "4"
+    },
+    {
+      "id": "rexton-sports",
+      "brand_id": "kgm",
+      "name": "렉스턴 스포츠",
+      "sort": "5"
+    },
+    {
+      "id": "tivoli",
+      "brand_id": "kgm",
+      "name": "티볼리",
+      "sort": "6"
+    },
+    {
+      "id": "torres",
+      "brand_id": "kgm",
+      "name": "토레스",
+      "sort": "7"
+    },
+    {
+      "id": "torres-evx",
+      "brand_id": "kgm",
+      "name": "토레스 EVX",
+      "sort": "8"
+    },
+    {
+      "id": "arkana",
+      "brand_id": "renault",
+      "name": "아르카나",
+      "sort": "1"
+    },
+    {
+      "id": "grand-koleos",
+      "brand_id": "renault",
+      "name": "그랑 콜레오스",
+      "sort": "2"
+    },
+    {
+      "id": "qm3",
+      "brand_id": "renault",
+      "name": "QM3",
+      "sort": "3"
+    },
+    {
+      "id": "qm5",
+      "brand_id": "renault",
+      "name": "QM5",
+      "sort": "4"
+    },
+    {
+      "id": "qm6",
+      "brand_id": "renault",
+      "name": "QM6",
+      "sort": "5"
+    },
+    {
+      "id": "sm3",
+      "brand_id": "renault",
+      "name": "SM3",
+      "sort": "6"
+    },
+    {
+      "id": "sm5",
+      "brand_id": "renault",
+      "name": "SM5",
+      "sort": "7"
+    },
+    {
+      "id": "sm6",
+      "brand_id": "renault",
+      "name": "SM6",
+      "sort": "8"
+    },
+    {
+      "id": "sm7",
+      "brand_id": "renault",
+      "name": "SM7",
+      "sort": "9"
+    },
+    {
+      "id": "c-class",
+      "brand_id": "mercedes",
+      "name": "C클래스",
+      "sort": "1"
+    },
+    {
+      "id": "e-class",
+      "brand_id": "mercedes",
+      "name": "E클래스",
+      "sort": "2"
+    },
+    {
+      "id": "glc",
+      "brand_id": "mercedes",
+      "name": "GLC",
+      "sort": "3"
+    },
+    {
+      "id": "series-3",
+      "brand_id": "bmw",
+      "name": "3시리즈",
+      "sort": "1"
+    },
+    {
+      "id": "series-5",
+      "brand_id": "bmw",
+      "name": "5시리즈",
+      "sort": "2"
+    },
+    {
+      "id": "x5",
+      "brand_id": "bmw",
+      "name": "X5",
+      "sort": "3"
+    },
+    {
+      "id": "a6",
+      "brand_id": "audi",
+      "name": "A6",
+      "sort": "1"
+    },
+    {
+      "id": "tiguan",
+      "brand_id": "volkswagen",
+      "name": "티구안",
+      "sort": "1"
+    },
+    {
+      "id": "model-3",
+      "brand_id": "tesla",
+      "name": "모델 3",
+      "sort": "1"
+    },
+    {
+      "id": "model-y",
+      "brand_id": "tesla",
+      "name": "모델 Y",
+      "sort": "2"
+    },
+    {
+      "id": "xc60",
+      "brand_id": "volvo",
+      "name": "XC60",
+      "sort": "1"
+    },
+    {
+      "id": "es",
+      "brand_id": "lexus",
+      "name": "ES",
+      "sort": "1"
+    },
+    {
+      "id": "cooper",
+      "brand_id": "mini",
+      "name": "쿠퍼",
+      "sort": "1"
+    }
+  ],
+  "generations": [
+    {
+      "id": "avante-cn8",
+      "model_id": "avante",
+      "code": "CN8",
+      "label": "아반떼 CN8",
+      "years": "2026~현재",
+      "sort": "0",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "nexo-fe",
+      "model_id": "nexo",
+      "code": "FE",
+      "label": "넥쏘",
+      "years": "2018~2025",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "650",
+      "passenger_mm": "400",
+      "rear_mm": "350"
+    },
+    {
+      "id": "carens-rp",
+      "model_id": "carens",
+      "code": "RP",
+      "label": "카렌스 RP",
+      "years": "2013~2019",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "650",
+      "passenger_mm": "650"
+    },
+    {
+      "id": "pride-ub",
+      "model_id": "pride",
+      "code": "UB",
+      "label": "프라이드 UB",
+      "years": "2011~2017",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "650",
+      "passenger_mm": "400",
+      "rear_mm": "275",
+      "rear_note": "5도어에만 있습니다."
+    },
+    {
+      "id": "soul-ps",
+      "model_id": "soul",
+      "code": "PS",
+      "label": "쏘울 PS",
+      "years": "2013~2019",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "600",
+      "passenger_mm": "500",
+      "rear_mm": "280"
+    },
+    {
+      "id": "stinger-ck",
+      "model_id": "stinger",
+      "code": "CK",
+      "label": "스팅어 CK",
+      "years": "2017~2023",
+      "sort": "1",
+      "rear_type": "none",
+      "driver_mm": "650",
+      "passenger_mm": "450"
+    },
+    {
+      "id": "tasman-tk1",
+      "model_id": "tasman",
+      "code": "TK1",
+      "label": "타스만",
+      "years": "2025~현재",
+      "sort": "1",
+      "rear_type": "none",
+      "driver_mm": "550",
+      "passenger_mm": "550"
+    },
+    {
+      "id": "impala-10",
+      "model_id": "impala",
+      "code": "10세대",
+      "label": "임팔라 10세대",
+      "years": "2015~2019",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "450"
+    },
+    {
+      "id": "actyon-new",
+      "model_id": "actyon",
+      "code": "",
+      "label": "액티언",
+      "years": "2024~현재",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "600",
+      "passenger_mm": "450",
+      "rear_mm": "275",
+      "rear_note": "가솔린 275mm. 하이브리드는 250mm."
+    },
+    {
+      "id": "korando-c300",
+      "model_id": "korando",
+      "code": "C300",
+      "label": "코란도 C300",
+      "years": "2019~현재",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "600",
+      "passenger_mm": "450",
+      "rear_mm": "275"
+    },
+    {
+      "id": "korando-sports-q150",
+      "model_id": "korando-sports",
+      "code": "Q150",
+      "label": "코란도 스포츠",
+      "years": "2012~2018",
+      "sort": "1",
+      "rear_type": "none",
+      "driver_mm": "550",
+      "passenger_mm": "480"
+    },
+    {
+      "id": "rexton-y400",
+      "model_id": "rexton",
+      "code": "Y400",
+      "label": "G4 렉스턴",
+      "years": "2017~현재",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "650",
+      "passenger_mm": "500",
+      "rear_mm": "325"
+    },
+    {
+      "id": "rexton-y290",
+      "model_id": "rexton",
+      "code": "Y290",
+      "label": "렉스턴 W",
+      "years": "2012~2017",
+      "sort": "2",
+      "rear_type": "size",
+      "driver_mm": "500",
+      "passenger_mm": "500",
+      "rear_mm": "350"
+    },
+    {
+      "id": "rexton-sports-q200",
+      "model_id": "rexton-sports",
+      "code": "Q200",
+      "label": "렉스턴 스포츠",
+      "years": "2018~현재",
+      "sort": "1",
+      "rear_type": "none",
+      "driver_mm": "650",
+      "passenger_mm": "500"
+    },
+    {
+      "id": "tivoli-x100",
+      "model_id": "tivoli",
+      "code": "X100",
+      "label": "티볼리",
+      "years": "2015~현재",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "600",
+      "passenger_mm": "400",
+      "rear_mm": "250",
+      "rear_note": "2015~2019 일반 티볼리는 275mm, 이후는 250mm."
+    },
+    {
+      "id": "torres-j100",
+      "model_id": "torres",
+      "code": "J100",
+      "label": "토레스",
+      "years": "2022~현재",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "600",
+      "passenger_mm": "450",
+      "rear_mm": "250"
+    },
+    {
+      "id": "torres-evx-u100",
+      "model_id": "torres-evx",
+      "code": "U100",
+      "label": "토레스 EVX",
+      "years": "2023~현재",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "600",
+      "passenger_mm": "450",
+      "rear_mm": "250"
+    },
+    {
+      "id": "arkana-ljl",
+      "model_id": "arkana",
+      "code": "LJL",
+      "label": "아르카나",
+      "years": "2024~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "450"
+    },
+    {
+      "id": "grand-koleos-ar1",
+      "model_id": "grand-koleos",
+      "code": "AR1",
+      "label": "그랑 콜레오스",
+      "years": "2024~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "425"
+    },
+    {
+      "id": "qm3-1",
+      "model_id": "qm3",
+      "code": "",
+      "label": "QM3",
+      "years": "2013~2019",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "650",
+      "passenger_mm": "350"
+    },
+    {
+      "id": "qm5-h45",
+      "model_id": "qm5",
+      "code": "H45",
+      "label": "QM5",
+      "years": "2007~2016",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "450"
+    },
+    {
+      "id": "qm6-hzg",
+      "model_id": "qm6",
+      "code": "HZG",
+      "label": "QM6",
+      "years": "2016~2024",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "650",
+      "passenger_mm": "400"
+    },
+    {
+      "id": "sm3-l38",
+      "model_id": "sm3",
+      "code": "L38",
+      "label": "SM3",
+      "years": "2009~2019",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "400"
+    },
+    {
+      "id": "sm5-l43",
+      "model_id": "sm5",
+      "code": "L43",
+      "label": "SM5",
+      "years": "2010~2019",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "400"
+    },
+    {
+      "id": "sm6-lfd",
+      "model_id": "sm6",
+      "code": "LFD",
+      "label": "SM6",
+      "years": "2016~2024",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "450"
+    },
+    {
+      "id": "sm7-l47",
+      "model_id": "sm7",
+      "code": "L47",
+      "label": "SM7",
+      "years": "2011~2019",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "400"
+    },
+    {
+      "id": "c-class-w205",
+      "model_id": "c-class",
+      "code": "W205",
+      "label": "C클래스",
+      "years": "2014~2021",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "550",
+      "passenger_mm": "550"
+    },
+    {
+      "id": "e-class-w213",
+      "model_id": "e-class",
+      "code": "W213",
+      "label": "E클래스",
+      "years": "2016~2023",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "550"
+    },
+    {
+      "id": "e-class-w214",
+      "model_id": "e-class",
+      "code": "W214",
+      "label": "E클래스",
+      "years": "2023~현재",
+      "sort": "2",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "glc-x253",
+      "model_id": "glc",
+      "code": "X253",
+      "label": "GLC",
+      "years": "2015~2022",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "series-3-g20",
+      "model_id": "series-3",
+      "code": "G20",
+      "label": "3시리즈",
+      "years": "2019~현재",
+      "sort": "1",
+      "rear_type": "none",
+      "driver_mm": "600"
+    },
+    {
+      "id": "series-5-g30",
+      "model_id": "series-5",
+      "code": "G30",
+      "label": "5시리즈",
+      "years": "2017~2023",
+      "sort": "1",
+      "rear_type": "none",
+      "driver_mm": "650"
+    },
+    {
+      "id": "x5-g05",
+      "model_id": "x5",
+      "code": "G05",
+      "label": "X5",
+      "years": "2018~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "650",
+      "passenger_mm": "500"
+    },
+    {
+      "id": "a6-c8",
+      "model_id": "a6",
+      "code": "C8",
+      "label": "A6",
+      "years": "2018~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "600",
+      "passenger_mm": "500"
+    },
+    {
+      "id": "tiguan-ad",
+      "model_id": "tiguan",
+      "code": "AD",
+      "label": "티구안",
+      "years": "2016~2024",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "650"
+    },
+    {
+      "id": "model-3-highland",
+      "model_id": "model-3",
+      "code": "하이랜드",
+      "label": "모델 3",
+      "years": "2024~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "650",
+      "passenger_mm": "475"
+    },
+    {
+      "id": "model-y-juniper",
+      "model_id": "model-y",
+      "code": "주니퍼",
+      "label": "모델 Y",
+      "years": "2025~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "driver_mm": "650",
+      "passenger_mm": "500"
+    },
+    {
+      "id": "xc60-2",
+      "model_id": "xc60",
+      "code": "2세대",
+      "label": "XC60 2세대",
+      "years": "2017~현재",
+      "sort": "1",
+      "rear_type": "size",
+      "driver_mm": "650",
+      "passenger_mm": "475",
+      "rear_mm": "330"
+    },
+    {
+      "id": "es-xz10",
+      "model_id": "es",
+      "code": "XZ10",
+      "label": "ES",
+      "years": "2018~현재",
+      "sort": "1",
+      "rear_type": "none",
+      "driver_mm": "660",
+      "passenger_mm": "455"
+    },
+    {
+      "id": "cooper-f56",
+      "model_id": "cooper",
+      "code": "F56",
+      "label": "쿠퍼 3도어",
+      "years": "2014~2024",
+      "sort": "1",
+      "rear_type": "unknown"
+    }
+  ]
+}

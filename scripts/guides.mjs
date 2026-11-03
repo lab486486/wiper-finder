@@ -230,16 +230,36 @@ export const RESULT_RELATED_GUIDE_IDS = [
 ];
 
 export function buildResultFaq({ brand, model, gen, base }) {
+  const vehicle = gen.label.includes(brand.name) ? gen.label : `${brand.name} ${gen.label}`;
+  if (gen.sizePending) {
+    return [
+      {
+        q: `${gen.label} 와이퍼 사이즈는 얼마인가요?`,
+        a: `${vehicle} 와이퍼 사이즈는 아직 확인되지 않았습니다. 데이터 필요.`,
+      },
+      {
+        q: "와이퍼는 얼마나 자주 교체해야 하나요?",
+        a: "일반적으로 6~12개월, 또는 닦임이 나빠지고 고무가 갈라지면 교체하세요. 주행·주차 환경에 따라 달라집니다.",
+        guideId: "how-to-choose-wiper",
+      },
+      {
+        q: "와이퍼에서 소리가 나거나 잘 안 닦이면?",
+        a: "유리 오염·고무 경화·장착 불량을 먼저 점검하세요. 상태가 나쁘면 교체가 가장 확실합니다.",
+        guideId: "wiper-noise-fix",
+      },
+    ];
+  }
+
   let rearAnswer;
   if (gen.rear_type === "none") {
     rearAnswer = "후방 와이퍼는 없습니다.";
   } else if (gen.rear_type === "dedicated") {
     rearAnswer = "후방은 전용 와이퍼를 사용합니다.";
+  } else if (gen.rear_type === "unknown") {
+    rearAnswer = "후방 와이퍼 사이즈는 아직 확인되지 않았습니다. 데이터 필요.";
   } else {
     rearAnswer = `후방 와이퍼 사이즈는 ${gen.rear_mm}mm입니다.`;
   }
-
-  const vehicle = gen.label.includes(brand.name) ? gen.label : `${brand.name} ${gen.label}`;
 
   return [
     {

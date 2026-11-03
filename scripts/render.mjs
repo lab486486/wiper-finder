@@ -155,13 +155,6 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .brand-home { display: flex; flex-direction: column; gap: 10px; }
 .brand-home-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.brand-btn-soon {
-  display: block; background: var(--surface); border: 1px dashed var(--border);
-  border-radius: var(--radius); padding: 24px 16px; text-align: center;
-  color: var(--muted); box-shadow: none; cursor: default; user-select: none;
-}
-.brand-btn-soon strong { display: block; font-size: 1.35rem; margin-bottom: 4px; color: var(--text); opacity: .72; }
-.brand-btn-soon span { font-size: .85rem; }
 .grid-responsive {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
 }
@@ -297,6 +290,7 @@ h3 { font-size: .95rem; font-weight: 700; margin: 20px 0 8px; color: var(--text)
 .size-cell:last-child { border-right: 0; }
 .size-cell .label { font-size: .75rem; color: var(--muted); }
 .size-cell .value { font-size: 1.35rem; font-weight: 700; margin-top: 4px; }
+.size-cell .value.is-pending { font-size: .85rem; font-weight: 600; color: var(--muted); }
 .size-cell .unit { font-size: .72rem; color: var(--muted); }
 .rear-msg {
   background: #f8fafc; border: 1px solid var(--border); border-radius: 8px;
@@ -968,48 +962,47 @@ export function layout({
 function brandButtonHtml(base, brand, modelsByBrand) {
   if (!brand) return "";
   const count = (modelsByBrand[brand.id] || []).length;
+  const meta = count ? `${count}개 차종` : "데이터 필요";
   return `<a class="brand-btn" href="${base}/${brand.id}/">
         <strong>${escapeHtml(brand.name)}</strong>
-        <span>${count}개 차종</span>
+        <span>${meta}</span>
       </a>`;
 }
 
-function brandComingSoonHtml(name = "수입차") {
-  return `<div class="brand-btn-soon" aria-disabled="true">
-        <strong>${escapeHtml(name)}</strong>
-        <span>준비중</span>
-      </div>`;
-}
+/** Home is a fixed 2-column grid. Daewoo stays in the catalog but is not a home button. */
+const HOME_BRAND_ROWS = [
+  ["hyundai", "kia"],
+  ["genesis", "chevrolet"],
+  ["kgm", "renault"],
+  ["mercedes", "bmw"],
+  ["audi", "volkswagen"],
+  ["tesla", "volvo"],
+  ["lexus", "mini"],
+  ["byd", null],
+];
+const HOME_HIDDEN_BRANDS = new Set(["daewoo"]);
 
-/** Home layout: 현대|기아 / 제네시스|수입차(준비중) / 쉐보레|대우 (+ leftover brands). */
 export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
   const seo = seoHome();
   const byId = Object.fromEntries(brands.map((b) => [b.id, b]));
   const used = new Set();
   const take = (id) => {
+    if (!id) return null;
     const b = byId[id];
     if (!b) return null;
     used.add(id);
     return b;
   };
 
+  for (const id of HOME_HIDDEN_BRANDS) take(id);
+
   const rows = [];
-  const hyundai = take("hyundai");
-  const kia = take("kia");
-  if (hyundai || kia) {
+  for (const [leftId, rightId] of HOME_BRAND_ROWS) {
+    const left = take(leftId);
+    const right = take(rightId);
+    if (!left && !right) continue;
     rows.push(
-      `<div class="brand-home-row">${brandButtonHtml(base, hyundai, modelsByBrand)}${brandButtonHtml(base, kia, modelsByBrand)}</div>`
-    );
-  }
-  const genesis = take("genesis");
-  rows.push(
-    `<div class="brand-home-row">${brandButtonHtml(base, genesis, modelsByBrand)}${brandComingSoonHtml("수입차")}</div>`
-  );
-  const chevrolet = take("chevrolet");
-  const daewoo = take("daewoo");
-  if (chevrolet || daewoo) {
-    rows.push(
-      `<div class="brand-home-row">${brandButtonHtml(base, chevrolet, modelsByBrand)}${brandButtonHtml(base, daewoo, modelsByBrand)}</div>`
+      `<div class="brand-home-row">${brandButtonHtml(base, left, modelsByBrand)}${brandButtonHtml(base, right, modelsByBrand)}</div>`
     );
   }
 
@@ -1042,14 +1035,16 @@ export function renderBrandPage({ base, siteUrl, brands, modelsByBrand }) {
 
 export function renderModelPage({ base, siteUrl, brand, models }) {
   const seo = seoBrand(brand);
-  const cards = models
-    .map(
-      (m) => `<a class="model-card" href="${base}/${brand.id}/${m.id}/">
+  const cards = models.length
+    ? models
+        .map(
+          (m) => `<a class="model-card" href="${base}/${brand.id}/${m.id}/">
       <strong>${escapeHtml(m.name)}</strong>
       <span>${m.genCount}개 세대</span>
     </a>`
-    )
-    .join("");
+        )
+        .join("")
+    : "";
 
   const breadcrumb = [{ label: brand.name, href: `/${brand.id}/` }];
 
@@ -1062,8 +1057,8 @@ export function renderModelPage({ base, siteUrl, brand, models }) {
     breadcrumb,
     jsonLd: buildJsonLd({ siteUrl, base, breadcrumb }),
     body: `<h1>${escapeHtml(brand.name)} 와이퍼 사이즈</h1>
-<p class="sub">차종을 선택하세요</p>
-<div class="grid-responsive">${cards}</div>`,
+<p class="sub">${cards ? "차종을 선택하세요" : "등록된 차종이 없습니다. 데이터 필요"}</p>
+${cards ? `<div class="grid-responsive">${cards}</div>` : ""}`,
   });
 }
 
@@ -1178,6 +1173,13 @@ function productCard({ title, url, tag = "쿠팡", cta = false, ctaLabel = "보�
     </div>
     <a class="${btnClass}" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer sponsored">${escapeHtml(ctaLabel)}</a>
   </div>`;
+}
+
+function sizeCellHtml(mm, pending) {
+  if (pending || !String(mm || "").trim()) {
+    return `<div class="value is-pending">데이터 필요</div>`;
+  }
+  return `<div class="value">${escapeHtml(mm)}</div>${mmUnitHtml(mm)}`;
 }
 
 function formatPrice(n) {
@@ -1447,10 +1449,8 @@ function tireCardHtml(tire, base) {
   if (!front && !rear) {
     return consumableCardHtml({ label: "타이어(순정)", value: "", note: "", link: tire?.link }, base);
   }
-  const lines = [
-    front ? `<p>전륜(앞타이어) : ${escapeHtml(front)}</p>` : "",
-    rear ? `<p>후륜(뒤타이어) : ${escapeHtml(rear)}</p>` : "",
-  ].join("");
+  const sizes = [front, rear].filter(Boolean).map((size) => escapeHtml(size)).join(" / ");
+  const lines = `<p>전륜(앞)/후륜(뒤) : ${sizes}</p>`;
   const frontPsi = tire?.pressure_front_psi;
   const rearPsi = tire?.pressure_rear_psi;
   const pressure =
@@ -1590,14 +1590,14 @@ export function renderResultPage({ base, siteUrl, brand, model, gen, productsEnt
       <p class="sub">와이퍼 사이즈</p>
     </div>
     <div class="size-table" id="wiper-size">
-      <div class="size-cell"><div class="label">운전석</div><div class="value">${escapeHtml(gen.driver_mm)}</div>${mmUnitHtml(gen.driver_mm)}</div>
-      <div class="size-cell"><div class="label">조수석</div><div class="value">${escapeHtml(gen.passenger_mm)}</div>${mmUnitHtml(gen.passenger_mm)}</div>
-      <div class="size-cell"><div class="label">후방</div>${rearCell}</div>
+      <div class="size-cell"><div class="label">운전석</div>${gen.sizePending ? sizeCellHtml(gen.driver_mm, true) : `<div class="value">${escapeHtml(gen.driver_mm)}</div>${mmUnitHtml(gen.driver_mm)}`}</div>
+      <div class="size-cell"><div class="label">조수석</div>${gen.sizePending ? sizeCellHtml(gen.passenger_mm, true) : `<div class="value">${escapeHtml(gen.passenger_mm)}</div>${mmUnitHtml(gen.passenger_mm)}`}</div>
+      <div class="size-cell"><div class="label">후방</div>${gen.sizePending ? sizeCellHtml("", true) : rearCell}</div>
     </div>
-    ${sizeSourceHtml(gen)}
-    ${rearMsg}
-    ${productGrid}
-    ${signalOutside}
+    ${gen.sizePending ? "" : sizeSourceHtml(gen)}
+    ${gen.sizePending ? "" : rearMsg}
+    ${gen.sizePending ? "" : productGrid}
+    ${gen.sizePending ? consumablesSectionHtml(gen, base, model) : signalOutside}
     ${frontCard ? `<p class="section-title">바로 구매</p><p class="section-sub">mm 확인 후 아래에서 바로 이동하세요.</p>${frontCard}${rearCard}` : ""}
     ${faqSection}
     ${relatedSection}`,

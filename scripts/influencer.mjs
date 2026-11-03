@@ -142,10 +142,11 @@ function sortByPopularSize(items) {
 export function influencerProductsBySize(catalog, generations, homeUrl) {
   const map = {};
   for (const gen of generations) {
-    const key = `${gen.driver_mm}-${gen.passenger_mm}`;
-    if (map[key]) continue;
     const driver = String(gen.driver_mm || "");
     const passenger = String(gen.passenger_mm || "");
+    if (!driver || !passenger) continue;
+    const key = `${driver}-${passenger}`;
+    if (map[key]) continue;
     // Match on driver size first (exact pair is rare). Also treat a product as a
     // hit when the car's driver mm appears as either blade on the product.
     const exact = [];
