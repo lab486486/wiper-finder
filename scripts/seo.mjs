@@ -82,13 +82,13 @@ export function seoGeneration(brand, model, generations = []) {
       path: `/${brand.id}/${model.id}/`,
     };
   }
-  const sizeLine = generations
-    .map((g) => `${g.label}(${g.years}) ${g.driver_mm}/${g.passenger_mm}mm`)
-    .join(", ");
+  const sizeOf = (g) =>
+    g.driver_mm || g.passenger_mm ? `${g.driver_mm}/${g.passenger_mm}mm` : "데이터 필요";
+  const sizeLine = generations.map((g) => `${g.label}(${g.years}) ${sizeOf(g)}`).join(", ");
+  const titled = generations.find((g) => g.driver_mm && g.passenger_mm);
+  const titleSize = titled ? ` ${titled.driver_mm}·${titled.passenger_mm}mm` : "";
   return {
-    documentTitle: titleSuffix(
-      `${model.name} 와이퍼 사이즈 ${latest.driver_mm}·${latest.passenger_mm}mm`
-    ),
+    documentTitle: titleSuffix(`${model.name} 와이퍼 사이즈${titleSize}`),
     description: `${vehicleName(brand.name, model.name)} 와이퍼는 세대마다 다릅니다. ${sizeLine}.`,
     path: `/${brand.id}/${model.id}/`,
   };

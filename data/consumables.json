@@ -1,7 +1,7 @@
 {
   "_note": "세대 id별 소모품. 없는 값은 null. 화면은 값이 있는 항목만 보여주고, 4종이 모두 비면 섹션을 숨긴다. link.href가 있을 때만 항목 링크를 표시한다. 기존 항목은 국내 취급설명서에서 확인한 값이다. 그 아래 추가 세대는 마이카 차종 페이지 규격 표의 숫자만 옮겼고, 표에 없는 값은 null이다.",
   "cn7-pe": {
-    "_source": "현대 아반떼 CN7 2026 국내 취급설명서",
+    "_source": "현대 아반떼 CN7 2026 국내 취급설명서 배터리는 마이카 아반떼 CN7 규격 표.",
     "oil": {
       "viscosity": "0W-20",
       "capacity_l": 3.8,
@@ -18,9 +18,9 @@
       "_all": "195/65R15 · 205/55R16 · 225/45R17 · 235/40R18"
     },
     "battery": {
-      "model": null,
+      "model": "AGM60",
       "capacity_ah": null,
-      "note": null,
+      "note": "가솔린 1.6. LPI는 DIN GB56219.",
       "link": null
     },
     "key_battery": {
@@ -56,7 +56,7 @@
     }
   },
   "cn7-n": {
-    "_source": "현대 아반떼 N 2021 국내 취급설명서와 2026 설명서의 엔진오일 표가 동일",
+    "_source": "현대 아반떼 N 2021 국내 취급설명서와 2026 설명서의 엔진오일 표가 동일 스마트키는 마이카 아반떼 CN7 표의 2023년형 이전 규격 CR2032. N 전용 타이어·배터리는 표에 없어 비움.",
     "oil": {
       "viscosity": "0W-30",
       "capacity_l": 5.2,
@@ -76,13 +76,13 @@
       "link": null
     },
     "key_battery": {
-      "type": null,
-      "count": null,
+      "type": "CR2032",
+      "count": 1,
       "link": null
     }
   },
   "mx5": {
-    "_source": "현대 싼타페 MX5 2024 국내 취급설명서. 하이브리드 1.6T는 2024 하이브리드 취급설명서",
+    "_source": "현대 싼타페 MX5 2024 국내 취급설명서. 하이브리드 1.6T는 2024 하이브리드 취급설명서 배터리·스마트키는 마이카 싼타페 MX5 규격 표.",
     "oil": {
       "viscosity": "0W-30",
       "capacity_l": 5.8,
@@ -99,19 +99,19 @@
       "_all": "235/60R18 · 255/45R20 · 245/45R21"
     },
     "battery": {
-      "model": null,
+      "model": "AGM80L",
       "capacity_ah": null,
-      "note": null,
+      "note": "가솔린 2.5 터보.",
       "link": null
     },
     "key_battery": {
-      "type": null,
-      "count": null,
+      "type": "CR2450",
+      "count": 1,
       "link": null
     }
   },
   "mq4-pe": {
-    "_source": "기아 쏘렌토 MQ4 2024 추천 오일, 2026 타이어 및 휠",
+    "_source": "기아 쏘렌토 MQ4 2024 추천 오일, 2026 타이어 및 휠 배터리·스마트키는 마이카 쏘렌토 MQ4 규격 표. 표는 2024년형부터 CR2450.",
     "oil": {
       "viscosity": "0W-30",
       "capacity_l": 5.8,
@@ -128,19 +128,19 @@
       "_all": "235/60R18 · 255/45R20"
     },
     "battery": {
-      "model": null,
+      "model": "AGM",
       "capacity_ah": null,
-      "note": null,
+      "note": "가솔린 2.5 터보·디젤 2.2는 AGM. 하이브리드는 AGM LN2.",
       "link": null
     },
     "key_battery": {
-      "type": null,
-      "count": null,
+      "type": "CR2450",
+      "count": 1,
       "link": null
     }
   },
   "ka4": {
-    "_source": "기아 카니발 KA4 2022~2025 국내 취급설명서",
+    "_source": "기아 카니발 KA4 2022~2025 국내 취급설명서 타이어·배터리·스마트키는 마이카 카니발 KA4 규격 표. 공기압은 235/60R18 앞 35·뒤 35psi.",
     "oil": {
       "viscosity": "0W-20",
       "capacity_l": 6.1,
@@ -148,25 +148,28 @@
       "link": null
     },
     "tire": {
-      "front": null,
-      "rear": null,
+      "front": "235/60R18",
+      "rear": "235/60R18",
+      "pressure_front_psi": 35,
+      "pressure_rear_psi": 35,
       "pressure_note": null,
-      "link": null
+      "link": null,
+      "_all": "235/60R18 · 235/55R19"
     },
     "battery": {
-      "model": null,
+      "model": "AGM80",
       "capacity_ah": null,
       "note": null,
       "link": null
     },
     "key_battery": {
-      "type": null,
-      "count": null,
+      "type": "CR2032",
+      "count": 1,
       "link": null
     }
   },
   "ka4-pe": {
-    "_source": "기아 카니발 KA4 2026 국내 취급설명서 요약본",
+    "_source": "기아 카니발 KA4 2026 국내 취급설명서 요약본 타이어·배터리·스마트키는 마이카 카니발 KA4 규격 표. 공기압은 235/60R18 앞 35·뒤 35psi.",
     "oil": {
       "viscosity": "0W-20",
       "capacity_l": 6.1,
@@ -174,25 +177,28 @@
       "link": null
     },
     "tire": {
-      "front": null,
-      "rear": null,
+      "front": "235/60R18",
+      "rear": "235/60R18",
+      "pressure_front_psi": 35,
+      "pressure_rear_psi": 35,
       "pressure_note": null,
-      "link": null
+      "link": null,
+      "_all": "235/60R18 · 235/55R19"
     },
     "battery": {
-      "model": null,
+      "model": "AGM80",
       "capacity_ah": null,
       "note": null,
       "link": null
     },
     "key_battery": {
-      "type": null,
-      "count": null,
+      "type": "CR2032",
+      "count": 1,
       "link": null
     }
   },
   "ja-pe2": {
-    "_source": "기아 모닝 JA 2024 국내 취급설명서",
+    "_source": "기아 모닝 JA 2024 국내 취급설명서 타이어·스마트키는 마이카 모닝 JA 규격 표. 스마트스트림 배터리 칸은 비어 있음.",
     "oil": {
       "viscosity": "0W-20",
       "capacity_l": 3.1,
@@ -200,10 +206,13 @@
       "link": null
     },
     "tire": {
-      "front": null,
-      "rear": null,
+      "front": "185/55R15",
+      "rear": "185/55R15",
+      "pressure_front_psi": 33,
+      "pressure_rear_psi": 33,
       "pressure_note": null,
-      "link": null
+      "link": null,
+      "_all": "155/80R13 · 175/65R14 · 185/55R15 · 195/45R16"
     },
     "battery": {
       "model": null,
@@ -212,8 +221,8 @@
       "link": null
     },
     "key_battery": {
-      "type": null,
-      "count": null,
+      "type": "CR2032",
+      "count": 1,
       "link": null
     }
   },
@@ -1361,6 +1370,262 @@
     },
     "key_battery": {
       "type": "CR2032",
+      "count": null,
+      "link": null
+    }
+  },
+  "atto-3": {
+    "_source": "BYD 아토 3 국내 취급설명서 8-1 휠과 타이어 제원. https://www.bydauto.kr/static/file/BYD_ATTO_3_Owners_manual.pdf",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": "엔진오일 없음.",
+      "link": null
+    },
+    "tire": {
+      "front": "215/55R18",
+      "rear": "215/55R18",
+      "pressure_front_psi": 36,
+      "pressure_rear_psi": 36,
+      "pressure_note": "설명서 250kPa.",
+      "link": null
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": "12V 저전압 배터리. 규격 코드는 설명서에 없습니다.",
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "dolphin": {
+    "_source": "BYD 돌핀 2026 국내 취급설명서 타이어 제원과 bydauto.kr 돌핀 타이어 에너지 소비 효율 표. https://www.bydauto.kr/static/file/manual/BYD_DOLPHIN_Owners_manual_2026.pdf",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": "엔진오일 없음.",
+      "link": null
+    },
+    "tire": {
+      "front": "205/55R16",
+      "rear": "205/55R16",
+      "pressure_front_psi": 36,
+      "pressure_rear_psi": 36,
+      "pressure_note": "2026 설명서 표의 205/55R16·205/50R17은 250kPa.",
+      "link": null,
+      "_all": "195/60R16 · 205/55R16 · 205/50R17"
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": "12V 저전압 배터리. 규격 코드는 설명서에 없습니다.",
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "seal": {
+    "_source": "BYD 씰 국내 취급설명서 휠과 타이어 제원(전/후 250/290kPa)과 bydauto.kr 씰 타이어 등급 표의 235/45 R19. 데이터 정보 표는 사륜 구동 제원 안에 있습니다. https://www.bydauto.kr/static/file/BYD_SEAL_Owners_manual.pdf",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": "엔진오일 없음.",
+      "link": null
+    },
+    "tire": {
+      "front": "235/45R19",
+      "rear": "235/45R19",
+      "pressure_front_psi": 36,
+      "pressure_rear_psi": 42,
+      "pressure_note": "설명서 앞 250kPa, 뒤 290kPa. 데이터 정보 표는 사륜 구동 제원 안입니다.",
+      "link": null
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": "12V 저전압 배터리. 규격 코드는 설명서에 없습니다.",
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "sealion-7": {
+    "_source": "BYD 씨라이언 7 국내 취급설명서 8-1. 235/50 R19, 255/45 R19, F/B 290/290kPa, 트레일러 290/310kPa. https://www.bydauto.kr/static/file/BYD_Sealion7_RWD_Owners_manual.pdf",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": "엔진오일 없음.",
+      "link": null
+    },
+    "tire": {
+      "front": "235/50R19",
+      "rear": "255/45R19",
+      "pressure_front_psi": 42,
+      "pressure_rear_psi": 42,
+      "pressure_note": "트레일러 견인 시 뒤 310kPa(45psi).",
+      "link": null
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": "12V 저전압 배터리. 규격 코드는 설명서에 없습니다.",
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "sealion-6": {
+    "_source": "bydauto.kr 씨라이언 6 DM-i 타이어 에너지 소비 효율 표. 금호 235/50 R19. 국내 표에 엔진오일 용량과 공기압은 없습니다. https://www.bydauto.kr/car/byd-sealion6",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": null,
+      "link": null
+    },
+    "tire": {
+      "front": "235/50R19",
+      "rear": "235/50R19",
+      "pressure_front_psi": null,
+      "pressure_rear_psi": null,
+      "pressure_note": null,
+      "link": null
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": "12V 저전압 배터리. 규격 코드는 설명서에 없습니다.",
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "t4k": {
+    "_source": "BYD T4K는 1톤 전기 트럭. 국내 판매 제원 표에서 순정 타이어·12V 규격·스마트키 규격·와이퍼 mm를 확인하지 못해 비움.",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": "엔진오일 없음.",
+      "link": null
+    },
+    "tire": {
+      "front": null,
+      "rear": null,
+      "pressure_front_psi": null,
+      "pressure_rear_psi": null,
+      "pressure_note": null,
+      "link": null
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": null,
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "series-5-g60": {
+    "_source": "다나와 5시리즈 G60 제원 표의 19인치 245/45R, 20인치 앞 245/40R·뒤 275/35R. 미쉐린 코리아 G60 520i는 245/45R19, 530e는 앞 245/45R19·뒤 275/40R19. 공기압은 표에 없음.",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": null,
+      "link": null
+    },
+    "tire": {
+      "front": "245/45R19",
+      "rear": "245/45R19",
+      "pressure_front_psi": null,
+      "pressure_rear_psi": null,
+      "pressure_note": null,
+      "link": null,
+      "_all": "245/45R19 · 275/40R19 · 245/40R20 · 275/35R20"
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": null,
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "series-7-g70": {
+    "_source": "미쉐린 영국 BMW 7시리즈 G70 장착 사이즈 표. 공기압 칸은 비어 있음. https://www.michelin.co.uk/auto/manufacturers/bmw/serie-7/g70-berline",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": null,
+      "link": null
+    },
+    "tire": {
+      "front": "245/50R19",
+      "rear": "245/50R19",
+      "pressure_front_psi": null,
+      "pressure_rear_psi": null,
+      "pressure_note": null,
+      "link": null,
+      "_all": "245/50R19 · 255/45R20 · 285/40R20 · 255/40R21 · 285/35R21 · 255/35R22 · 285/30R22"
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": null,
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
+      "count": null,
+      "link": null
+    }
+  },
+  "x3-g45": {
+    "_source": "미쉐린 코리아 BMW X3 G45 2025 20d xDrive 장착 사이즈. 공기압은 표에 없음. https://www.michelin.co.kr/auto/manufacturers/bmw/x3/x3-g45/2025/20d-xdrive-2.0-d-197",
+    "oil": {
+      "viscosity": null,
+      "capacity_l": null,
+      "note": null,
+      "link": null
+    },
+    "tire": {
+      "front": "245/50R19",
+      "rear": "245/50R19",
+      "pressure_front_psi": null,
+      "pressure_rear_psi": null,
+      "pressure_note": null,
+      "link": null,
+      "_all": "225/60R18 · 245/50R19 · 255/45R20 · 285/40R20"
+    },
+    "battery": {
+      "model": null,
+      "capacity_ah": null,
+      "note": null,
+      "link": null
+    },
+    "key_battery": {
+      "type": null,
       "count": null,
       "link": null
     }
