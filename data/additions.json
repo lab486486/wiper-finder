@@ -218,7 +218,7 @@
       "id": "glc",
       "brand_id": "mercedes",
       "name": "GLC",
-      "sort": "3"
+      "sort": "4"
     },
     {
       "id": "series-3",
@@ -230,19 +230,19 @@
       "id": "series-5",
       "brand_id": "bmw",
       "name": "5시리즈",
-      "sort": "2"
+      "sort": "3"
     },
     {
       "id": "x5",
       "brand_id": "bmw",
       "name": "X5",
-      "sort": "3"
+      "sort": "8"
     },
     {
       "id": "a6",
       "brand_id": "audi",
       "name": "A6",
-      "sort": "1"
+      "sort": "2"
     },
     {
       "id": "tiguan",
@@ -266,7 +266,7 @@
       "id": "xc60",
       "brand_id": "volvo",
       "name": "XC60",
-      "sort": "1"
+      "sort": "2"
     },
     {
       "id": "es",
@@ -279,6 +279,150 @@
       "brand_id": "mini",
       "name": "쿠퍼",
       "sort": "1"
+    },
+    {
+      "id": "series-4",
+      "brand_id": "bmw",
+      "name": "4시리즈",
+      "sort": "2"
+    },
+    {
+      "id": "series-7",
+      "brand_id": "bmw",
+      "name": "7시리즈",
+      "sort": "4"
+    },
+    {
+      "id": "x1",
+      "brand_id": "bmw",
+      "name": "X1",
+      "sort": "5"
+    },
+    {
+      "id": "x3",
+      "brand_id": "bmw",
+      "name": "X3",
+      "sort": "6"
+    },
+    {
+      "id": "x4",
+      "brand_id": "bmw",
+      "name": "X4",
+      "sort": "7"
+    },
+    {
+      "id": "x6",
+      "brand_id": "bmw",
+      "name": "X6",
+      "sort": "9"
+    },
+    {
+      "id": "x7",
+      "brand_id": "bmw",
+      "name": "X7",
+      "sort": "10"
+    },
+    {
+      "id": "s-class",
+      "brand_id": "mercedes",
+      "name": "S클래스",
+      "sort": "3"
+    },
+    {
+      "id": "gle",
+      "brand_id": "mercedes",
+      "name": "GLE",
+      "sort": "5"
+    },
+    {
+      "id": "a4",
+      "brand_id": "audi",
+      "name": "A4",
+      "sort": "1"
+    },
+    {
+      "id": "q4-e-tron",
+      "brand_id": "audi",
+      "name": "Q4 e-tron",
+      "sort": "3"
+    },
+    {
+      "id": "q5",
+      "brand_id": "audi",
+      "name": "Q5",
+      "sort": "4"
+    },
+    {
+      "id": "id4",
+      "brand_id": "volkswagen",
+      "name": "ID.4",
+      "sort": "2"
+    },
+    {
+      "id": "xc40",
+      "brand_id": "volvo",
+      "name": "XC40",
+      "sort": "1"
+    },
+    {
+      "id": "xc90",
+      "brand_id": "volvo",
+      "name": "XC90",
+      "sort": "3"
+    },
+    {
+      "id": "nx",
+      "brand_id": "lexus",
+      "name": "NX",
+      "sort": "2"
+    },
+    {
+      "id": "rx",
+      "brand_id": "lexus",
+      "name": "RX",
+      "sort": "3"
+    },
+    {
+      "id": "countryman",
+      "brand_id": "mini",
+      "name": "컨트리맨",
+      "sort": "2"
+    },
+    {
+      "id": "atto-3",
+      "brand_id": "byd",
+      "name": "아토 3",
+      "sort": "1"
+    },
+    {
+      "id": "dolphin",
+      "brand_id": "byd",
+      "name": "돌핀",
+      "sort": "2"
+    },
+    {
+      "id": "seal",
+      "brand_id": "byd",
+      "name": "씰",
+      "sort": "3"
+    },
+    {
+      "id": "sealion-7",
+      "brand_id": "byd",
+      "name": "씨라이언 7",
+      "sort": "4"
+    },
+    {
+      "id": "sealion-6",
+      "brand_id": "byd",
+      "name": "씨라이언 6",
+      "sort": "5"
+    },
+    {
+      "id": "t4k",
+      "brand_id": "byd",
+      "name": "T4K",
+      "sort": "6"
     }
   ],
   "generations": [
@@ -585,7 +729,7 @@
       "code": "W205",
       "label": "C클래스",
       "years": "2014~2021",
-      "sort": "1",
+      "sort": "2",
       "rear_type": "unknown",
       "driver_mm": "550",
       "passenger_mm": "550"
@@ -596,7 +740,7 @@
       "code": "W213",
       "label": "E클래스",
       "years": "2016~2023",
-      "sort": "1",
+      "sort": "2",
       "rear_type": "unknown",
       "driver_mm": "600",
       "passenger_mm": "550"
@@ -607,7 +751,7 @@
       "code": "W214",
       "label": "E클래스",
       "years": "2023~현재",
-      "sort": "2",
+      "sort": "1",
       "rear_type": "unknown"
     },
     {
@@ -616,7 +760,7 @@
       "code": "X253",
       "label": "GLC",
       "years": "2015~2022",
-      "sort": "1",
+      "sort": "2",
       "rear_type": "unknown"
     },
     {
@@ -635,7 +779,7 @@
       "code": "G30",
       "label": "5시리즈",
       "years": "2017~2023",
-      "sort": "1",
+      "sort": "2",
       "rear_type": "none",
       "driver_mm": "650"
     },
@@ -724,6 +868,257 @@
       "years": "2014~2024",
       "sort": "1",
       "rear_type": "unknown"
+    },
+    {
+      "id": "series-4-g22",
+      "model_id": "series-4",
+      "code": "G22",
+      "label": "4시리즈",
+      "years": "2021~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "series-5-g60",
+      "model_id": "series-5",
+      "code": "G60",
+      "label": "5시리즈",
+      "years": "2023~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "series-7-g70",
+      "model_id": "series-7",
+      "code": "G70",
+      "label": "7시리즈",
+      "years": "2023~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "x1-u11",
+      "model_id": "x1",
+      "code": "U11",
+      "label": "X1",
+      "years": "2022~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "x3-g45",
+      "model_id": "x3",
+      "code": "G45",
+      "label": "X3",
+      "years": "2024~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "x4-g02",
+      "model_id": "x4",
+      "code": "G02",
+      "label": "X4",
+      "years": "2018~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "x6-g06",
+      "model_id": "x6",
+      "code": "G06",
+      "label": "X6",
+      "years": "2020~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "x7-g07",
+      "model_id": "x7",
+      "code": "G07",
+      "label": "X7",
+      "years": "2019~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "c-class-w206",
+      "model_id": "c-class",
+      "code": "W206",
+      "label": "C클래스",
+      "years": "2022~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "s-class-w223",
+      "model_id": "s-class",
+      "code": "W223",
+      "label": "S클래스",
+      "years": "2021~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "glc-x254",
+      "model_id": "glc",
+      "code": "X254",
+      "label": "GLC",
+      "years": "2023~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "gle-w167",
+      "model_id": "gle",
+      "code": "W167",
+      "label": "GLE",
+      "years": "2019~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "a4-b9",
+      "model_id": "a4",
+      "code": "B9",
+      "label": "A4",
+      "years": "2016~2024",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "q4-e-tron",
+      "model_id": "q4-e-tron",
+      "code": "Q4 e-tron",
+      "label": "Q4 e-tron",
+      "years": "2022~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "2"
+    },
+    {
+      "id": "q5-fy",
+      "model_id": "q5",
+      "code": "FY",
+      "label": "Q5",
+      "years": "2017~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "id4",
+      "model_id": "id4",
+      "code": "ID.4",
+      "label": "ID.4",
+      "years": "2022~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "2"
+    },
+    {
+      "id": "xc40",
+      "model_id": "xc40",
+      "code": "1세대",
+      "label": "XC40",
+      "years": "2018~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "xc90-2",
+      "model_id": "xc90",
+      "code": "2세대",
+      "label": "XC90",
+      "years": "2015~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "nx-az20",
+      "model_id": "nx",
+      "code": "AZ20",
+      "label": "NX",
+      "years": "2022~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "rx-al10",
+      "model_id": "rx",
+      "code": "AL10",
+      "label": "RX",
+      "years": "2022~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "countryman-u25",
+      "model_id": "countryman",
+      "code": "U25",
+      "label": "컨트리맨",
+      "years": "2024~현재",
+      "sort": "1",
+      "rear_type": "unknown"
+    },
+    {
+      "id": "atto-3",
+      "model_id": "atto-3",
+      "code": "아토 3",
+      "label": "아토 3",
+      "years": "2025~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "2"
+    },
+    {
+      "id": "dolphin",
+      "model_id": "dolphin",
+      "code": "돌핀",
+      "label": "돌핀",
+      "years": "2025~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "2"
+    },
+    {
+      "id": "seal",
+      "model_id": "seal",
+      "code": "씰",
+      "label": "씰",
+      "years": "2025~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "2"
+    },
+    {
+      "id": "sealion-7",
+      "model_id": "sealion-7",
+      "code": "씨라이언 7",
+      "label": "씨라이언 7",
+      "years": "2025~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "2"
+    },
+    {
+      "id": "sealion-6",
+      "model_id": "sealion-6",
+      "code": "씨라이언 6",
+      "label": "씨라이언 6",
+      "years": "2026~현재",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "1"
+    },
+    {
+      "id": "t4k",
+      "model_id": "t4k",
+      "code": "1톤",
+      "label": "T4K",
+      "years": "2023~2025",
+      "sort": "1",
+      "rear_type": "unknown",
+      "hybrid": "2"
     }
   ]
 }
